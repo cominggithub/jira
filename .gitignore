@@ -47,3 +47,6 @@ instance/
 *.db
 *.sqlite
 *.sqlite3
+
+# Log files
+*.log

@@ -1,10 +1,35 @@
 import os
-from flask import Flask, render_template
+import logging
+from datetime import datetime
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from config.base import config
 from config.database import DatabaseConfig
 
 db = SQLAlchemy()
+
+def log_request_info():
+    """Log connection request info to console and file"""
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    remote_addr = request.environ.get('REMOTE_ADDR', 'Unknown')
+    user_agent = request.headers.get('User-Agent', 'Unknown')
+    method = request.method
+    url = request.url
+    endpoint = request.endpoint or 'Unknown'
+    
+    # Create log message
+    log_message = f"[{timestamp}] {method} {url} - IP: {remote_addr} - Agent: {user_agent} - Endpoint: {endpoint}"
+    
+    # Print to console
+    print(f"REQUEST INFO: {log_message}")
+    
+    # Write to log file
+    log_file = 'requests.log'
+    try:
+        with open(log_file, 'a', encoding='utf-8') as f:
+            f.write(f"{log_message}\n")
+    except Exception as e:
+        print(f"Error writing to log file: {e}")
 
 def create_app(config_name=None):
     app = Flask(__name__)
@@ -16,6 +41,11 @@ def create_app(config_name=None):
     config[config_name].init_app(app)
     
     db.init_app(app)
+    
+    # Add request logging middleware
+    @app.before_request
+    def before_request():
+        log_request_info()
     
     @app.route('/')
     def hello():
