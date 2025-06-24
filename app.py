@@ -10,26 +10,25 @@ db = SQLAlchemy()
 
 def log_request_info():
     """Log connection request info to console and file"""
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    remote_addr = request.environ.get('REMOTE_ADDR', 'Unknown')
-    user_agent = request.headers.get('User-Agent', 'Unknown')
-    method = request.method
-    url = request.url
-    endpoint = request.endpoint or 'Unknown'
-    
-    # Create log message
-    log_message = f"[{timestamp}] {method} {url} - IP: {remote_addr} - Agent: {user_agent} - Endpoint: {endpoint}"
-    
-    # Print to console
-    print(f"REQUEST INFO: {log_message}")
-    
-    # Write to log file
-    log_file = 'requests.log'
     try:
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        remote_addr = request.environ.get('REMOTE_ADDR', 'Unknown')
+        user_agent = request.headers.get('User-Agent', 'Unknown')
+        method = request.method
+        url = request.url
+        
+        # Create log message
+        log_message = f"[{timestamp}] {method} {url} - IP: {remote_addr} - Agent: {user_agent}"
+        
+        # Print to console
+        print(f"REQUEST INFO: {log_message}")
+        
+        # Write to log file
+        log_file = 'requests.log'
         with open(log_file, 'a', encoding='utf-8') as f:
             f.write(f"{log_message}\n")
     except Exception as e:
-        print(f"Error writing to log file: {e}")
+        print(f"Error in request logging: {e}")
 
 def create_app(config_name=None):
     app = Flask(__name__)
@@ -42,10 +41,15 @@ def create_app(config_name=None):
     
     db.init_app(app)
     
-    # Add request logging middleware
-    @app.before_request
-    def before_request():
-        log_request_info()
+    # Request logging - outputs to console and file
+    @app.after_request
+    def log_requests(response):
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        log_msg = f"[{timestamp}] {request.method} {request.path} - {request.remote_addr}"
+        print(f"REQUEST: {log_msg}")
+        with open('requests.log', 'a') as f:
+            f.write(f"{log_msg}\n")
+        return response
     
     @app.route('/')
     def hello():
@@ -72,4 +76,4 @@ def create_app(config_name=None):
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=5002)
