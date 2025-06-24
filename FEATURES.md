@@ -3,8 +3,8 @@
 ## Project Overview
 Flask Web Application with Multi-Theme System and Sonic Switch AI Fabric Interface
 
-**Version:** 1.0.0  
-**Last Updated:** 2024-12-24  
+**Version:** 1.1.0  
+**Last Updated:** 2025-06-24  
 **Technology Stack:** Flask, SQLAlchemy, HTML5, CSS3, JavaScript (ES6+)
 
 ---
@@ -18,6 +18,7 @@ Flask Web Application with Multi-Theme System and Sonic Switch AI Fabric Interfa
 - **Environment Management**: Development, production, and testing environment support
 - **Static Asset Management**: Organized CSS, JavaScript, and asset serving
 - **Template Engine**: Jinja2 templating with inheritance and blocks
+- **Request Logging**: Comprehensive request monitoring and logging system
 
 ### Routing System
 | Route | Method | Description | Template |
@@ -72,28 +73,35 @@ Flask Web Application with Multi-Theme System and Sonic Switch AI Fabric Interfa
 ## 🎨 Advanced Theme System
 
 ### Theme Variants
-1. **Neon Theme**
+1. **Green Neon Theme**
    - Bright green cyberpunk aesthetic
    - Glowing text effects and animations
    - Pulsing neon animations
    - Matrix-inspired color scheme
    - Animated background particles
 
-2. **Tron Theme**
+2. **Pink Neon Theme**
+   - Deep pink cyberpunk aesthetic  
+   - Magenta neon glow effects
+   - Pulsing pink animations
+   - Cyberpunk-inspired color scheme
+   - Pink-tinted background gradients
+
+3. **Tron Theme**
    - Blue futuristic grid design
    - Geometric line patterns
    - Scanning laser effects
    - Grid-based background
    - Courier New monospace typography
 
-3. **Dark Theme**
+4. **Dark Theme**
    - Professional dark interface
    - Purple accent colors
    - Subtle gradients and shadows
    - Modern card-based layout
    - High contrast readability
 
-4. **White Theme**
+5. **White Theme**
    - Clean minimalist design
    - Blue accent colors
    - Light backgrounds with shadows
@@ -111,12 +119,49 @@ Flask Web Application with Multi-Theme System and Sonic Switch AI Fabric Interfa
 ### Theme Controls
 - **Header Navigation**: Theme buttons in navigation bar
 - **Keyboard Shortcuts**: 
-  - `Ctrl+Shift+1`: Neon theme
-  - `Ctrl+Shift+2`: Tron theme  
-  - `Ctrl+Shift+3`: Dark theme
-  - `Ctrl+Shift+4`: White theme
+  - `Ctrl+Shift+1`: Green Neon theme
+  - `Ctrl+Shift+2`: Pink Neon theme
+  - `Ctrl+Shift+3`: Tron theme  
+  - `Ctrl+Shift+4`: Dark theme
+  - `Ctrl+Shift+5`: White theme
 - **Theme Events**: JavaScript events for theme change detection
 - **Theme API**: Programmatic theme switching via JavaScript
+
+---
+
+## 📊 Request Logging & Monitoring
+
+### Comprehensive Request Tracking
+- **Real-Time Console Logging**: Live request information displayed in terminal
+- **File-Based Logging**: Persistent request logs saved to `requests.log`
+- **Request Details Capture**:
+  - Timestamp with date and time
+  - HTTP method (GET, POST, PUT, DELETE, etc.)
+  - Complete request URL/path
+  - Client IP address
+  - User agent information (available)
+
+### Log Format & Structure
+```
+[2025-06-24 16:20:01] GET /sonic-switch - 172.30.112.1
+[2025-06-24 16:20:01] GET /static/css/dark.css - 172.30.112.1
+[2025-06-24 16:20:01] GET /static/js/theme-switcher.js - 172.30.112.1
+```
+
+### Logging Features
+- **Automatic File Creation**: Log file auto-created on first request
+- **Append Mode**: New requests appended without overwriting existing logs
+- **Error Handling**: Graceful error handling if logging fails
+- **Performance Optimized**: Minimal impact on request processing
+- **Git Exclusion**: Log files excluded from version control
+- **Cross-Platform**: Works on Windows, macOS, Linux, and WSL
+
+### Monitoring Capabilities
+- **Traffic Analysis**: Monitor request patterns and frequency
+- **Route Usage**: Track which endpoints are most accessed
+- **Client Tracking**: Monitor requests from different IP addresses
+- **Static Asset Monitoring**: Track CSS, JavaScript, and image requests
+- **Debug Information**: Helpful for troubleshooting and optimization
 
 ---
 

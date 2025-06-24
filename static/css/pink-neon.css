@@ -1,0 +1,102 @@
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --header-bg: #111111;
+    --header-text: #ff1493;
+    --card-bg: #1a1a1a;
+    --card-text: #ffffff;
+    --card-border: #ff1493;
+    --heading-color: #ff1493;
+    --accent-color: #ff1493;
+    --accent-text: #000000;
+    --accent-glow: 0 0 20px #ff1493, 0 0 40px #ff1493, 0 0 60px #ff1493;
+    --button-bg: #111111;
+    --button-text: #ff1493;
+    --button-border: #ff1493;
+    --list-bg: #222222;
+}
+
+body {
+    background: radial-gradient(circle at center, #1a0a1a 0%, #000000 100%);
+    text-shadow: 0 0 10px currentColor;
+}
+
+.header {
+    background: linear-gradient(135deg, #111111 0%, #2a1a2a 100%);
+    border-bottom: 3px solid #ff1493;
+    box-shadow: 0 0 20px #ff1493;
+}
+
+.nav-links a {
+    text-shadow: 0 0 10px #ff1493;
+    border: 1px solid #ff1493;
+    background: rgba(255, 20, 147, 0.1);
+}
+
+.nav-links a:hover {
+    box-shadow: 0 0 20px #ff1493, 0 0 40px #ff1493;
+    text-shadow: 0 0 15px #ff1493;
+}
+
+.card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a1a2a 100%);
+    border: 2px solid #ff1493;
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
+}
+
+.card:hover {
+    box-shadow: 0 0 30px rgba(255, 20, 147, 0.5), 0 0 60px rgba(255, 20, 147, 0.3);
+    border-color: #ff1493;
+}
+
+.card h1,
+.card h2,
+.card h3 {
+    text-shadow: 0 0 15px #ff1493;
+    color: #ff1493;
+}
+
+.info-list li {
+    background: linear-gradient(90deg, rgba(255, 20, 147, 0.1) 0%, rgba(255, 20, 147, 0.05) 100%);
+    border-left: 4px solid #ff1493;
+    box-shadow: 0 0 10px rgba(255, 20, 147, 0.2);
+}
+
+.info-list strong {
+    color: #ff1493;
+    text-shadow: 0 0 10px #ff1493;
+}
+
+.theme-btn {
+    background: rgba(255, 20, 147, 0.1);
+    border: 1px solid #ff1493;
+    color: #ff1493;
+    text-shadow: 0 0 5px #ff1493;
+}
+
+.theme-btn:hover,
+.theme-btn.active {
+    background: #ff1493;
+    color: #000000;
+    box-shadow: 0 0 20px #ff1493;
+    text-shadow: none;
+}
+
+.footer {
+    background: linear-gradient(135deg, #111111 0%, #2a1a2a 100%);
+    border-top: 3px solid #ff1493;
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
+}
+
+@keyframes neon-pulse {
+    0%, 100% { 
+        text-shadow: 0 0 10px #ff1493, 0 0 20px #ff1493, 0 0 30px #ff1493;
+    }
+    50% { 
+        text-shadow: 0 0 5px #ff1493, 0 0 10px #ff1493, 0 0 15px #ff1493;
+    }
+}
+
+.card h1 {
+    animation: neon-pulse 2s infinite;
+}

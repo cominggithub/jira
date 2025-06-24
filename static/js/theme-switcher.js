@@ -51,13 +51,17 @@ document.addEventListener('keydown', function(event) {
                 break;
             case '2':
                 event.preventDefault();
-                switchTheme('tron');
+                switchTheme('pink-neon');
                 break;
             case '3':
                 event.preventDefault();
-                switchTheme('dark');
+                switchTheme('tron');
                 break;
             case '4':
+                event.preventDefault();
+                switchTheme('dark');
+                break;
+            case '5':
                 event.preventDefault();
                 switchTheme('white');
                 break;

@@ -1,11 +1,12 @@
 # Flask Web Project with Multi-Theme System
 
-A modern Flask web application featuring SQLAlchemy integration, multi-database support, and a comprehensive theme system with four distinct visual styles.
+A modern Flask web application featuring SQLAlchemy integration, multi-database support, comprehensive request logging, and a dynamic theme system with five distinct visual styles.
 
 ## Features
 
 ### 🎨 Theme System
-- **Neon Theme**: Bright green cyberpunk style with glowing effects and animations
+- **Green Neon Theme**: Bright green cyberpunk style with glowing effects and animations
+- **Pink Neon Theme**: Deep pink cyberpunk style with magenta neon glow effects
 - **Tron Theme**: Blue futuristic grid-based design with scanning animations
 - **Dark Theme**: Professional dark theme with purple accents
 - **White Theme**: Clean light theme with blue accents
@@ -19,10 +20,12 @@ A modern Flask web application featuring SQLAlchemy integration, multi-database 
 ### 🛠️ Technical Features
 - Flask application factory pattern
 - Environment-based configuration system
+- Comprehensive request logging (console + file)
 - Responsive design across all themes
 - Client-side theme switching with persistence
 - Keyboard shortcuts for theme switching
 - System theme detection
+- Real-time request monitoring
 
 ## Installation
 
@@ -96,7 +99,7 @@ CACHE_TEST_DB_URL=sqlite:///cache_test.db
 python app.py
 ```
 
-The application will start on `http://localhost:5000`
+The application will start on `http://localhost:5002` (or `http://172.30.116.234:5002` from Windows if running in WSL)
 
 ### Alternative: Using Flask CLI
 ```bash
@@ -136,7 +139,8 @@ jira/
 ├── static/              # Static assets
 │   ├── css/            # Theme stylesheets
 │   │   ├── base.css    # Base styles
-│   │   ├── neon.css    # Neon theme
+│   │   ├── neon.css    # Green neon theme
+│   │   ├── pink-neon.css # Pink neon theme
 │   │   ├── tron.css    # Tron theme
 │   │   ├── dark.css    # Dark theme
 │   │   └── white.css   # White theme
@@ -154,10 +158,11 @@ jira/
 ### Theme Switching
 - **UI Method**: Use the theme buttons in the header
 - **Keyboard Shortcuts**: 
-  - `Ctrl+Shift+1`: Neon theme
-  - `Ctrl+Shift+2`: Tron theme
-  - `Ctrl+Shift+3`: Dark theme
-  - `Ctrl+Shift+4`: White theme
+  - `Ctrl+Shift+1`: Green Neon theme
+  - `Ctrl+Shift+2`: Pink Neon theme
+  - `Ctrl+Shift+3`: Tron theme
+  - `Ctrl+Shift+4`: Dark theme
+  - `Ctrl+Shift+5`: White theme
 
 ### Theme Persistence
 - Themes are automatically saved to browser localStorage
@@ -189,6 +194,28 @@ The application supports multiple database configurations:
 - `/` - Home page with theme showcase
 - `/about` - About page with project information
 - `/db-info` - Database configuration details
+- `/sonic-switch` - AI fabric interface
+
+## Request Logging
+
+The application includes comprehensive request logging functionality:
+
+### Features
+- **Console Logging**: Real-time request information displayed in terminal
+- **File Logging**: All requests logged to `requests.log` file
+- **Request Details**: Timestamp, HTTP method, URL path, client IP address
+
+### Log Format
+```
+[2025-06-24 16:20:01] GET /sonic-switch - 172.30.112.1
+[2025-06-24 16:20:01] GET /static/css/dark.css - 172.30.112.1
+```
+
+### Log File Location
+- File: `requests.log` (in project root)
+- Auto-created on first request
+- Appends new requests (not overwritten)
+- Excluded from git via `.gitignore`
 
 ## Development
 
