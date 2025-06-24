@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: jira-flask-app
+    ports:
+      - "5002:5002"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-in-production}
+      - PRIMARY_PROD_DB_URL=${PRIMARY_PROD_DB_URL:-sqlite:///primary_prod.db}
+      - ANALYTICS_PROD_DB_URL=${ANALYTICS_PROD_DB_URL:-sqlite:///analytics_prod.db}
+      - CACHE_PROD_DB_URL=${CACHE_PROD_DB_URL:-sqlite:///cache_prod.db}
+    volumes:
+      - ./logs:/app/logs
+      - app_data:/app/data
+    restart: unless-stopped
+    networks:
+      - flask_network
+
+  # Optional: Add PostgreSQL database
+  # postgres:
+  #   image: postgres:15
+  #   container_name: jira-postgres
+  #   environment:
+  #     POSTGRES_DB: jira_db
+  #     POSTGRES_USER: jira_user
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - flask_network
+
+  # Optional: Add Redis cache
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: jira-redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - flask_network
+
+volumes:
+  app_data:
+  # postgres_data:
+
+networks:
+  flask_network:
+    driver: bridge
