@@ -16,7 +16,7 @@ IMAGE_NAME="jira-flask-app"
 IMAGE_TAG="latest"
 CONTAINER_NAME="jira-flask-container"
 REMOTE_HOST="10.102.99.22"
-REMOTE_USER="root"  # Change to your username
+REMOTE_USER="peter-lin"  # Updated to your username
 DOCKER_REGISTRY=""  # Add your registry if using one
 
 # Colors for output

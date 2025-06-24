@@ -72,6 +72,29 @@ def create_app(config_name=None):
     def sonic_switch():
         return render_template('sonic_switch.html', config=app.config)
     
+    @app.route('/readme')
+    def readme():
+        import os
+        
+        # Read markdown files
+        docs = {}
+        doc_files = {
+            'README': 'README.md',
+            'FEATURES': 'FEATURES.md', 
+            'DEPLOY': 'DEPLOY.md'
+        }
+        
+        for key, filename in doc_files.items():
+            try:
+                with open(filename, 'r', encoding='utf-8') as f:
+                    docs[key] = f.read()
+            except FileNotFoundError:
+                docs[key] = f"# {filename} not found\n\nThe {filename} file could not be located."
+            except Exception as e:
+                docs[key] = f"# Error reading {filename}\n\nError: {str(e)}"
+        
+        return render_template('readme.html', docs=docs, config=app.config)
+    
     return app
 
 if __name__ == '__main__':

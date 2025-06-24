@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation - Flask App{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/readme.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="readme-container">
+    <div class="readme-header">
+        <h1>📚 Documentation</h1>
+        <p>Up-to-date project documentation with real-time markdown rendering</p>
+    </div>
+
+    <div class="doc-tabs">
+        <button class="tab-btn active" data-doc="README">
+            <span class="tab-icon">📖</span>
+            README
+        </button>
+        <button class="tab-btn" data-doc="FEATURES">
+            <span class="tab-icon">⚡</span>
+            FEATURES
+        </button>
+        <button class="tab-btn" data-doc="DEPLOY">
+            <span class="tab-icon">🚀</span>
+            DEPLOY
+        </button>
+    </div>
+
+    <div class="doc-viewer">
+        <div class="viewer-toolbar">
+            <div class="view-controls">
+                <button class="view-btn active" data-view="rendered">
+                    <span class="btn-icon">👁️</span>
+                    Rendered
+                </button>
+                <button class="view-btn" data-view="source">
+                    <span class="btn-icon">📝</span>
+                    Source
+                </button>
+                <button class="view-btn" data-view="split">
+                    <span class="btn-icon">⚡</span>
+                    Split
+                </button>
+            </div>
+            <div class="doc-info">
+                <span class="doc-title" id="current-doc-title">README.md</span>
+                <span class="word-count" id="word-count">0 words</span>
+            </div>
+        </div>
+
+        <div class="viewer-content">
+            <!-- Rendered View -->
+            <div class="content-panel rendered-panel active" id="rendered-panel">
+                <div class="markdown-content" id="markdown-content">
+                    <!-- Rendered markdown will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Source View -->
+            <div class="content-panel source-panel" id="source-panel">
+                <pre class="source-code" id="source-code">
+                    <!-- Raw markdown source will be inserted here -->
+                </pre>
+            </div>
+
+            <!-- Split View -->
+            <div class="content-panel split-panel" id="split-panel">
+                <div class="split-container">
+                    <div class="split-source">
+                        <div class="split-header">Source</div>
+                        <pre class="source-code split-source-code" id="split-source-code">
+                            <!-- Raw markdown source will be inserted here -->
+                        </pre>
+                    </div>
+                    <div class="split-divider"></div>
+                    <div class="split-rendered">
+                        <div class="split-header">Rendered</div>
+                        <div class="markdown-content split-markdown-content" id="split-markdown-content">
+                            <!-- Rendered markdown will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="readme-footer">
+        <p>📝 Documentation auto-refreshed from source files | Last updated: <span id="last-updated"></span></p>
+    </div>
+</div>
+
+<!-- Hidden data for JavaScript -->
+<script type="application/json" id="docs-data">
+{{ docs | tojson }}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/readme-viewer.js') }}"></script>
+{% endblock %}
