@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask App{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + (theme|default('dark')) + '.css') }}" id="theme-stylesheet">
+    
+    {% block head %}{% endblock %}
+</head>
+<body data-theme="{{ theme|default('dark') }}">
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="nav-links">
+                    <a href="{{ url_for('hello') }}">Home</a>
+                    <a href="{{ url_for('sonic_switch') }}">Sonic Switch</a>
+                    <a href="{{ url_for('about') }}">About</a>
+                    <a href="{{ url_for('db_info') }}">Database Info</a>
+                </div>
+                
+                <div class="theme-switcher">
+                    <span>Theme:</span>
+                    <button class="theme-btn" data-theme="neon" onclick="switchTheme('neon')">Neon</button>
+                    <button class="theme-btn" data-theme="tron" onclick="switchTheme('tron')">Tron</button>
+                    <button class="theme-btn" data-theme="dark" onclick="switchTheme('dark')">Dark</button>
+                    <button class="theme-btn" data-theme="white" onclick="switchTheme('white')">White</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Flask Web Project. Environment: {{ config.get('ENV', 'development') }}</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

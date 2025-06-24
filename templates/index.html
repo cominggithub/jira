@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Flask App{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Hello, World!</h1>
+    <p>Welcome to your Python web project with multiple theme support.</p>
+    <p><strong>Environment:</strong> {{ env }}</p>
+    <p><strong>Primary Database:</strong> <code>{{ db_url }}</code></p>
+    <p>Try switching between different themes using the theme selector in the header!</p>
+    
+    <h2>Available Themes</h2>
+    <ul class="info-list">
+        <li><strong>Neon:</strong> Bright green cyberpunk style with glowing effects</li>
+        <li><strong>Tron:</strong> Blue futuristic grid-based design with scanning animations</li>
+        <li><strong>Dark:</strong> Professional dark theme with purple accents</li>
+        <li><strong>White:</strong> Clean light theme with blue accents</li>
+    </ul>
+</div>
+{% endblock %}

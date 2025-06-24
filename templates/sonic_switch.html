@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Sonic Switch - AI Fabric Interface{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sonic-switch.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="sonic-hero">
+    <div class="hero-content">
+        <div class="logo-section">
+            <div class="sonic-logo">
+                <div class="logo-ring ring-1"></div>
+                <div class="logo-ring ring-2"></div>
+                <div class="logo-ring ring-3"></div>
+                <div class="logo-center">
+                    <span class="logo-text">S</span>
+                </div>
+            </div>
+            <h1 class="hero-title">Sonic Switch</h1>
+            <p class="hero-subtitle">AI Fabric Interface</p>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card" data-feature="neural">
+                <div class="feature-icon">🧠</div>
+                <h3>Neural Processing</h3>
+                <p>Advanced AI neural network processing with real-time fabric optimization</p>
+                <div class="feature-status">
+                    <span class="status-indicator active"></span>
+                    <span>Online</span>
+                </div>
+            </div>
+            
+            <div class="feature-card" data-feature="sonic">
+                <div class="feature-icon">🔊</div>
+                <h3>Sonic Interface</h3>
+                <p>Voice-activated commands and audio feedback system for seamless interaction</p>
+                <div class="feature-status">
+                    <span class="status-indicator active"></span>
+                    <span>Listening</span>
+                </div>
+            </div>
+            
+            <div class="feature-card" data-feature="fabric">
+                <div class="feature-icon">🕸️</div>
+                <h3>AI Fabric</h3>
+                <p>Distributed AI mesh network for scalable intelligence processing</p>
+                <div class="feature-status">
+                    <span class="status-indicator active"></span>
+                    <span>Connected</span>
+                </div>
+            </div>
+            
+            <div class="feature-card" data-feature="quantum">
+                <div class="feature-icon">⚛️</div>
+                <h3>Quantum Switch</h3>
+                <p>Quantum-enhanced switching technology for ultra-fast data processing</p>
+                <div class="feature-status">
+                    <span class="status-indicator pulse"></span>
+                    <span>Calibrating</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-panel">
+            <h2>System Control Panel</h2>
+            <div class="control-grid">
+                <div class="control-group">
+                    <label>AI Processing Mode</label>
+                    <div class="control-buttons">
+                        <button class="control-btn active" data-mode="adaptive">Adaptive</button>
+                        <button class="control-btn" data-mode="performance">Performance</button>
+                        <button class="control-btn" data-mode="efficiency">Efficiency</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Sonic Interface</label>
+                    <div class="sonic-visualizer">
+                        <div class="wave-bar" style="--height: 0.3"></div>
+                        <div class="wave-bar" style="--height: 0.7"></div>
+                        <div class="wave-bar" style="--height: 0.5"></div>
+                        <div class="wave-bar" style="--height: 0.8"></div>
+                        <div class="wave-bar" style="--height: 0.4"></div>
+                        <div class="wave-bar" style="--height: 0.9"></div>
+                        <div class="wave-bar" style="--height: 0.6"></div>
+                        <div class="wave-bar" style="--height: 0.3"></div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Network Status</label>
+                    <div class="network-grid">
+                        <div class="network-node active"></div>
+                        <div class="network-node active"></div>
+                        <div class="network-node active"></div>
+                        <div class="network-node active"></div>
+                        <div class="network-node pulse"></div>
+                        <div class="network-node active"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-section">
+            <button class="primary-action" id="initiate-sonic">
+                <span class="action-icon">🚀</span>
+                <span>Initiate Sonic Switch</span>
+            </button>
+            <button class="secondary-action" id="diagnostics">
+                <span class="action-icon">🔧</span>
+                <span>Run Diagnostics</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="background-animation">
+        <div class="particle" style="--delay: 0s; --duration: 10s;"></div>
+        <div class="particle" style="--delay: 2s; --duration: 8s;"></div>
+        <div class="particle" style="--delay: 4s; --duration: 12s;"></div>
+        <div class="particle" style="--delay: 6s; --duration: 9s;"></div>
+        <div class="particle" style="--delay: 1s; --duration: 11s;"></div>
+    </div>
+</div>
+
+<div class="info-section">
+    <div class="card">
+        <h2>About Sonic Switch</h2>
+        <p>The Sonic Switch represents the next generation of AI Fabric interfaces, combining advanced neural processing with intuitive sonic interaction. This revolutionary system enables seamless communication between human operators and distributed AI networks.</p>
+        
+        <h3>Key Capabilities</h3>
+        <ul class="info-list">
+            <li><strong>Neural Integration:</strong> Direct interface with AI neural networks for enhanced processing</li>
+            <li><strong>Sonic Commands:</strong> Voice-activated control system with natural language processing</li>
+            <li><strong>Fabric Mesh:</strong> Distributed AI network with redundant pathways and load balancing</li>
+            <li><strong>Quantum Enhancement:</strong> Quantum-accelerated switching for ultra-low latency operations</li>
+            <li><strong>Adaptive Learning:</strong> Self-optimizing algorithms that improve performance over time</li>
+            <li><strong>Multi-Theme Interface:</strong> Customizable visual themes adapted for different operational environments</li>
+        </ul>
+        
+        <h3>System Requirements</h3>
+        <ul class="info-list">
+            <li><strong>Processing:</strong> Quantum-compatible neural processing unit</li>
+            <li><strong>Network:</strong> High-bandwidth mesh network connectivity</li>
+            <li><strong>Audio:</strong> Sonic interface with noise cancellation</li>
+            <li><strong>Display:</strong> Multi-theme capable visualization system</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sonic-switch.js') }}"></script>
+{% endblock %}

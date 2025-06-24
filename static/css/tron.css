@@ -1,0 +1,173 @@
+:root {
+    --bg-color: #000814;
+    --text-color: #00d4ff;
+    --header-bg: #001d3d;
+    --header-text: #00d4ff;
+    --card-bg: #001122;
+    --card-text: #ffffff;
+    --card-border: #00d4ff;
+    --heading-color: #00d4ff;
+    --accent-color: #00d4ff;
+    --accent-text: #000814;
+    --accent-glow: 0 0 20px #00d4ff, 0 0 40px #00d4ff;
+    --button-bg: #001d3d;
+    --button-text: #00d4ff;
+    --button-border: #00d4ff;
+    --list-bg: #001a2e;
+    --grid-color: #003566;
+}
+
+body {
+    background: 
+        linear-gradient(90deg, transparent 98%, var(--grid-color) 100%),
+        linear-gradient(0deg, transparent 98%, var(--grid-color) 100%),
+        radial-gradient(circle at center, #000814 0%, #000000 100%);
+    background-size: 30px 30px, 30px 30px, 100% 100%;
+    font-family: 'Courier New', monospace;
+}
+
+.header {
+    background: linear-gradient(135deg, #001d3d 0%, #003566 100%);
+    border-bottom: 3px solid #00d4ff;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+    position: relative;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 212, 255, 0.1) 2px,
+        rgba(0, 212, 255, 0.1) 4px
+    );
+    pointer-events: none;
+}
+
+.nav-links a {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid #00d4ff;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.nav-links a:hover::before {
+    left: 100%;
+}
+
+.nav-links a:hover {
+    box-shadow: 0 0 20px #00d4ff, inset 0 0 20px rgba(0, 212, 255, 0.1);
+    text-shadow: 0 0 10px #00d4ff;
+}
+
+.card {
+    background: linear-gradient(135deg, #001122 0%, #001a2e 100%);
+    border: 2px solid #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(0, 212, 255, 0.03) 10px,
+            rgba(0, 212, 255, 0.03) 20px
+        );
+    pointer-events: none;
+}
+
+.card:hover {
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.4);
+    transform: translateY(-5px) scale(1.02);
+}
+
+.card h1,
+.card h2,
+.card h3 {
+    color: #00d4ff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #00d4ff;
+    font-family: 'Courier New', monospace;
+}
+
+.info-list li {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-left: 4px solid #00d4ff;
+    font-family: 'Courier New', monospace;
+}
+
+.info-list strong {
+    color: #00d4ff;
+    text-shadow: 0 0 5px #00d4ff;
+}
+
+.theme-btn {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid #00d4ff;
+    color: #00d4ff;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-btn:hover,
+.theme-btn.active {
+    background: #00d4ff;
+    color: #000814;
+    box-shadow: 0 0 20px #00d4ff;
+}
+
+.footer {
+    background: linear-gradient(135deg, #001d3d 0%, #003566 100%);
+    border-top: 3px solid #00d4ff;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+@keyframes tron-scan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100vw); }
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #00d4ff, transparent);
+    animation: tron-scan 3s infinite;
+    opacity: 0.7;
+}

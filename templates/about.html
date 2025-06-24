@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}About - Flask App{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>About</h1>
+    <p>This is a Flask web application with SQLAlchemy and multiple database support, featuring a comprehensive theme system.</p>
+    
+    <h2>Features</h2>
+    <ul class="info-list">
+        <li><strong>SQLAlchemy Integration:</strong> Full ORM support with multiple database configurations</li>
+        <li><strong>Environment-based Configuration:</strong> Separate configs for development, production, and testing</li>
+        <li><strong>Multiple Database Support:</strong> Primary, analytics, and cache database configurations</li>
+        <li><strong>Theme System:</strong> Four distinct visual themes (Neon, Tron, Dark, White)</li>
+        <li><strong>Responsive Design:</strong> Mobile-friendly layouts across all themes</li>
+        <li><strong>Modern CSS:</strong> CSS Grid, Flexbox, and CSS custom properties</li>
+    </ul>
+    
+    <h2>Technology Stack</h2>
+    <ul class="info-list">
+        <li><strong>Backend:</strong> Flask, SQLAlchemy, Python-dotenv</li>
+        <li><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript</li>
+        <li><strong>Database:</strong> SQLite (development), PostgreSQL (production ready)</li>
+        <li><strong>Styling:</strong> CSS custom properties, CSS animations</li>
+    </ul>
+</div>
+{% endblock %}

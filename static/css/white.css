@@ -1,0 +1,87 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --header-bg: #f8fafc;
+    --header-text: #1f2937;
+    --card-bg: #ffffff;
+    --card-text: #374151;
+    --card-border: #e5e7eb;
+    --heading-color: #1f2937;
+    --accent-color: #3b82f6;
+    --accent-text: #ffffff;
+    --accent-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+    --button-bg: #f9fafb;
+    --button-text: #374151;
+    --button-border: #d1d5db;
+    --list-bg: #f3f4f6;
+}
+
+body {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.header {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-bottom: 2px solid #3b82f6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links a {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid #3b82f6;
+    color: #1f2937;
+}
+
+.nav-links a:hover {
+    background: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border-color: #3b82f6;
+}
+
+.card h1,
+.card h2,
+.card h3 {
+    color: #1f2937;
+}
+
+.info-list li {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border-left: 4px solid #3b82f6;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+}
+
+.info-list strong {
+    color: #3b82f6;
+}
+
+.theme-btn {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.theme-btn:hover,
+.theme-btn.active {
+    background: #3b82f6;
+    color: #ffffff;
+    border-color: #3b82f6;
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.footer {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-top: 2px solid #3b82f6;
+    color: #1f2937;
+}
