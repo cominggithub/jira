@@ -15,6 +15,14 @@ function switchTheme(theme) {
     // Update active button
     updateActiveButton(theme);
     
+    // Close dropdown after selection
+    const dropdown = document.getElementById('themeDropdown');
+    const dropdownContainer = document.querySelector('.theme-dropdown');
+    if (dropdown && dropdownContainer) {
+        dropdown.classList.remove('show');
+        dropdownContainer.classList.remove('open');
+    }
+    
     // Trigger theme change event
     document.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
 }
@@ -30,7 +38,45 @@ function updateActiveButton(theme) {
     if (activeBtn) {
         activeBtn.classList.add('active');
     }
+    
+    // Update dropdown button text
+    const currentThemeSpan = document.querySelector('.current-theme');
+    if (currentThemeSpan) {
+        const themeNames = {
+            'neon': '🟢 Green Neon',
+            'pink-neon': '🌸 Pink Neon',
+            'tron': '🔷 Tron',
+            'dark': '🌙 Dark',
+            'white': '☀️ White',
+            'pony': '🦄 Pony'
+        };
+        currentThemeSpan.textContent = themeNames[theme] || 'Theme';
+    }
 }
+
+function toggleThemeDropdown() {
+    const dropdown = document.getElementById('themeDropdown');
+    const dropdownContainer = document.querySelector('.theme-dropdown');
+    
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        dropdownContainer.classList.remove('open');
+    } else {
+        dropdown.classList.add('show');
+        dropdownContainer.classList.add('open');
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const themeDropdown = document.querySelector('.theme-dropdown');
+    if (!themeDropdown.contains(event.target)) {
+        const dropdown = document.getElementById('themeDropdown');
+        const dropdownContainer = document.querySelector('.theme-dropdown');
+        dropdown.classList.remove('show');
+        dropdownContainer.classList.remove('open');
+    }
+});
 
 function initTheme() {
     // Apply saved theme on page load
@@ -93,3 +139,4 @@ if (window.matchMedia) {
 
 // Expose functions globally for HTML onclick handlers
 window.switchTheme = switchTheme;
+window.toggleThemeDropdown = toggleThemeDropdown;

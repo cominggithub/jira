@@ -66,28 +66,94 @@ body {
 }
 
 .theme-switcher {
+    position: relative;
     display: flex;
-    gap: 0.5rem;
     align-items: center;
 }
 
-.theme-btn {
+.theme-dropdown {
+    position: relative;
+}
+
+.theme-dropdown-btn {
     background: var(--button-bg);
     color: var(--button-text);
     border: 1px solid var(--button-border);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.theme-dropdown-btn:hover {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    box-shadow: var(--accent-glow, var(--shadow));
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
     font-size: 0.8rem;
+}
+
+.theme-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.theme-dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-hover);
+    min-width: 150px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.theme-dropdown-content.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.theme-btn {
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    border-radius: 0;
+}
+
+.theme-btn:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.theme-btn:last-child {
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
 }
 
 .theme-btn:hover,
 .theme-btn.active {
     background: var(--accent-color);
     color: var(--accent-text);
-    box-shadow: var(--accent-glow, var(--shadow));
-    transform: scale(1.05);
+    transform: none;
 }
 
 .main-content {

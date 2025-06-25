@@ -1,32 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Database Info - Flask App{% endblock %}
+{% block title %}App Info - Flask App{% endblock %}
 
 {% block content %}
 <div class="card">
-    <h1>Database Configuration</h1>
+    <h1>Application Information</h1>
     <p><strong>Current Environment:</strong> {{ env }}</p>
-    
-    <h2>Database Connections</h2>
-    <ul class="info-list">
-        {% for db_name, db_url in db_configs.items() %}
-        <li><strong>{{ db_name|title }}:</strong> <code>{{ db_url }}</code></li>
-        {% endfor %}
-    </ul>
     
     <h2>Configuration Details</h2>
     <ul class="info-list">
-        <li><strong>SQLAlchemy Track Modifications:</strong> {{ config.SQLALCHEMY_TRACK_MODIFICATIONS }}</li>
         <li><strong>Debug Mode:</strong> {{ config.DEBUG }}</li>
         <li><strong>Testing Mode:</strong> {{ config.TESTING if config.TESTING is defined else 'False' }}</li>
+        <li><strong>Secret Key Set:</strong> {{ 'Yes' if config.SECRET_KEY else 'No' }}</li>
     </ul>
     
-    <h2>Environment Variables</h2>
-    <p>To configure database URLs, create a <code>.env</code> file based on <code>.env.example</code> and set the following variables:</p>
+    <h2>Theme System</h2>
+    <p>This application features a comprehensive 6-theme system:</p>
     <ul class="info-list">
-        <li><strong>Development:</strong> PRIMARY_DEV_DB_URL, ANALYTICS_DEV_DB_URL, CACHE_DEV_DB_URL</li>
-        <li><strong>Production:</strong> PRIMARY_PROD_DB_URL, ANALYTICS_PROD_DB_URL, CACHE_PROD_DB_URL</li>
-        <li><strong>Testing:</strong> PRIMARY_TEST_DB_URL, ANALYTICS_TEST_DB_URL, CACHE_TEST_DB_URL</li>
+        <li><strong>Green Neon:</strong> Cyberpunk green with glowing effects</li>
+        <li><strong>Pink Neon:</strong> Cyberpunk pink with magenta glow</li>
+        <li><strong>Tron:</strong> Blue futuristic grid with scanning animations</li>
+        <li><strong>Dark:</strong> Professional dark with purple accents</li>
+        <li><strong>White:</strong> Clean light theme with blue accents</li>
+        <li><strong>Pony:</strong> Magical pastel theme with rainbow effects</li>
     </ul>
 </div>
 {% endblock %}
