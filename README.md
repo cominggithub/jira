@@ -1,6 +1,6 @@
 # Flask Web Project with Multi-Theme System
 
-A modern Flask web application featuring SQLAlchemy integration, multi-database support, comprehensive request logging, and a dynamic theme system with five distinct visual styles.
+A modern Flask web application featuring SQLAlchemy integration, multi-database support, comprehensive request logging, and a dynamic theme system with six distinct visual styles.
 
 ## Features
 
@@ -10,6 +10,7 @@ A modern Flask web application featuring SQLAlchemy integration, multi-database 
 - **Tron Theme**: Blue futuristic grid-based design with scanning animations
 - **Dark Theme**: Professional dark theme with purple accents
 - **White Theme**: Clean light theme with blue accents
+- **Pony Theme**: Magical pastel theme with rainbow effects, sparkles, and unicorn emojis
 
 ### 🗄️ Database Features
 - SQLAlchemy ORM integration
@@ -143,7 +144,8 @@ jira/
 │   │   ├── pink-neon.css # Pink neon theme
 │   │   ├── tron.css    # Tron theme
 │   │   ├── dark.css    # Dark theme
-│   │   └── white.css   # White theme
+│   │   ├── white.css   # White theme
+│   │   └── pony.css    # Pony theme
 │   └── js/
 │       └── theme-switcher.js  # Theme switching logic
 └── templates/           # HTML templates
@@ -163,6 +165,7 @@ jira/
   - `Ctrl+Shift+3`: Tron theme
   - `Ctrl+Shift+4`: Dark theme
   - `Ctrl+Shift+5`: White theme
+  - `Ctrl+Shift+6`: Pony theme
 
 ### Theme Persistence
 - Themes are automatically saved to browser localStorage

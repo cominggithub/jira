@@ -65,6 +65,10 @@ document.addEventListener('keydown', function(event) {
                 event.preventDefault();
                 switchTheme('white');
                 break;
+            case '6':
+                event.preventDefault();
+                switchTheme('pony');
+                break;
         }
     }
 });
