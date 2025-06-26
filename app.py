@@ -2,7 +2,12 @@ import os
 import logging
 from datetime import datetime
 from flask import Flask, render_template, request
+from dotenv import load_dotenv
 from config.base import config
+from config.database import DatabaseConfig
+
+# Load environment variables from .env file
+load_dotenv()
 
 def log_request_info():
     """Log connection request info to console and file"""
@@ -34,6 +39,22 @@ def create_app(config_name=None):
     
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+    
+    # Database connection probe
+    print("=" * 60)
+    print("DATABASE CONNECTION PROBE")
+    print("=" * 60)
+    
+    db_results = DatabaseConfig.probe_database_connections()
+    for db_name, result in db_results.items():
+        status_symbol = "✓" if result['status'] == 'connected' else "✗" if result['status'] == 'failed' else "○"
+        print(f"{status_symbol} {db_name.upper()}: {result['status'].upper()}")
+        print(f"  URL: {result['url']}")
+        print(f"  Type: {result['type']}")
+        print(f"  Message: {result['message']}")
+        print()
+    
+    print("=" * 60)
     
     
     # Request logging - outputs to console and file
