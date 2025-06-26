@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Database Schema - Flask App{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/schema.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="{{ url_for('static', filename='js/schema-viewer.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="schema-container">
+    <div class="schema-header">
+        <h1>Database Schema Documentation</h1>
+        <p>Interactive database schema viewer with real-time markdown rendering</p>
+    </div>
+
+    {% if schemas|length > 1 %}
+    <div class="schema-tabs">
+        {% for db_name, content in schemas.items() %}
+        <button class="tab-btn {% if loop.first %}active{% endif %}" data-db="{{ db_name }}">
+            {{ db_name.title() }}
+        </button>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="schema-toolbar">
+        <div class="view-controls">
+            <button class="view-btn active" data-view="rendered">📄 Rendered</button>
+            <button class="view-btn" data-view="source">📝 Source</button>
+            <button class="view-btn" data-view="split">🔄 Split</button>
+        </div>
+        <div class="schema-actions">
+            <button class="action-btn" onclick="refreshSchema()">🔄 Refresh</button>
+            <button class="action-btn" onclick="exportSchema()">📥 Export</button>
+        </div>
+    </div>
+
+    <div class="schema-content">
+        {% for db_name, content in schemas.items() %}
+        <div class="schema-panel {% if loop.first %}active{% endif %}" id="panel-{{ db_name }}">
+            <div class="view-container">
+                <div class="rendered-view active" id="rendered-{{ db_name }}">
+                    <div class="markdown-content">
+                        <!-- Markdown content will be rendered here by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="source-view" id="source-{{ db_name }}">
+                    <pre><code>{{ content }}</code></pre>
+                </div>
+                
+                <div class="split-view" id="split-{{ db_name }}">
+                    <div class="split-left">
+                        <h3>Source</h3>
+                        <pre><code>{{ content }}</code></pre>
+                    </div>
+                    <div class="split-right">
+                        <h3>Rendered</h3>
+                        <div class="markdown-content">
+                            <!-- Markdown content will be rendered here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="schema-footer">
+        <div class="schema-stats">
+            <span id="schema-stats">Loading statistics...</span>
+        </div>
+        <div class="schema-links">
+            <a href="/db-info" class="link-btn">← Back to App Info</a>
+            {% if schemas|length == 1 %}
+            <a href="/schema" class="link-btn">View All Schemas</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+// Pass schema data to JavaScript
+window.schemaData = {{ schemas|tojson }};
+window.selectedDb = {{ (selected_db or 'null')|tojson }};
+</script>
+{% endblock %}

@@ -1,0 +1,705 @@
+{% extends "base.html" %}
+
+{% block title %}ESTS Testing System - SONiC Feature Management System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🧪 ESTS Testing System</h1>
+    <p>Enterprise SONiC Test Suite - Comprehensive validation and quality assurance framework for SONiC network operating system.</p>
+    
+    <div class="ests-overview">
+        <h2>📊 ESTS Overview</h2>
+        <div class="ests-stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">1,200+</div>
+                <div class="stat-label">Test Cases</div>
+                <div class="stat-desc">Comprehensive Coverage</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">25</div>
+                <div class="stat-label">Test Suites</div>
+                <div class="stat-desc">Organized Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">98.5%</div>
+                <div class="stat-label">Pass Rate</div>
+                <div class="stat-desc">Quality Assurance</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Multi-Vendor</div>
+                <div class="stat-label">Platform Support</div>
+                <div class="stat-desc">Hardware Validation</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ests-sections">
+        <div class="ests-section">
+            <h2>🗂️ Test Case Management</h2>
+            <p>Centralized test case repository with comprehensive metadata and traceability.</p>
+            <div class="test-management">
+                <div class="management-grid">
+                    <div class="management-card">
+                        <h3>📋 Test Case Database</h3>
+                        <p>Structured storage of test cases with detailed metadata</p>
+                        <div class="card-stats">
+                            <span class="stat-badge">s_test_case table</span>
+                            <span class="stat-badge">Automated import</span>
+                        </div>
+                    </div>
+                    <div class="management-card">
+                        <h3>🏷️ Label Classification</h3>
+                        <p>Feature-based labeling and categorization system</p>
+                        <div class="card-stats">
+                            <span class="stat-badge">s_test_case_label table</span>
+                            <span class="stat-badge">Multi-label support</span>
+                        </div>
+                    </div>
+                    <div class="management-card">
+                        <h3>📈 Traceability Matrix</h3>
+                        <p>Requirements to test case mapping and coverage analysis</p>
+                        <div class="card-stats">
+                            <span class="stat-badge">Feature mapping</span>
+                            <span class="stat-badge">Coverage reports</span>
+                        </div>
+                    </div>
+                    <div class="management-card">
+                        <h3>🔄 Import Automation</h3>
+                        <p>Automated test case import from Excel specifications</p>
+                        <div class="card-stats">
+                            <span class="stat-badge">Excel integration</span>
+                            <span class="stat-badge">Validation checks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ests-section">
+            <h2>📥 Test Case Import Process</h2>
+            <p>Streamlined process for importing test cases from Excel specifications.</p>
+            <div class="import-process">
+                <h3>📁 Excel File Requirements</h3>
+                <div class="import-requirements">
+                    <div class="requirement-item">
+                        <span class="req-label">File Pattern:</span>
+                        <code>ESTS_testcase.*.xlsx</code>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="req-label">Sheet Name:</span>
+                        <code>"ESTS testcase"</code>
+                    </div>
+                    <div class="requirement-item">
+                        <span class="req-label">Location:</span>
+                        <code>data/ directory</code>
+                    </div>
+                </div>
+                
+                <h3>⚙️ Import Commands</h3>
+                <div class="code-examples">
+                    <div class="code-block">
+                        <div class="code-header">Basic Import</div>
+                        <code>python testcase_importer.py</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Preview Mode</div>
+                        <code>python testcase_importer.py --dry-run</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Specific File</div>
+                        <code>python testcase_importer.py --file ESTS_testcase.20250626.xlsx</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Validation Only</div>
+                        <code>python testcase_importer.py --validate</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ests-section">
+            <h2>🎯 Test Categories</h2>
+            <p>Comprehensive test coverage across all SONiC functionalities and enterprise requirements.</p>
+            <div class="test-categories">
+                <div class="category-tabs">
+                    <div class="category-grid">
+                        <div class="category-card functional">
+                            <h3>⚙️ Functional Testing</h3>
+                            <p>Core functionality validation</p>
+                            <div class="category-details">
+                                <span class="detail-item">L2/L3 Features</span>
+                                <span class="detail-item">Protocol Testing</span>
+                                <span class="detail-item">Interface Management</span>
+                            </div>
+                        </div>
+                        <div class="category-card performance">
+                            <h3>🚀 Performance Testing</h3>
+                            <p>Throughput and latency validation</p>
+                            <div class="category-details">
+                                <span class="detail-item">Traffic Generation</span>
+                                <span class="detail-item">Latency Measurement</span>
+                                <span class="detail-item">Stress Testing</span>
+                            </div>
+                        </div>
+                        <div class="category-card reliability">
+                            <h3>🛡️ Reliability Testing</h3>
+                            <p>Stability and fault tolerance</p>
+                            <div class="category-details">
+                                <span class="detail-item">Failover Testing</span>
+                                <span class="detail-item">Recovery Scenarios</span>
+                                <span class="detail-item">Long-term Stability</span>
+                            </div>
+                        </div>
+                        <div class="category-card security">
+                            <h3>🔒 Security Testing</h3>
+                            <p>Security compliance and validation</p>
+                            <div class="category-details">
+                                <span class="detail-item">Access Control</span>
+                                <span class="detail-item">Authentication</span>
+                                <span class="detail-item">Encryption</span>
+                            </div>
+                        </div>
+                        <div class="category-card compliance">
+                            <h3>📜 Compliance Testing</h3>
+                            <p>Standards and regulatory compliance</p>
+                            <div class="category-details">
+                                <span class="detail-item">RFC Compliance</span>
+                                <span class="detail-item">Industry Standards</span>
+                                <span class="detail-item">Certification</span>
+                            </div>
+                        </div>
+                        <div class="category-card regression">
+                            <h3>🔄 Regression Testing</h3>
+                            <p>Automated regression validation</p>
+                            <div class="category-details">
+                                <span class="detail-item">CI/CD Integration</span>
+                                <span class="detail-item">Nightly Builds</span>
+                                <span class="detail-item">Release Validation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ests-section">
+            <h2>📊 Reporting & Analytics</h2>
+            <p>Comprehensive test result analysis and reporting capabilities.</p>
+            <div class="reporting-features">
+                <div class="reporting-grid">
+                    <div class="reporting-card">
+                        <h3>📈 Test Metrics</h3>
+                        <p>Real-time test execution metrics and KPIs</p>
+                        <ul class="feature-list">
+                            <li>Pass/Fail Rates</li>
+                            <li>Execution Time Analysis</li>
+                            <li>Coverage Metrics</li>
+                            <li>Trend Analysis</li>
+                        </ul>
+                    </div>
+                    <div class="reporting-card">
+                        <h3>📋 Detailed Reports</h3>
+                        <p>Comprehensive test result documentation</p>
+                        <ul class="feature-list">
+                            <li>HTML Test Reports</li>
+                            <li>XML Result Export</li>
+                            <li>PDF Summary Reports</li>
+                            <li>Custom Templates</li>
+                        </ul>
+                    </div>
+                    <div class="reporting-card">
+                        <h3>🔍 Failure Analysis</h3>
+                        <p>Automated failure categorization and analysis</p>
+                        <ul class="feature-list">
+                            <li>Root Cause Analysis</li>
+                            <li>Failure Pattern Detection</li>
+                            <li>Automated Triaging</li>
+                            <li>Historical Correlation</li>
+                        </ul>
+                    </div>
+                    <div class="reporting-card">
+                        <h3>📊 Dashboard Views</h3>
+                        <p>Interactive dashboards and visualizations</p>
+                        <ul class="feature-list">
+                            <li>Real-time Monitoring</li>
+                            <li>Custom Widgets</li>
+                            <li>Multi-level Drilldown</li>
+                            <li>Export Capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ests-section">
+            <h2>🔗 Integration Ecosystem</h2>
+            <p>Seamless integration with development and deployment workflows.</p>
+            <div class="integration-ecosystem">
+                <div class="ecosystem-grid">
+                    <div class="ecosystem-item">
+                        <h3>🧪 sonic-mgmt</h3>
+                        <p>Integration with community testing framework</p>
+                        <span class="integration-badge active">Active</span>
+                    </div>
+                    <div class="ecosystem-item">
+                        <h3>🔧 Feature Management</h3>
+                        <p>Link to SONiC feature tracking system</p>
+                        <span class="integration-badge active">Active</span>
+                    </div>
+                    <div class="ecosystem-item">
+                        <h3>📊 Database Systems</h3>
+                        <p>PostgreSQL backend for data persistence</p>
+                        <span class="integration-badge active">Active</span>
+                    </div>
+                    <div class="ecosystem-item">
+                        <h3>🔄 CI/CD Pipelines</h3>
+                        <p>Automated testing in build processes</p>
+                        <span class="integration-badge pending">Pending</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ests-footer">
+        <div class="quick-links">
+            <h3>🔗 Quick Links</h3>
+            <div class="link-grid">
+                <a href="/sonic-feature" class="quick-link">
+                    🔧 Feature Management
+                </a>
+                <a href="/sonic-mgmt" class="quick-link">
+                    🛠️ sonic-mgmt
+                </a>
+                <a href="/db-info" class="quick-link">
+                    📊 Database Status
+                </a>
+                <a href="/schema/primary" class="quick-link">
+                    📋 Test Schema
+                </a>
+            </div>
+        </div>
+        
+        <div class="documentation-link">
+            <p>📖 For detailed test case management, see <a href="#" onclick="alert('Run: python testcase_importer.py --help')">ESTS Documentation</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+.ests-overview {
+    margin: 2rem 0;
+}
+
+.ests-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.ests-sections {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.ests-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+}
+
+.ests-section h2 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.management-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.management-card {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.management-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.management-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.management-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.card-stats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-badge {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.import-requirements {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.requirement-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+    flex-wrap: wrap;
+}
+
+.req-label {
+    font-weight: 600;
+    color: var(--text-color);
+    min-width: 100px;
+}
+
+.requirement-item code {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.code-examples {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.code-block {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.code-header {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.code-block code {
+    display: block;
+    padding: 1rem;
+    font-family: var(--font-mono);
+    background: transparent;
+    color: var(--text-color);
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.category-card {
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+    background: var(--bg-color);
+}
+
+.category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.category-card.functional {
+    border-left: 4px solid #3b82f6;
+}
+
+.category-card.performance {
+    border-left: 4px solid #10b981;
+}
+
+.category-card.reliability {
+    border-left: 4px solid #f59e0b;
+}
+
+.category-card.security {
+    border-left: 4px solid #ef4444;
+}
+
+.category-card.compliance {
+    border-left: 4px solid #8b5cf6;
+}
+
+.category-card.regression {
+    border-left: 4px solid #06b6d4;
+}
+
+.category-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.category-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.category-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detail-item {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    padding: 0.25rem 0;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.reporting-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.reporting-card {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.reporting-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.reporting-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.reporting-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    padding: 0.25rem 0;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.feature-list li:last-child {
+    border-bottom: none;
+}
+
+.ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.ecosystem-item {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+}
+
+.ecosystem-item:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.ecosystem-item h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.ecosystem-item p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.integration-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.integration-badge.active {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.integration-badge.pending {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.ests-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--card-border);
+}
+
+.quick-links h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quick-link {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.quick-link:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.documentation-link {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.documentation-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.documentation-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .ests-stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .management-grid, .category-grid, .reporting-grid, .ecosystem-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .requirement-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .req-label {
+        min-width: auto;
+    }
+}
+</style>
+{% endblock %}

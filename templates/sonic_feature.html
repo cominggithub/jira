@@ -1,0 +1,567 @@
+{% extends "base.html" %}
+
+{% block title %}SONiC Feature Management - SONiC Feature Management System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🔧 SONiC Feature Management</h1>
+    <p>Comprehensive management system for SONiC community and Edgecore proprietary features across different branches and platforms.</p>
+    
+    <div class="feature-overview">
+        <h2>📊 Feature Overview</h2>
+        <div class="feature-stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">149</div>
+                <div class="stat-label">Total Features</div>
+                <div class="stat-desc">Community & Proprietary</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">587</div>
+                <div class="stat-label">Feature Labels</div>
+                <div class="stat-desc">Classification Tags</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">SONiC Branches</div>
+                <div class="stat-desc">2111, 2211, 2311.X, 2311.N</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Support Status</div>
+                <div class="stat-desc">Support, Not Support, Under Development</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="feature-sections">
+        <div class="feature-section">
+            <h2>🗄️ Database Management</h2>
+            <p>Direct access to feature data and schema documentation.</p>
+            <div class="feature-actions">
+                <a href="/db-info" class="feature-btn primary">
+                    📊 Database Info
+                    <span class="btn-desc">Connection status & schema links</span>
+                </a>
+                <a href="/schema/primary" class="feature-btn secondary">
+                    📋 Feature Schema
+                    <span class="btn-desc">Interactive database documentation</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2>📥 Data Import</h2>
+            <p>Import feature data from Excel files with validation and processing.</p>
+            <div class="import-info">
+                <h3>📁 Excel File Format</h3>
+                <ul class="feature-list">
+                    <li><strong>File Pattern:</strong> <code>EC_SONiC_Feature.YYYYMMDD.xlsx</code></li>
+                    <li><strong>Sheet Name:</strong> "feature_map"</li>
+                    <li><strong>Location:</strong> <code>data/</code> directory</li>
+                </ul>
+                
+                <h3>⚙️ Import Commands</h3>
+                <div class="code-examples">
+                    <div class="code-block">
+                        <div class="code-header">Basic Import</div>
+                        <code>python feature_importer.py</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Preview Import</div>
+                        <code>python feature_importer.py --dry-run</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Specific Date</div>
+                        <code>python feature_importer.py --date 20250626</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2>🏷️ Support Status Mapping</h2>
+            <p>Automatic conversion of Excel codes to readable status text.</p>
+            <div class="status-mapping">
+                <div class="status-item">
+                    <span class="status-code support">O</span>
+                    <span class="status-arrow">→</span>
+                    <span class="status-text">Support</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-code not-support">X</span>
+                    <span class="status-arrow">→</span>
+                    <span class="status-text">Not Support</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-code development">D</span>
+                    <span class="status-arrow">→</span>
+                    <span class="status-text">Under Development</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2>🌿 SONiC Branches</h2>
+            <p>Track feature support across different SONiC community releases.</p>
+            <div class="branch-grid">
+                <div class="branch-card">
+                    <h3>SONiC 2111</h3>
+                    <p>Community branch 2111</p>
+                    <span class="branch-tag">ec_sonic_2111</span>
+                </div>
+                <div class="branch-card">
+                    <h3>SONiC 2211</h3>
+                    <p>Community branch 2211</p>
+                    <span class="branch-tag">ec_sonic_2211</span>
+                </div>
+                <div class="branch-card">
+                    <h3>SONiC 2311.X</h3>
+                    <p>Community branch 2311-X</p>
+                    <span class="branch-tag">ec_sonic_2311_x</span>
+                </div>
+                <div class="branch-card">
+                    <h3>SONiC 2311.N</h3>
+                    <p>Community branch 2311-N</p>
+                    <span class="branch-tag">ec_sonic_2311_n</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2>🔗 Virtual Switch & Fabric</h2>
+            <p>Support status for Virtual Switch implementations and fabric configurations.</p>
+            <div class="vs-fabric-grid">
+                <div class="vs-card">
+                    <h3>🖥️ Virtual Switch 202311</h3>
+                    <p>Virtual Switch implementation support</p>
+                    <span class="vs-tag">vs_202311</span>
+                </div>
+                <div class="vs-card">
+                    <h3>🌐 VS 202311 Fabric</h3>
+                    <p>Virtual Switch fabric implementation</p>
+                    <span class="vs-tag">vs_202311_fabric</span>
+                </div>
+                <div class="vs-card">
+                    <h3>⚙️ EC 202211 Fabric</h3>
+                    <p>Edgecore 202211 fabric support</p>
+                    <span class="vs-tag">ec_202211_fabric</span>
+                </div>
+                <div class="vs-card">
+                    <h3>🔧 EC Proprietary</h3>
+                    <p>Edgecore proprietary implementations</p>
+                    <span class="vs-tag">ec_proprietary</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2>📝 Feature Categories</h2>
+            <p>Common feature categories and labels in the system.</p>
+            <div class="category-tags">
+                <span class="category-tag l2">L2</span>
+                <span class="category-tag l3">L3</span>
+                <span class="category-tag acl">ACL</span>
+                <span class="category-tag lag">LAG</span>
+                <span class="category-tag vlan">VLAN</span>
+                <span class="category-tag bgp">BGP</span>
+                <span class="category-tag evpn">EVPN</span>
+                <span class="category-tag qos">QoS</span>
+                <span class="category-tag platform">Platform</span>
+                <span class="category-tag community">Community</span>
+                <span class="category-tag proprietary">Proprietary</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="feature-footer">
+        <div class="quick-links">
+            <h3>🔗 Quick Links</h3>
+            <div class="link-grid">
+                <a href="/db-info" class="quick-link">
+                    📊 Database Status
+                </a>
+                <a href="/schema" class="quick-link">
+                    📋 Schema Viewer
+                </a>
+                <a href="/sonic-mgmt" class="quick-link">
+                    🛠️ sonic-mgmt
+                </a>
+                <a href="/ests" class="quick-link">
+                    🧪 ESTS
+                </a>
+            </div>
+        </div>
+        
+        <div class="documentation-link">
+            <p>📖 For detailed import instructions, see <a href="#" onclick="alert('Run: python feature_importer.py --help')">Feature Import Guide</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+.feature-overview {
+    margin: 2rem 0;
+}
+
+.feature-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.feature-sections {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.feature-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+}
+
+.feature-section h2 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.feature-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.feature-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: var(--transition);
+    min-width: 160px;
+}
+
+.feature-btn.primary {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    border: 1px solid var(--accent-color);
+}
+
+.feature-btn.secondary {
+    background: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
+
+.feature-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.feature-btn.primary:hover {
+    background: var(--accent-color-hover, var(--accent-color));
+}
+
+.feature-btn.secondary:hover {
+    background: var(--accent-color);
+    color: var(--accent-text);
+}
+
+.btn-desc {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+}
+
+.feature-list {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.feature-list li {
+    margin: 0.5rem 0;
+    color: var(--text-color);
+}
+
+.code-examples {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.code-block {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.code-header {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.code-block code {
+    display: block;
+    padding: 1rem;
+    font-family: var(--font-mono);
+    background: transparent;
+    color: var(--text-color);
+}
+
+.status-mapping {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.status-code {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.status-code.support {
+    background: #4ade80;
+}
+
+.status-code.not-support {
+    background: #f87171;
+}
+
+.status-code.development {
+    background: #fbbf24;
+}
+
+.status-arrow {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.status-text {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.branch-grid, .vs-fabric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.branch-card, .vs-card {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.branch-card:hover, .vs-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.branch-card h3, .vs-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.branch-card p, .vs-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.branch-tag, .vs-tag {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+}
+
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.category-tag {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid;
+    transition: var(--transition);
+}
+
+.category-tag.l2, .category-tag.l3 {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.category-tag.lag, .category-tag.vlan {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border-color: #22c55e;
+}
+
+.category-tag.acl, .category-tag.qos {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+.category-tag.bgp, .category-tag.evpn {
+    background: rgba(168, 85, 247, 0.1);
+    color: #a855f7;
+    border-color: #a855f7;
+}
+
+.category-tag.platform, .category-tag.community {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.category-tag.proprietary {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+    border-color: #6366f1;
+}
+
+.category-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+.feature-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--card-border);
+}
+
+.quick-links h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quick-link {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.quick-link:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.documentation-link {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.documentation-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.documentation-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .feature-stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .feature-actions {
+        flex-direction: column;
+    }
+    
+    .status-mapping {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .branch-grid, .vs-fabric-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

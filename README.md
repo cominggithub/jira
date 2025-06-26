@@ -1,6 +1,6 @@
-# Flask Web Project with Multi-Theme System
+# SONiC Feature Management System
 
-A modern Flask web application featuring SQLAlchemy integration, multi-database support, comprehensive request logging, and a dynamic theme system with six distinct visual styles.
+A modern Flask web application for managing SONiC (Software for Open Networking in the Cloud) features and test cases. Features multi-database support, comprehensive schema documentation, Excel data import utilities, and a dynamic theme system with six distinct visual styles.
 
 ## Features
 
@@ -13,20 +13,29 @@ A modern Flask web application featuring SQLAlchemy integration, multi-database 
 - **Pony Theme**: Magical pastel theme with rainbow effects, sparkles, and unicorn emojis
 
 ### 🗄️ Database Features
-- SQLAlchemy ORM integration
-- Multi-database support (Primary, Analytics, Cache)
-- Environment-specific database configurations
-- Support for SQLite (development) and PostgreSQL (production)
+- **SONiC Feature Management**: Track SONiC community and Edgecore proprietary features
+- **Test Case Management**: Comprehensive test case documentation and labeling
+- **Multi-Database Support**: Primary, Analytics, Cache databases
+- **PostgreSQL Integration**: Production-ready database with connection probing
+- **Real-time Schema Documentation**: Interactive web-based schema viewer
+- **Database Connection Monitoring**: Live connection status and health checks
 
 ### 🛠️ Technical Features
-- Flask application factory pattern
-- Environment-based configuration system
-- Comprehensive request logging (console + file)
-- Responsive design across all themes
-- Client-side theme switching with persistence
-- Keyboard shortcuts for theme switching
-- System theme detection
-- Real-time request monitoring
+- **Flask Application Factory**: Modular application structure
+- **Environment-based Configuration**: Development/Production/Testing environments
+- **Excel Data Import**: Automated import from EC SONiC Feature Excel files
+- **Interactive Schema Viewer**: Web-based database documentation with search and export
+- **Real-time Connection Probing**: Database health monitoring on startup
+- **Comprehensive Request Logging**: Console + file logging with detailed metrics
+- **Responsive Design**: Mobile-friendly across all themes
+- **Client-side Theme Switching**: Persistent theme preferences
+
+### 📊 Data Management Features
+- **Excel Import Utility**: Import EC SONiC features from Excel files with validation
+- **Support Status Mapping**: Automatic conversion of O/X/D codes to readable text
+- **Label Processing**: Comma-separated label splitting and normalization
+- **Data Validation**: Schema validation and error reporting
+- **Batch Processing**: Efficient bulk data operations with transaction safety
 
 ## Installation
 
@@ -34,6 +43,8 @@ A modern Flask web application featuring SQLAlchemy integration, multi-database 
 - Python 3.7 or higher
 - pip (Python package installer)
 - Git
+- PostgreSQL 12+ (for production) or SQLite (for development)
+- Excel files with SONiC feature data (optional)
 
 ### Step 1: Clone the Repository
 ```bash
@@ -76,14 +87,14 @@ Edit the `.env` file and customize the following variables:
 FLASK_ENV=development
 SECRET_KEY=your-secret-key-here
 
-# Primary Database URLs
-PRIMARY_DEV_DB_URL=sqlite:///primary_dev.db
-PRIMARY_PROD_DB_URL=postgresql://user:password@localhost/primary_prod
+# Primary Database URLs (SONiC Features & Test Cases)
+PRIMARY_DEV_DB_URL=postgresql://postgres:password@localhost:5432/ESTS_Dev
+PRIMARY_PROD_DB_URL=postgresql://postgres:password@10.102.6.16:15432/ESTS_Dev
 PRIMARY_TEST_DB_URL=sqlite:///primary_test.db
 
 # Analytics Database URLs
-ANALYTICS_DEV_DB_URL=sqlite:///analytics_dev.db
-ANALYTICS_PROD_DB_URL=postgresql://user:password@localhost/analytics_prod
+ANALYTICS_DEV_DB_URL=postgresql://postgres:password@localhost:5432/ESTS_Dev
+ANALYTICS_PROD_DB_URL=postgresql://postgres:password@10.102.6.16:15432/ESTS_Dev
 ANALYTICS_TEST_DB_URL=sqlite:///analytics_test.db
 
 # Cache Database URLs
@@ -101,6 +112,18 @@ python app.py
 ```
 
 The application will start on `http://localhost:5002` (or `http://172.30.116.234:5002` from Windows if running in WSL)
+
+You'll see database connection probing on startup:
+```
+============================================================
+DATABASE CONNECTION PROBE
+============================================================
+✓ PRIMARY: CONNECTED
+  URL: postgresql://postgres:password@10.102.6.16:15432/ESTS_Dev
+  Type: postgresql
+  Message: Connected successfully. PostgreSQL version: 17.4
+============================================================
+```
 
 ### Alternative: Using Flask CLI
 ```bash
@@ -126,33 +149,45 @@ gunicorn -w 4 -b 0.0.0.0:5000 app:create_app()
 
 ```
 jira/
-├── app.py                 # Main application file
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variables template
-├── .gitignore           # Git ignore rules
-├── README.md            # This file
-├── config/              # Configuration files
+├── app.py                    # Main application file
+├── feature_importer.py       # Excel data import utility
+├── schema_reader.py          # Database schema documentation generator
+├── excel_inspector.py        # Excel file structure analyzer
+├── requirements.txt          # Python dependencies
+├── .env.example             # Environment variables template
+├── FEATURE_IMPORT_GUIDE.md  # Data import documentation
+├── README.md                # This file
+├── config/                  # Configuration files
 │   ├── __init__.py
-│   ├── base.py         # Base configuration classes
-│   └── database.py     # Database configuration
-├── models/              # SQLAlchemy models
-│   └── __init__.py     # User model example
-├── static/              # Static assets
-│   ├── css/            # Theme stylesheets
-│   │   ├── base.css    # Base styles
-│   │   ├── neon.css    # Green neon theme
-│   │   ├── pink-neon.css # Pink neon theme
-│   │   ├── tron.css    # Tron theme
-│   │   ├── dark.css    # Dark theme
-│   │   ├── white.css   # White theme
-│   │   └── pony.css    # Pony theme
+│   ├── base.py             # Base configuration classes
+│   └── database.py         # Database configuration and connection probing
+├── data/                    # Excel data files
+│   ├── EC_SONiC_Feature.YYYYMMDD.xlsx  # SONiC feature data
+│   └── ESTS_Test_Case.xlsx             # Test case data
+├── static/                  # Static assets
+│   ├── css/                # Theme stylesheets
+│   │   ├── base.css        # Base styles with database styling
+│   │   ├── schema.css      # Schema viewer styles
+│   │   ├── neon.css        # Green neon theme
+│   │   ├── pink-neon.css   # Pink neon theme
+│   │   ├── tron.css        # Tron theme
+│   │   ├── dark.css        # Dark theme
+│   │   ├── white.css       # White theme
+│   │   └── pony.css        # Pony theme
 │   └── js/
-│       └── theme-switcher.js  # Theme switching logic
-└── templates/           # HTML templates
-    ├── base.html       # Base template
-    ├── index.html      # Home page
-    ├── about.html      # About page
-    └── db_info.html    # Database info page
+│       ├── theme-switcher.js  # Theme switching logic
+│       └── schema-viewer.js   # Interactive schema viewer
+├── templates/               # HTML templates
+│   ├── base.html           # Base template with navigation
+│   ├── index.html          # Home page
+│   ├── about.html          # About page
+│   ├── db_info.html        # Database info and schema links
+│   └── schema.html         # Interactive schema viewer
+├── schema_*.md             # Generated database schema documentation
+│   ├── schema_primary.md   # Primary database schema
+│   ├── schema_analytics.md # Analytics database schema
+│   └── schema_cache.md     # Cache database schema
+└── requests.log            # Application request logs
 ```
 
 ## Using the Theme System
@@ -196,8 +231,116 @@ The application supports multiple database configurations:
 
 - `/` - Home page with theme showcase
 - `/about` - About page with project information
-- `/db-info` - Database configuration details
+- `/db-info` - Database configuration details with schema links
+- `/schema` - Interactive database schema viewer (all databases)
+- `/schema/<db_name>` - Individual database schema viewer
 - `/sonic-switch` - AI fabric interface
+- `/readme` - Interactive documentation viewer
+
+## SONiC Feature Data Management
+
+### Excel Data Import
+
+Import SONiC feature data from Excel files using the automated import utility:
+
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Import latest feature file
+python feature_importer.py
+
+# Import specific date file
+python feature_importer.py --date 20250626
+
+# Preview import without making changes
+python feature_importer.py --dry-run
+
+# Import without clearing existing data
+python feature_importer.py --no-clear
+```
+
+### Excel File Format
+
+Place Excel files in the `data/` directory with the naming pattern:
+- `EC_SONiC_Feature.YYYYMMDD.xlsx` - SONiC feature data
+- `ESTS_Test_Case.xlsx` - Test case data
+
+### Support Status Mapping
+
+The import utility automatically converts Excel codes to readable text:
+- **O** → `Support`
+- **X** → `Not Support`
+- **D** → `Under Development`
+
+### Data Processing Features
+
+- **Automatic Label Splitting**: Comma-separated labels are split into individual records
+- **Feature Key Generation**: Missing feature keys are auto-generated from category + feature name
+- **Data Validation**: Schema validation with detailed error reporting
+- **Transaction Safety**: All-or-nothing import with rollback on errors
+- **Duplicate Handling**: Configurable insert/update behavior
+
+## Database Schema Documentation
+
+### Interactive Schema Viewer
+
+Access comprehensive database documentation through the web interface:
+
+1. **Visit `/db-info`** - View database connection status and schema links
+2. **Click "View Schema"** - Open interactive schema viewer
+3. **Switch between databases** - Use tabs to navigate between Primary/Analytics/Cache
+4. **Multiple view modes**: Rendered markdown, source code, or split view
+5. **Export schemas** - Download documentation as markdown files
+
+### Schema Generation
+
+Generate fresh schema documentation:
+
+```bash
+# Generate all database schemas
+python schema_reader.py
+
+# This creates:
+# - schema_primary.md    - Primary database (SONiC features & test cases)
+# - schema_analytics.md  - Analytics database  
+# - schema_cache.md      - Cache database
+```
+
+### Schema Content
+
+The generated documentation includes:
+- **Table structures** with column details and descriptions
+- **Primary keys and foreign keys** with relationship mapping
+- **Indexes** with uniqueness and column information
+- **Data types** with precision and constraints
+- **Business context** explaining the purpose of each field
+- **SONiC domain knowledge** integrated into field descriptions
+
+## Database Schema Overview
+
+### Primary Database Tables
+
+1. **s_feature_map** - Core SONiC feature tracking
+   - Tracks community and Edgecore proprietary features
+   - Support status across different SONiC branches (2111, 2211, 2311)
+   - Virtual Switch and fabric implementation status
+   - JIRA component associations
+
+2. **s_feature_label** - Feature categorization
+   - Many-to-many relationship with features
+   - Flexible labeling system for feature classification
+   - Supports comma-separated label import from Excel
+
+3. **s_test_case** - Test case management
+   - Comprehensive test case documentation
+   - Topology, validation, and traffic pattern specifications
+   - Project and customer associations
+   - Pytest marker integration
+
+4. **s_test_case_label** - Test case categorization
+   - Links test cases to classification labels
+   - Enables flexible test case organization and filtering
 
 ## Request Logging
 
@@ -252,18 +395,40 @@ Create new theme files following the pattern in existing theme CSS files, using 
    - Check your `.env` file configuration
    - Ensure database URLs are correct
    - For PostgreSQL, make sure the server is running
+   - Check the connection probe output on startup
 
-3. **Theme Not Loading**
+3. **Excel Import Issues**
+   ```bash
+   # Check Excel file format and location
+   python excel_inspector.py
+   
+   # Test import without making changes
+   python feature_importer.py --dry-run
+   
+   # Check for missing dependencies
+   pip install pandas openpyxl psycopg2-binary
+   ```
+
+4. **Schema Documentation Issues**
+   ```bash
+   # Regenerate schema files
+   python schema_reader.py
+   
+   # Check database connection first
+   python -c "from config.database import DatabaseConfig; print(DatabaseConfig.probe_database_connections())"
+   ```
+
+5. **Theme Not Loading**
    - Clear browser cache
    - Check browser console for JavaScript errors
    - Verify static files are being served correctly
 
-4. **Port Already in Use**
+6. **Port Already in Use**
    ```bash
    # Use a different port
    python app.py --port 5001
    # Or kill the process using the port
-   lsof -ti:5000 | xargs kill -9  # macOS/Linux
+   lsof -ti:5002 | xargs kill -9  # macOS/Linux
    ```
 
 ### Development Tips
@@ -275,11 +440,23 @@ Create new theme files following the pattern in existing theme CSS files, using 
 
 ## Dependencies
 
+### Core Web Framework
 - **Flask**: Web framework
-- **Flask-SQLAlchemy**: ORM integration
-- **SQLAlchemy**: Database ORM  
-- **python-dotenv**: Environment variable management
 - **Werkzeug**: WSGI utilities
+- **python-dotenv**: Environment variable management
+
+### Database & ORM
+- **psycopg2-binary**: PostgreSQL database adapter
+- **SQLAlchemy**: Database ORM and schema introspection
+
+### Data Processing
+- **pandas**: Excel file reading and data manipulation
+- **openpyxl**: Excel file format support
+- **numpy**: Numerical computing support (pandas dependency)
+
+### Development & Utilities
+- **marked.js**: Client-side markdown rendering (CDN)
+- **python-dateutil**: Date/time parsing utilities
 
 ## License
 

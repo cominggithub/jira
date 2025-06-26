@@ -79,11 +79,24 @@ def create_app(config_name=None):
     @app.route('/db-info')
     def db_info():
         env = os.environ.get('FLASK_ENV', 'development')
-        return render_template('db_info.html', env=env, config=app.config)
+        db_results = DatabaseConfig.probe_database_connections()
+        return render_template('db_info.html', env=env, config=app.config, db_results=db_results)
     
     @app.route('/sonic-switch')
     def sonic_switch():
         return render_template('sonic_switch.html', config=app.config)
+    
+    @app.route('/sonic-feature')
+    def sonic_feature():
+        return render_template('sonic_feature.html', config=app.config)
+    
+    @app.route('/sonic-mgmt')
+    def sonic_mgmt():
+        return render_template('sonic_mgmt.html', config=app.config)
+    
+    @app.route('/ests')
+    def ests():
+        return render_template('ests.html', config=app.config)
     
     @app.route('/readme')
     def readme():
@@ -107,6 +120,41 @@ def create_app(config_name=None):
                 docs[key] = f"# Error reading {filename}\n\nError: {str(e)}"
         
         return render_template('readme.html', docs=docs, config=app.config)
+    
+    @app.route('/schema')
+    @app.route('/schema/<db_name>')
+    def schema_viewer(db_name=None):
+        import os
+        import glob
+        
+        # Get all schema files
+        schema_files = glob.glob('schema_*.md')
+        schemas = {}
+        
+        for file_path in schema_files:
+            base_name = os.path.basename(file_path)
+            # Extract db name from filename (schema_primary.md -> primary)
+            db = base_name.replace('schema_', '').replace('.md', '')
+            
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    schemas[db] = f.read()
+            except Exception as e:
+                schemas[db] = f"# Error reading {file_path}\n\nError: {str(e)}"
+        
+        # If specific database requested, show only that one
+        if db_name:
+            if db_name in schemas:
+                filtered_schemas = {db_name: schemas[db_name]}
+                return render_template('schema.html', schemas=filtered_schemas, selected_db=db_name, config=app.config)
+            else:
+                # Database not found, show 404-like message
+                error_content = f"# Database Schema Not Found\n\nThe schema for '{db_name}' database could not be found.\n\nAvailable schemas: {', '.join(schemas.keys())}"
+                filtered_schemas = {db_name: error_content}
+                return render_template('schema.html', schemas=filtered_schemas, selected_db=db_name, config=app.config)
+        
+        # Show all schemas
+        return render_template('schema.html', schemas=schemas, selected_db=None, config=app.config)
     
     return app
 

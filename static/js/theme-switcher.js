@@ -147,5 +147,34 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Expose functions globally for HTML onclick handlers
+// Navigation dropdown functionality
+function toggleNavDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    const allNavDropdowns = document.querySelectorAll('.nav-dropdown-content');
+    
+    // Close all other nav dropdowns
+    allNavDropdowns.forEach(d => {
+        if (d.id !== dropdownId) {
+            d.classList.remove('show');
+        }
+    });
+    
+    // Toggle the clicked dropdown
+    dropdown.classList.toggle('show');
+}
+
+// Close nav dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    const isNavDropdown = event.target.closest('.nav-dropdown');
+    if (!isNavDropdown) {
+        const navDropdowns = document.querySelectorAll('.nav-dropdown-content');
+        navDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('show');
+        });
+    }
+});
+
+// Make functions globally available
 window.switchTheme = switchTheme;
 window.toggleThemeDropdown = toggleThemeDropdown;
+window.toggleNavDropdown = toggleNavDropdown;

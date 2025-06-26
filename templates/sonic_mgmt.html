@@ -1,0 +1,518 @@
+{% extends "base.html" %}
+
+{% block title %}sonic-mgmt Testing Framework - SONiC Feature Management System{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>🛠️ sonic-mgmt Testing Framework</h1>
+    <p>Comprehensive testing framework for SONiC network operating system validation and automation.</p>
+    
+    <div class="mgmt-overview">
+        <h2>📊 Framework Overview</h2>
+        <div class="mgmt-stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Test Cases</div>
+                <div class="stat-desc">Automated Test Scripts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Test Categories</div>
+                <div class="stat-desc">Feature Coverage Areas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">CI/CD</div>
+                <div class="stat-desc">Continuous Integration</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Multi-Vendor</div>
+                <div class="stat-label">Platform Support</div>
+                <div class="stat-desc">Hardware Compatibility</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mgmt-sections">
+        <div class="mgmt-section">
+            <h2>🧪 Test Categories</h2>
+            <p>Comprehensive test coverage across all SONiC functionalities.</p>
+            <div class="test-categories">
+                <div class="category-grid">
+                    <div class="category-item">
+                        <h3>🌐 Layer 2</h3>
+                        <p>VLAN, LAG, STP, FDB</p>
+                        <span class="category-count">45 tests</span>
+                    </div>
+                    <div class="category-item">
+                        <h3>🔀 Layer 3</h3>
+                        <p>Routing, BGP, OSPF, Static Routes</p>
+                        <span class="category-count">78 tests</span>
+                    </div>
+                    <div class="category-item">
+                        <h3>🔒 ACL</h3>
+                        <p>Access Control Lists, Security</p>
+                        <span class="category-count">32 tests</span>
+                    </div>
+                    <div class="category-item">
+                        <h3>📊 QoS</h3>
+                        <p>Quality of Service, Traffic Shaping</p>
+                        <span class="category-count">28 tests</span>
+                    </div>
+                    <div class="category-item">
+                        <h3>🔧 Platform</h3>
+                        <p>Hardware Integration, APIs</p>
+                        <span class="category-count">55 tests</span>
+                    </div>
+                    <div class="category-item">
+                        <h3>📡 Telemetry</h3>
+                        <p>Monitoring, Statistics, Streaming</p>
+                        <span class="category-count">24 tests</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mgmt-section">
+            <h2>🚀 Test Execution</h2>
+            <p>Automated test execution and result analysis framework.</p>
+            <div class="execution-info">
+                <h3>⚙️ Test Commands</h3>
+                <div class="code-examples">
+                    <div class="code-block">
+                        <div class="code-header">Run All Tests</div>
+                        <code>pytest tests/ --tb=short</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Run Specific Category</div>
+                        <code>pytest tests/l2/ -v</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Run with HTML Report</div>
+                        <code>pytest tests/ --html=report.html --self-contained-html</code>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header">Parallel Execution</div>
+                        <code>pytest tests/ -n 4 --dist=worksteal</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mgmt-section">
+            <h2>🔧 Test Environment</h2>
+            <p>Flexible test environment setup and configuration options.</p>
+            <div class="environment-grid">
+                <div class="env-card">
+                    <h3>🖥️ Virtual Switch</h3>
+                    <p>Software-based testing environment</p>
+                    <div class="env-features">
+                        <span class="feature-tag">Docker</span>
+                        <span class="feature-tag">KVM</span>
+                        <span class="feature-tag">Mininet</span>
+                    </div>
+                </div>
+                <div class="env-card">
+                    <h3>⚡ Hardware Platform</h3>
+                    <p>Physical switch testing</p>
+                    <div class="env-features">
+                        <span class="feature-tag">Broadcom</span>
+                        <span class="feature-tag">Mellanox</span>
+                        <span class="feature-tag">Intel</span>
+                    </div>
+                </div>
+                <div class="env-card">
+                    <h3>☁️ Cloud Testing</h3>
+                    <p>Scalable cloud-based validation</p>
+                    <div class="env-features">
+                        <span class="feature-tag">AWS</span>
+                        <span class="feature-tag">Azure</span>
+                        <span class="feature-tag">GCP</span>
+                    </div>
+                </div>
+                <div class="env-card">
+                    <h3>🔬 Lab Setup</h3>
+                    <p>Dedicated testing infrastructure</p>
+                    <div class="env-features">
+                        <span class="feature-tag">Multi-DUT</span>
+                        <span class="feature-tag">Topology</span>
+                        <span class="feature-tag">Automation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mgmt-section">
+            <h2>📈 Test Results & Analytics</h2>
+            <p>Comprehensive test result analysis and reporting capabilities.</p>
+            <div class="analytics-features">
+                <div class="analytics-item">
+                    <h3>📊 Real-time Dashboard</h3>
+                    <p>Live test execution monitoring and progress tracking</p>
+                </div>
+                <div class="analytics-item">
+                    <h3>📝 Detailed Reports</h3>
+                    <p>HTML, XML, and JSON test result formats</p>
+                </div>
+                <div class="analytics-item">
+                    <h3>📈 Trend Analysis</h3>
+                    <p>Historical test performance and regression detection</p>
+                </div>
+                <div class="analytics-item">
+                    <h3>🔍 Failure Analysis</h3>
+                    <p>Automated failure categorization and root cause analysis</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mgmt-section">
+            <h2>🤖 CI/CD Integration</h2>
+            <p>Seamless integration with continuous integration and deployment pipelines.</p>
+            <div class="cicd-grid">
+                <div class="cicd-card">
+                    <h3>🔄 Jenkins</h3>
+                    <p>Automated test triggering</p>
+                    <span class="integration-status active">Active</span>
+                </div>
+                <div class="cicd-card">
+                    <h3>🐙 GitHub Actions</h3>
+                    <p>PR validation testing</p>
+                    <span class="integration-status active">Active</span>
+                </div>
+                <div class="cicd-card">
+                    <h3>🏗️ Azure DevOps</h3>
+                    <p>Enterprise pipeline integration</p>
+                    <span class="integration-status pending">Pending</span>
+                </div>
+                <div class="cicd-card">
+                    <h3>🚀 GitLab CI</h3>
+                    <p>Self-hosted runner support</p>
+                    <span class="integration-status active">Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mgmt-footer">
+        <div class="quick-links">
+            <h3>🔗 Quick Links</h3>
+            <div class="link-grid">
+                <a href="/sonic-feature" class="quick-link">
+                    🔧 Feature Management
+                </a>
+                <a href="/ests" class="quick-link">
+                    🧪 ESTS Testing
+                </a>
+                <a href="/db-info" class="quick-link">
+                    📊 Database Status
+                </a>
+                <a href="/schema" class="quick-link">
+                    📋 Schema Viewer
+                </a>
+            </div>
+        </div>
+        
+        <div class="documentation-link">
+            <p>📖 For detailed testing guides, see <a href="#" onclick="alert('Visit: https://github.com/sonic-net/sonic-mgmt')">sonic-mgmt Documentation</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+.mgmt-overview {
+    margin: 2rem 0;
+}
+
+.mgmt-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.mgmt-sections {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.mgmt-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+}
+
+.mgmt-section h2 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.category-item {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+}
+
+.category-item:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.category-item h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.category-item p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.category-count {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.code-examples {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.code-block {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.code-header {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.code-block code {
+    display: block;
+    padding: 1rem;
+    font-family: var(--font-mono);
+    background: transparent;
+    color: var(--text-color);
+}
+
+.environment-grid, .cicd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.env-card, .cicd-card {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.env-card:hover, .cicd-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.env-card h3, .cicd-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.env-card p, .cicd-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.env-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.feature-tag {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.integration-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.integration-status.active {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.integration-status.pending {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.analytics-features {
+    display: grid;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.analytics-item {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.analytics-item:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.analytics-item h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.analytics-item p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.mgmt-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--card-border);
+}
+
+.quick-links h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quick-link {
+    background: var(--bg-color);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.quick-link:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.documentation-link {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.documentation-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.documentation-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .mgmt-stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .category-grid, .environment-grid, .cicd-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .env-features {
+        justify-content: flex-start;
+    }
+}
+</style>
+{% endblock %}

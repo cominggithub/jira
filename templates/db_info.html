@@ -14,6 +14,66 @@
         <li><strong>Secret Key Set:</strong> {{ 'Yes' if config.SECRET_KEY else 'No' }}</li>
     </ul>
     
+    <h2>Database Connections</h2>
+    <p>Real-time database connection status:</p>
+    <div class="db-connections">
+        {% for db_name, result in db_results.items() %}
+        <div class="db-connection-card">
+            <div class="db-header">
+                {% if result.status == 'connected' %}
+                    <span class="status-icon connected">✓</span>
+                {% elif result.status == 'failed' %}
+                    <span class="status-icon failed">✗</span>
+                {% else %}
+                    <span class="status-icon available">○</span>
+                {% endif %}
+                <h3>{{ db_name.upper() }}</h3>
+                <span class="status-badge status-{{ result.status }}">{{ result.status.upper() }}</span>
+            </div>
+            <div class="db-details">
+                <p><strong>Type:</strong> {{ result.type }}</p>
+                <p><strong>URL:</strong> <code>{{ result.url }}</code></p>
+                <p><strong>Status:</strong> {{ result.message }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Database Schema Documentation</h2>
+    <p>Interactive schema documentation with real-time markdown rendering:</p>
+    <div class="schema-links">
+        <div class="schema-link-grid">
+            {% for db_name, result in db_results.items() %}
+            <div class="schema-link-card">
+                <div class="schema-link-header">
+                    <h4>{{ db_name.title() }} Schema</h4>
+                    {% if result.status == 'connected' %}
+                        <span class="schema-status connected">✓ Live</span>
+                    {% elif result.status == 'failed' %}
+                        <span class="schema-status failed">✗ Failed</span>
+                    {% else %}
+                        <span class="schema-status available">○ Available</span>
+                    {% endif %}
+                </div>
+                <p class="schema-description">
+                    {{ result.type }} database schema documentation
+                </p>
+                <div class="schema-actions">
+                    <a href="/schema/{{ db_name }}" class="schema-btn primary">📄 View Schema</a>
+                    <a href="/schema/{{ db_name }}" class="schema-btn secondary" download>📥 Download</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="schema-overview">
+            <a href="/schema" class="overview-btn">
+                📚 View All Schemas
+                <span class="overview-desc">Interactive viewer with tabs, search, and export</span>
+            </a>
+        </div>
+    </div>
+
     <h2>Theme System</h2>
     <p>This application features a comprehensive 6-theme system:</p>
     <ul class="info-list">
