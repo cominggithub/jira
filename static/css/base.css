@@ -20,12 +20,82 @@ body {
     background: var(--bg-color);
     transition: var(--transition);
     min-height: 100vh;
+    position: relative;
+}
+
+/* Left-side rotating background images - occupies 1/4 of screen */
+.bg-image {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 25vw; /* Exactly 1/4 of viewport width */
+    height: 100vh; /* Full viewport height */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* bg1 only - full size within the 1/4 space */
+.bg-image.bg1 {
+    background-image: url('/static/images/ai1.png');
+    background-size: contain;
+}
+
+/* bg1 default brightness - 2x brighter than before */
+.bg-image.bg1.active {
+    opacity: 1.0; /* Maximum brightness (was 0.8, now 2x brighter) */
+}
+
+/* Theme-specific background opacity adjustments for bg1 (2x brighter) */
+body[data-theme="white"] .bg-image.bg1.active {
+    opacity: 1.0; /* Maximum brightness (was 0.6) */
+}
+
+body[data-theme="dark"] .bg-image.bg1.active {
+    opacity: 1.0; /* Maximum brightness (unchanged) */
+}
+
+body[data-theme="neon"] .bg-image.bg1.active {
+    opacity: 1.0; /* Maximum brightness (was 0.8) */
+}
+
+body[data-theme="tron"] .bg-image.bg1.active {
+    opacity: 1.0; /* Maximum brightness (was 0.9) */
+}
+
+body[data-theme="pony"] .bg-image.bg1.active {
+    opacity: 1.0; /* Maximum brightness (unchanged) */
+}
+
+body[data-theme="pink-neon"] .bg-image.bg1.active {
+    opacity: 1.0; /* Maximum brightness (was 0.8) */
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    margin-left: 25vw; /* Start after the 1/4 left space */
+    width: 75vw; /* Use the remaining 3/4 space */
+    box-sizing: border-box;
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 1024px) {
+    .container {
+        margin-left: 0; /* Reset to normal centering */
+        width: 100%; /* Use full width */
+        max-width: 1200px;
+        padding: 20px;
+    }
+    
+    .bg-image {
+        display: none; /* Hide background images on smaller screens */
+    }
 }
 
 .header {
@@ -229,6 +299,8 @@ body {
     }
     
     .container {
+        margin-left: 0 !important; /* Reset to normal centering */
+        width: 100% !important; /* Use full width */
         padding: 10px;
     }
 }

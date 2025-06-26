@@ -137,6 +137,15 @@ if (window.matchMedia) {
     });
 }
 
+// Background image functionality (single image, no rotation needed)
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure bg1 is active on page load
+    const bgImage = document.querySelector('.bg-image.bg1');
+    if (bgImage) {
+        bgImage.classList.add('active');
+    }
+});
+
 // Expose functions globally for HTML onclick handlers
 window.switchTheme = switchTheme;
 window.toggleThemeDropdown = toggleThemeDropdown;
