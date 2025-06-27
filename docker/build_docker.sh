@@ -237,8 +237,14 @@ deploy_to_vm() {
     # Copy docker-compose.yml and .env files
     log_info "Copying configuration files..."
     scp docker/docker-compose.yml $REMOTE_USER@$REMOTE_HOST:/tmp/
-    if [ -f .env ]; then
+    if [ -f .env.production ]; then
+        scp .env.production $REMOTE_USER@$REMOTE_HOST:/tmp/.env
+        log_info "Using production environment configuration"
+    elif [ -f .env ]; then
         scp .env $REMOTE_USER@$REMOTE_HOST:/tmp/
+        log_info "Using default environment configuration"
+    else
+        log_warning "No environment configuration file found"
     fi
     
     # Load and run image on VM
@@ -257,6 +263,7 @@ deploy_to_vm() {
         docker run -d \
             --name $CONTAINER_NAME \
             -p 5002:5002 \
+            --env-file /tmp/.env \
             --restart unless-stopped \
             $IMAGE_NAME:$IMAGE_TAG
         
