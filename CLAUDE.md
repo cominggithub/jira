@@ -15,6 +15,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - There is an EC SONiC feature file located at `data/EC_SONiC_Feature.<data>.xlsx`
 - There is ests test case file in `data/ESTS_Test_Case.xlsx`
 
+## Feature Classification
+
+- EC Proprietary is categorized to EC or community:
+  - If it is EC, that means EC's proprietary feature
+  - If it is community, that means native support from community source
+  - Update the feature importer and the feature matrix page properly
+
 ## Essential Commands
 
 ### Development

@@ -177,6 +177,9 @@
         <div class="quick-links">
             <h3>🔗 Quick Links</h3>
             <div class="link-grid">
+                <a href="/feature-list" class="quick-link featured">
+                    📋 Feature Support Matrix
+                </a>
                 <a href="/db-info" class="quick-link">
                     📊 Database Status
                 </a>
@@ -529,6 +532,18 @@
     border-color: var(--accent-color);
     color: var(--accent-color);
     transform: translateY(-2px);
+}
+
+.quick-link.featured {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    border-color: var(--accent-color);
+    font-weight: 600;
+}
+
+.quick-link.featured:hover {
+    background: var(--accent-color-hover, var(--accent-color));
+    color: var(--accent-text);
 }
 
 .documentation-link {
