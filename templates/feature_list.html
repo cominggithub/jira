@@ -5,7 +5,6 @@
 {% block content %}
 <div class="card">
     <h1>📋 SONiC Feature Support Matrix</h1>
-    <p>Comprehensive feature support status across all SONiC branches and platforms with advanced filtering capabilities.</p>
     
     {% if error %}
     <div class="error-message">
@@ -15,89 +14,49 @@
     </div>
     {% else %}
     
-    <!-- Filter Controls -->
-    <div class="filter-section">
-        <h2>🔍 Filters</h2>
-        <form method="GET" class="filter-form">
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label for="label">Feature Label:</label>
-                    <select name="label" id="label">
-                        <option value="">All Labels</option>
-                        {% for label in all_labels %}
-                        <option value="{{ label }}" {% if current_filters.label == label %}selected{% endif %}>
-                            {{ label }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
+    <!-- Compact Filter Controls -->
+    <div class="compact-filter-section">
+        <form method="GET" class="compact-filter-form">
+            <div class="compact-filter-grid">
+                <select name="label" title="Filter by Label">
+                    <option value="">All Labels</option>
+                    {% for label in all_labels %}
+                    <option value="{{ label }}" {% if current_filters.label == label %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
                 
-                <div class="filter-group">
-                    <label for="branch">Specific Branch:</label>
-                    <select name="branch" id="branch">
-                        <option value="">All Branches</option>
-                        <option value="ec_sonic_2111" {% if current_filters.branch == 'ec_sonic_2111' %}selected{% endif %}>EC SONiC 2111</option>
-                        <option value="ec_sonic_2211" {% if current_filters.branch == 'ec_sonic_2211' %}selected{% endif %}>EC SONiC 2211</option>
-                        <option value="ec_sonic_2311_x" {% if current_filters.branch == 'ec_sonic_2311_x' %}selected{% endif %}>EC SONiC 2311-X</option>
-                        <option value="ec_sonic_2311_n" {% if current_filters.branch == 'ec_sonic_2311_n' %}selected{% endif %}>EC SONiC 2311-N</option>
-                        <option value="vs_202311" {% if current_filters.branch == 'vs_202311' %}selected{% endif %}>VS 202311</option>
-                        <option value="ec_proprietary" {% if current_filters.branch == 'ec_proprietary' %}selected{% endif %}>EC Proprietary</option>
-                    </select>
-                </div>
+                <select name="branch" title="Filter by Branch">
+                    <option value="">All Branches</option>
+                    <option value="ec_sonic_2111" {% if current_filters.branch == 'ec_sonic_2111' %}selected{% endif %}>EC 2111</option>
+                    <option value="ec_sonic_2211" {% if current_filters.branch == 'ec_sonic_2211' %}selected{% endif %}>EC 2211</option>
+                    <option value="ec_sonic_2311_x" {% if current_filters.branch == 'ec_sonic_2311_x' %}selected{% endif %}>EC 2311-X</option>
+                    <option value="ec_sonic_2311_n" {% if current_filters.branch == 'ec_sonic_2311_n' %}selected{% endif %}>EC 2311-N</option>
+                    <option value="vs_202311" {% if current_filters.branch == 'vs_202311' %}selected{% endif %}>VS 202311</option>
+                </select>
                 
-                <div class="filter-group">
-                    <label for="support">Support Status:</label>
-                    <select name="support" id="support">
-                        <option value="">All Status</option>
-                        <option value="Support" {% if current_filters.support == 'Support' %}selected{% endif %}>Support</option>
-                        <option value="Not Support" {% if current_filters.support == 'Not Support' %}selected{% endif %}>Not Support</option>
-                        <option value="Under Development" {% if current_filters.support == 'Under Development' %}selected{% endif %}>Under Development</option>
-                    </select>
-                </div>
+                <select name="support" title="Filter by Support Status">
+                    <option value="">All Status</option>
+                    <option value="Support" {% if current_filters.support == 'Support' %}selected{% endif %}>Support</option>
+                    <option value="Not Support" {% if current_filters.support == 'Not Support' %}selected{% endif %}>Not Support</option>
+                    <option value="Under Development" {% if current_filters.support == 'Under Development' %}selected{% endif %}>Under Development</option>
+                </select>
                 
-                <div class="filter-group">
-                    <label for="source">Source Type:</label>
-                    <select name="source" id="source">
-                        <option value="">All Sources</option>
-                        <option value="community" {% if current_filters.source == 'community' %}selected{% endif %}>Community</option>
-                        <option value="edgecore" {% if current_filters.source == 'edgecore' %}selected{% endif %}>Edgecore</option>
-                    </select>
-                </div>
+                <select name="source" title="Filter by Source Type">
+                    <option value="">All Sources</option>
+                    <option value="community" {% if current_filters.source == 'community' %}selected{% endif %}>Community</option>
+                    <option value="edgecore" {% if current_filters.source == 'edgecore' %}selected{% endif %}>Edgecore</option>
+                </select>
+                
+                <button type="submit" class="compact-filter-btn">Filter</button>
+                <a href="/feature-list" class="compact-clear-btn">Clear</a>
             </div>
-            
-            <div class="filter-actions">
-                <button type="submit" class="filter-btn primary">🔍 Apply Filters</button>
-                <a href="/feature-list" class="filter-btn secondary">🔄 Clear All</a>
-            </div>
+            <div class="compact-results-info">{{ features|length }} features found</div>
         </form>
     </div>
     
-    <!-- Results Summary -->
-    <div class="results-summary">
-        <h2>📊 Results Summary</h2>
-        <div class="summary-stats">
-            <div class="summary-card">
-                <div class="summary-number">{{ features|length }}</div>
-                <div class="summary-label">Features Found</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-number">{{ all_labels|length }}</div>
-                <div class="summary-label">Total Labels</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-number">7</div>
-                <div class="summary-label">Data Columns</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Feature List -->
-    <div class="feature-matrix">
-        <h2>🗂️ Feature Support Matrix</h2>
-        
-        {% if features %}
-        <div class="matrix-container">
-            <div class="matrix-table">
+    {% if features %}
+    <div class="matrix-container">
+        <div class="matrix-table">
                 <div class="matrix-header">
                     <div class="header-cell feature-col">Feature</div>
                     <div class="header-cell description-col">Description</div>
@@ -235,140 +194,81 @@
     margin-bottom: 1rem;
 }
 
-.filter-section {
+.compact-filter-section {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: var(--border-radius);
-    padding: 2rem;
-    margin: 2rem 0;
+    padding: 1rem;
+    margin: 1rem 0;
 }
 
-.filter-section h2 {
-    color: var(--accent-color);
-    margin-bottom: 1.5rem;
-}
-
-.filter-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.filter-group {
+.compact-filter-grid {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
-.filter-group label {
-    font-weight: 600;
-    color: var(--text-color);
-    font-size: 0.9rem;
-}
-
-.filter-group select {
-    padding: 0.75rem;
+.compact-filter-grid select {
+    padding: 0.4rem 0.6rem;
     border: 1px solid var(--card-border);
     border-radius: var(--border-radius);
     background: var(--bg-color);
     color: var(--text-color);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    min-width: 120px;
 }
 
-.filter-group select:focus {
+.compact-filter-grid select:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb, 59, 130, 246), 0.2);
 }
 
-.filter-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.filter-btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--border-radius);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: var(--transition);
+.compact-filter-btn {
+    padding: 0.4rem 1rem;
+    background: var(--accent-color);
+    color: var(--accent-text);
     border: none;
+    border-radius: var(--border-radius);
+    font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: var(--transition);
 }
 
-.filter-btn.primary {
+.compact-filter-btn:hover {
+    background: var(--accent-color-hover, var(--accent-color));
+}
+
+.compact-clear-btn {
+    padding: 0.4rem 1rem;
+    background: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.compact-clear-btn:hover {
     background: var(--accent-color);
     color: var(--accent-text);
 }
 
-.filter-btn.secondary {
-    background: transparent;
-    color: var(--accent-color);
-    border: 1px solid var(--accent-color);
-}
-
-.filter-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.results-summary {
-    margin: 2rem 0;
-}
-
-.results-summary h2 {
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-}
-
-.summary-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-}
-
-.summary-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    text-align: center;
-    transition: var(--transition);
-}
-
-.summary-card:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
-}
-
-.summary-number {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--accent-color);
-    margin-bottom: 0.5rem;
-}
-
-.summary-label {
-    font-size: 0.9rem;
+.compact-results-info {
+    font-size: 0.8rem;
     color: var(--text-muted);
-}
-
-.feature-matrix {
-    margin: 2rem 0;
-}
-
-.feature-matrix h2 {
-    color: var(--accent-color);
-    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .matrix-container {
     overflow-x: auto;
     border: 1px solid var(--card-border);
     border-radius: var(--border-radius);
+    margin: 1rem 0;
 }
 
 .matrix-table {
@@ -614,16 +514,19 @@
 }
 
 @media (max-width: 768px) {
-    .filter-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .filter-actions {
+    .compact-filter-grid {
         flex-direction: column;
+        align-items: stretch;
     }
     
-    .summary-stats {
-        grid-template-columns: repeat(2, 1fr);
+    .compact-filter-grid select {
+        min-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .compact-filter-btn, .compact-clear-btn {
+        width: 100%;
+        margin: 0.25rem 0;
     }
     
     .matrix-container {
