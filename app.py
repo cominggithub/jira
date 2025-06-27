@@ -2,9 +2,13 @@ import os
 import logging
 from datetime import datetime
 from flask import Flask, render_template, request
+from flask_migrate import Migrate
 from dotenv import load_dotenv
 from config.base import config
 from config.database import DatabaseConfig
+from models.base import db
+from models import FeatureMap, FeatureLabel
+from routes_sqlalchemy import feature_list_sqlalchemy
 
 # Load environment variables from .env file
 load_dotenv()
@@ -37,8 +41,13 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.environ.get('FLASK_ENV', 'development')
     
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
+    config_obj = config[config_name]()
+    app.config.from_object(config_obj)
+    config_obj.init_app(app)
+    
+    # Initialize SQLAlchemy and Flask-Migrate
+    db.init_app(app)
+    migrate = Migrate(app, db)
     
     # Database connection probe
     print("=" * 60)
@@ -89,6 +98,10 @@ def create_app(config_name=None):
     @app.route('/sonic-feature')
     def sonic_feature():
         return render_template('sonic_feature.html', config=app.config)
+    
+    @app.route('/feature-list')
+    def feature_list():
+        return feature_list_sqlalchemy(app.config)
     
     @app.route('/sonic-mgmt')
     def sonic_mgmt():

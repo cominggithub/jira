@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
 """
-EC SONiC Feature Importer
-Reads EC SONiC Feature Excel files and imports data to ESTS_Dev database
+SQLAlchemy-based EC SONiC Feature Importer
+Reads EC SONiC Feature Excel files and imports data using SQLAlchemy ORM
 """
 import os
 import sys
 import pandas as pd
-import psycopg2
 import re
+import click
 from datetime import datetime
 from dotenv import load_dotenv
-from urllib.parse import urlparse
+from models.base import db
+from models import FeatureMap, FeatureLabel
+from config.base import config
 
 # Load environment variables
 load_dotenv()
 
-class FeatureImporter:
-    """Import EC SONiC features from Excel to database"""
+
+class SQLAlchemyFeatureImporter:
+    """Import EC SONiC features from Excel using SQLAlchemy ORM"""
     
-    def __init__(self):
-        self.db_conn = None
+    def __init__(self, env='development'):
+        self.env = env
+        self.app = None
         self.stats = {
             'features_processed': 0,
             'features_inserted': 0,
@@ -29,34 +33,25 @@ class FeatureImporter:
             'errors': []
         }
     
-    def connect_database(self):
-        """Connect to PostgreSQL database"""
-        try:
-            # Get database URL
-            env = os.environ.get('FLASK_ENV', 'development')
-            env_short = 'DEV' if env == 'development' else 'PROD' if env == 'production' else 'TEST'
-            db_url = os.environ.get(f'PRIMARY_{env_short}_DB_URL')
-            
-            if not db_url:
-                raise Exception(f"Database URL not found for environment: {env}")
-            
-            # Parse URL and connect
-            parsed = urlparse(db_url)
-            self.db_conn = psycopg2.connect(
-                host=parsed.hostname,
-                port=parsed.port or 5432,
-                database=parsed.path.lstrip('/'),
-                user=parsed.username,
-                password=parsed.password
-            )
-            
-            print(f"✅ Connected to database: {parsed.hostname}:{parsed.port}/{parsed.path.lstrip('/')}")
-            
-        except Exception as e:
-            print(f"❌ Database connection failed: {e}")
-            return False
+    def create_app(self):
+        """Create Flask app for database operations"""
+        from flask import Flask
         
-        return True
+        app = Flask(__name__)
+        
+        # Set configuration
+        app.config.from_object(config[self.env])
+        
+        # Get database URI
+        db_config = config[self.env]()
+        app.config['SQLALCHEMY_DATABASE_URI'] = db_config.SQLALCHEMY_DATABASE_URI
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        
+        # Initialize extensions
+        db.init_app(app)
+        
+        self.app = app
+        return app
     
     def find_latest_feature_file(self, specific_date=None):
         """Find the latest or specific EC SONiC feature file"""
@@ -69,12 +64,12 @@ class FeatureImporter:
             if os.path.exists(filepath):
                 return filepath
             else:
-                print(f"❌ File not found: {filepath}")
+                click.echo(f"❌ File not found: {filepath}")
                 return None
         
         # Find latest file
         if not os.path.exists(data_dir):
-            print(f"❌ Data directory not found: {data_dir}")
+            click.echo(f"❌ Data directory not found: {data_dir}")
             return None
         
         feature_files = []
@@ -86,59 +81,37 @@ class FeatureImporter:
                     feature_files.append((filename, date_match.group(1)))
         
         if not feature_files:
-            print("❌ No EC SONiC Feature files found")
+            click.echo("❌ No EC SONiC Feature files found")
             return None
         
         # Sort by date and get latest
         feature_files.sort(key=lambda x: x[1], reverse=True)
         latest_file = os.path.join(data_dir, feature_files[0][0])
         
-        print(f"📅 Using file: {latest_file} (date: {feature_files[0][1]})")
+        click.echo(f"📅 Using file: {latest_file} (date: {feature_files[0][1]})")
         return latest_file
     
     def read_excel_data(self, filepath):
         """Read and validate Excel data"""
         try:
-            print(f"📖 Reading Excel file: {filepath}")
+            click.echo(f"📖 Reading Excel file: {filepath}")
             
             # Read the feature_map sheet
             df = pd.read_excel(filepath, sheet_name='feature_map')
-            print(f"📊 Loaded {len(df)} rows from feature_map sheet")
+            click.echo(f"📊 Loaded {len(df)} rows from feature_map sheet")
             
             # Validate required columns
             required_columns = ['Feature_Key', 'Category', 'Feature N1']
             missing_columns = [col for col in required_columns if col not in df.columns]
             
             if missing_columns:
-                print(f"❌ Missing required columns: {missing_columns}")
+                click.echo(f"❌ Missing required columns: {missing_columns}")
                 return None
-            
-            # Show column mapping
-            print("📋 Column mapping:")
-            column_mapping = {
-                'Feature_Key': 'feature_key',
-                'Category': 'category', 
-                'Feature N1': 'feature_n1',
-                'EC_SONiC_2111': 'ec_sonic_2111',
-                'EC_SONiC_2211': 'ec_sonic_2211',
-                'EC_202211_Fabric': 'ec_202211_fabric',
-                'EC SONiC 2311.X': 'ec_sonic_2311_x',
-                'EC SONiC 2311.N': 'ec_sonic_2311_n',
-                'VS_202311': 'vs_202311',
-                'VS_202311_Fabric': 'vs_202311_fabric',
-                'EC Proprietary': 'ec_proprietary',
-                'Component': 'component',
-                'Labels': 'labels'
-            }
-            
-            for excel_col, db_col in column_mapping.items():
-                status = "✅" if excel_col in df.columns else "❌"
-                print(f"   {status} {excel_col} → {db_col}")
             
             return df
             
         except Exception as e:
-            print(f"❌ Error reading Excel file: {e}")
+            click.echo(f"❌ Error reading Excel file: {e}")
             return None
     
     def clean_value(self, value):
@@ -149,19 +122,21 @@ class FeatureImporter:
         # Convert to string and strip whitespace
         cleaned = str(value).strip()
         
-        # Return None for empty strings
-        if cleaned == '' or cleaned.lower() in ['nan', 'none', 'null']:
+        # Return None for empty strings and NAN values
+        if cleaned == '' or cleaned.upper() in ['NAN', 'NONE', 'NULL', 'N/A']:
             return None
             
         return cleaned
     
     def map_support_value(self, value):
         """Map O/X/D values to meaningful text"""
-        if not value:
+        # Clean the value first
+        cleaned_value = self.clean_value(value)
+        if not cleaned_value:
             return None
         
-        # Clean the value first
-        cleaned = str(value).strip().upper()
+        # Convert to uppercase for mapping
+        upper_value = cleaned_value.upper()
         
         # Map the values
         value_mapping = {
@@ -170,7 +145,7 @@ class FeatureImporter:
             'D': 'Under Development'
         }
         
-        return value_mapping.get(cleaned, cleaned)  # Return original if not in mapping
+        return value_mapping.get(upper_value, cleaned_value)
     
     def generate_feature_key(self, category, feature_name):
         """Generate feature key if missing"""
@@ -197,10 +172,10 @@ class FeatureImporter:
         if not feature_key:
             feature_key = self.generate_feature_key(category, feature_n1)
             if not feature_key:
-                print(f"⚠️  Skipping row: Cannot generate feature_key from category='{category}', feature_n1='{feature_n1}'")
+                click.echo(f"⚠️  Skipping row: Cannot generate feature_key from category='{category}', feature_n1='{feature_n1}'")
                 return None
         
-        # Prepare feature data (map O/X/D values for support status fields)
+        # Prepare feature data
         feature_data = {
             'feature_key': feature_key,
             'category': category,
@@ -212,7 +187,7 @@ class FeatureImporter:
             'ec_sonic_2311_n': self.map_support_value(row.get('EC SONiC 2311.N')),
             'vs_202311': self.map_support_value(row.get('VS_202311')),
             'vs_202311_fabric': self.map_support_value(row.get('VS_202311_Fabric')),
-            'ec_proprietary': self.map_support_value(row.get('EC Proprietary')),
+            'ec_proprietary': self.clean_value(row.get('EC Proprietary')),
             'component': self.clean_value(row.get('Component'))
         }
         
@@ -228,245 +203,190 @@ class FeatureImporter:
         
         return feature_data, labels
     
-    def insert_feature(self, feature_data):
-        """Insert feature in s_feature_map table"""
-        try:
-            cursor = self.db_conn.cursor()
-            
-            # Insert new feature (since we cleared all data first)
-            insert_sql = """
-            INSERT INTO s_feature_map (
-                feature_key, category, feature_n1,
-                ec_sonic_2111, ec_sonic_2211, ec_202211_fabric,
-                ec_sonic_2311_x, ec_sonic_2311_n,
-                vs_202311, vs_202311_fabric,
-                ec_proprietary, component, created_at
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
-            """
-            
-            cursor.execute(insert_sql, (
-                feature_data['feature_key'],
-                feature_data['category'],
-                feature_data['feature_n1'],
-                feature_data['ec_sonic_2111'],
-                feature_data['ec_sonic_2211'],
-                feature_data['ec_202211_fabric'],
-                feature_data['ec_sonic_2311_x'],
-                feature_data['ec_sonic_2311_n'],
-                feature_data['vs_202311'],
-                feature_data['vs_202311_fabric'],
-                feature_data['ec_proprietary'],
-                feature_data['component']
-            ))
-            
-            self.stats['features_inserted'] += 1
-            cursor.close()
-            print(f"✅ Feature inserted: {feature_data['feature_key']}")
-            return True
-            
-        except Exception as e:
-            self.stats['errors'].append(f"Feature {feature_data['feature_key']}: {e}")
-            print(f"❌ Error inserting feature {feature_data['feature_key']}: {e}")
-            return False
-    
-    def insert_feature_labels(self, feature_key, labels):
-        """Insert feature labels into s_feature_label table"""
-        if not labels:
-            return
-        
-        try:
-            cursor = self.db_conn.cursor()
-            
-            # Insert labels (no need to delete since we cleared all data first)
-            for label in labels:
-                cursor.execute("""
-                    INSERT INTO s_feature_label (feature_key, label, created_at)
-                    VALUES (%s, %s, CURRENT_TIMESTAMP)
-                """, (feature_key, label))
-                
-                self.stats['labels_inserted'] += 1
-            
-            cursor.close()
-            print(f"✅ Labels inserted for {feature_key}: {', '.join(labels)}")
-            
-        except Exception as e:
-            self.stats['errors'].append(f"Labels for {feature_key}: {e}")
-            print(f"❌ Error inserting labels for {feature_key}: {e}")
-    
     def clear_existing_data(self):
         """Clear existing data from feature tables"""
         try:
-            cursor = self.db_conn.cursor()
+            click.echo("🧹 Clearing existing data...")
             
-            print("🧹 Clearing existing data...")
+            # Get counts before deletion
+            label_count = FeatureLabel.query.count()
+            feature_count = FeatureMap.query.count()
             
-            # Clear s_feature_label first (due to foreign key constraint)
-            cursor.execute("SELECT COUNT(*) FROM s_feature_label")
-            label_count = cursor.fetchone()[0]
+            # Delete all labels first (due to foreign key constraint)
+            FeatureLabel.query.delete()
+            click.echo(f"   ✅ Cleared {label_count} records from s_feature_label")
             
-            cursor.execute("DELETE FROM s_feature_label")
-            print(f"   ✅ Cleared {label_count} records from s_feature_label")
-            
-            # Clear s_feature_map
-            cursor.execute("SELECT COUNT(*) FROM s_feature_map")
-            feature_count = cursor.fetchone()[0]
-            
-            cursor.execute("DELETE FROM s_feature_map")
-            print(f"   ✅ Cleared {feature_count} records from s_feature_map")
+            # Delete all features
+            FeatureMap.query.delete()
+            click.echo(f"   ✅ Cleared {feature_count} records from s_feature_map")
             
             # Commit the deletions
-            self.db_conn.commit()
-            print("   ✅ Old data cleared successfully")
+            db.session.commit()
+            click.echo("   ✅ Old data cleared successfully")
             
-            cursor.close()
             return True
             
         except Exception as e:
-            print(f"   ❌ Error clearing data: {e}")
-            self.db_conn.rollback()
+            click.echo(f"   ❌ Error clearing data: {e}")
+            db.session.rollback()
             return False
-
+    
     def import_features(self, filepath, clear_data=True):
         """Main import process"""
-        print("🚀 Starting EC SONiC Feature import process")
-        print("="*60)
+        click.echo("🚀 Starting SQLAlchemy EC SONiC Feature import process")
+        click.echo("=" * 60)
         
-        # Clear existing data first (if requested)
-        if clear_data:
-            if not self.clear_existing_data():
-                print("❌ Failed to clear existing data. Aborting import.")
+        # Create app and push context
+        app = self.create_app()
+        
+        with app.app_context():
+            # Clear existing data first (if requested)
+            if clear_data:
+                if not self.clear_existing_data():
+                    click.echo("❌ Failed to clear existing data. Aborting import.")
+                    return False
+            else:
+                click.echo("⚠️  Skipping data clearing - will append to existing data")
+            
+            # Read Excel data
+            df = self.read_excel_data(filepath)
+            if df is None:
                 return False
-        else:
-            print("⚠️  Skipping data clearing - will append to existing data")
-        
-        # Read Excel data
-        df = self.read_excel_data(filepath)
-        if df is None:
-            return False
-        
-        # Process each row
-        print(f"\n📝 Processing {len(df)} feature rows...")
-        
-        for index, row in df.iterrows():
-            self.stats['features_processed'] += 1
             
-            # Process the row
-            result = self.process_feature_row(row)
-            if result is None:
-                continue
+            # Process each row
+            click.echo(f"\n📝 Processing {len(df)} feature rows...")
             
-            feature_data, labels = result
-            
-            # Insert feature
-            if self.insert_feature(feature_data):
-                # Insert labels
-                if labels:
+            for index, row in df.iterrows():
+                self.stats['features_processed'] += 1
+                
+                # Process the row
+                result = self.process_feature_row(row)
+                if result is None:
+                    continue
+                
+                feature_data, labels = result
+                
+                try:
+                    # Create feature object
+                    feature = FeatureMap(**feature_data)
+                    db.session.add(feature)
+                    db.session.flush()  # Get the ID
+                    
+                    self.stats['features_inserted'] += 1
+                    
+                    # Add labels
+                    for label in labels:
+                        feature_label = FeatureLabel(
+                            feature_key=feature.feature_key,
+                            label=label
+                        )
+                        db.session.add(feature_label)
+                        self.stats['labels_inserted'] += 1
+                    
                     self.stats['labels_processed'] += len(labels)
-                    self.insert_feature_labels(feature_data['feature_key'], labels)
-        
-        # Commit all changes
-        self.db_conn.commit()
-        print("\n✅ All changes committed to database")
-        
-        return True
+                    
+                    click.echo(f"✅ Feature processed: {feature.feature_key} ({len(labels)} labels)")
+                    
+                except Exception as e:
+                    self.stats['errors'].append(f"Feature {feature_data['feature_key']}: {e}")
+                    click.echo(f"❌ Error processing feature {feature_data['feature_key']}: {e}")
+                    db.session.rollback()
+                    continue
+            
+            # Commit all changes
+            try:
+                db.session.commit()
+                click.echo("\n✅ All changes committed to database")
+                return True
+            except Exception as e:
+                click.echo(f"\n❌ Error committing to database: {e}")
+                db.session.rollback()
+                return False
     
     def print_summary(self):
         """Print import summary"""
-        print("\n📊 Import Summary")
-        print("="*60)
-        print(f"📝 Features processed: {self.stats['features_processed']}")
-        print(f"➕ Features inserted: {self.stats['features_inserted']}")
-        print(f"🔄 Features updated: {self.stats['features_updated']}")
-        print(f"🏷️  Labels processed: {self.stats['labels_processed']}")
-        print(f"➕ Labels inserted: {self.stats['labels_inserted']}")
-        print(f"❌ Errors: {len(self.stats['errors'])}")
+        click.echo("\n📊 Import Summary")
+        click.echo("=" * 60)
+        click.echo(f"📝 Features processed: {self.stats['features_processed']}")
+        click.echo(f"➕ Features inserted: {self.stats['features_inserted']}")
+        click.echo(f"🔄 Features updated: {self.stats['features_updated']}")
+        click.echo(f"🏷️  Labels processed: {self.stats['labels_processed']}")
+        click.echo(f"➕ Labels inserted: {self.stats['labels_inserted']}")
+        click.echo(f"❌ Errors: {len(self.stats['errors'])}")
         
         if self.stats['errors']:
-            print(f"\n⚠️  Error Details:")
+            click.echo(f"\n⚠️  Error Details:")
             for error in self.stats['errors'][:10]:  # Show first 10 errors
-                print(f"   • {error}")
+                click.echo(f"   • {error}")
             if len(self.stats['errors']) > 10:
-                print(f"   ... and {len(self.stats['errors']) - 10} more errors")
-    
-    def close(self):
-        """Close database connection"""
-        if self.db_conn:
-            self.db_conn.close()
-            print("🔌 Database connection closed")
+                click.echo(f"   ... and {len(self.stats['errors']) - 10} more errors")
 
-def main():
-    """Main function"""
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Import EC SONiC features from Excel to database')
-    parser.add_argument('--date', help='Specific date in YYYYMMDD format (e.g., 20250626)')
-    parser.add_argument('--file', help='Specific Excel file path')
-    parser.add_argument('--dry-run', action='store_true', help='Preview data without importing')
-    parser.add_argument('--no-clear', action='store_true', help='Do not clear existing data before import')
-    
-    args = parser.parse_args()
+
+@click.command()
+@click.option('--env', default='development', help='Environment (development/production/testing)')
+@click.option('--date', help='Specific date in YYYYMMDD format (e.g., 20250626)')
+@click.option('--file', help='Specific Excel file path')
+@click.option('--dry-run', is_flag=True, help='Preview data without importing')
+@click.option('--no-clear', is_flag=True, help='Do not clear existing data before import')
+def main(env, date, file, dry_run, no_clear):
+    """Import EC SONiC features from Excel to database using SQLAlchemy"""
     
     # Create importer
-    importer = FeatureImporter()
+    importer = SQLAlchemyFeatureImporter(env)
     
     try:
-        # Connect to database (skip in dry-run mode)
-        if not args.dry_run and not importer.connect_database():
-            return 1
-        
         # Find Excel file
-        if args.file:
-            excel_file = args.file
+        if file:
+            excel_file = file
         else:
-            excel_file = importer.find_latest_feature_file(args.date)
+            excel_file = importer.find_latest_feature_file(date)
         
         if not excel_file:
-            print("❌ No Excel file found")
+            click.echo("❌ No Excel file found")
             return 1
         
-        if args.dry_run:
-            print("🔍 DRY RUN MODE - No data will be imported")
+        if dry_run:
+            click.echo("🔍 DRY RUN MODE - No data will be imported")
             df = importer.read_excel_data(excel_file)
             if df is not None:
-                print(f"✅ Would process {len(df)} feature rows")
+                click.echo(f"✅ Would process {len(df)} feature rows")
                 
                 # Preview first few rows
-                print("\n📋 Preview of first 3 rows:")
+                click.echo("\n📋 Preview of first 3 rows:")
                 for index, row in df.head(3).iterrows():
                     result = importer.process_feature_row(row)
                     if result:
                         feature_data, labels = result
-                        print(f"   Row {index+1}: {feature_data['feature_key']} ({len(labels)} labels)")
-                        print(f"      Category: {feature_data['category']}")
-                        print(f"      Feature: {feature_data['feature_n1']}")
-                        print(f"      SONiC 2111: {feature_data['ec_sonic_2111']}")
-                        print(f"      SONiC 2211: {feature_data['ec_sonic_2211']}")
-                        print(f"      SONiC 2311.X: {feature_data['ec_sonic_2311_x']}")
+                        click.echo(f"   Row {index+1}: {feature_data['feature_key']} ({len(labels)} labels)")
+                        click.echo(f"      Category: {feature_data['category']}")
+                        click.echo(f"      Feature: {feature_data['feature_n1']}")
+                        click.echo(f"      SONiC 2111: {feature_data['ec_sonic_2111']}")
+                        click.echo(f"      SONiC 2211: {feature_data['ec_sonic_2211']}")
+                        click.echo(f"      SONiC 2311.X: {feature_data['ec_sonic_2311_x']}")
                         if labels:
-                            print(f"      Labels: {', '.join(labels)}")
-                        print()
+                            click.echo(f"      Labels: {', '.join(labels)}")
+                        click.echo()
             return 0
         else:
             # Import features
-            clear_data = not args.no_clear
+            clear_data = not no_clear
             success = importer.import_features(excel_file, clear_data)
             
             if success:
                 importer.print_summary()
-                print("\n🎉 Import completed successfully!")
+                click.echo("\n🎉 Import completed successfully!")
                 return 0
             else:
-                print("\n💥 Import failed!")
+                click.echo("\n💥 Import failed!")
                 return 1
     
     except KeyboardInterrupt:
-        print("\n⏹️  Import cancelled by user")
+        click.echo("\n⏹️  Import cancelled by user")
         return 1
     except Exception as e:
-        print(f"\n💥 Unexpected error: {e}")
+        click.echo(f"\n💥 Unexpected error: {e}")
         return 1
-    finally:
-        importer.close()
+
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
