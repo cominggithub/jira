@@ -1,0 +1,389 @@
+{% extends "base.html" %}
+
+{% block title %}SAI Recording Analyzer{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>🔍 SAI Recording Analyzer</h1>
+    <p>Analyze SAI recording files for API usage patterns and performance metrics</p>
+</div>
+
+<div class="dashboard-grid">
+    <!-- File Selection -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>📁 Recording Files</h3>
+        </div>
+        <div class="card-content">
+            {% if recording_files %}
+                <div class="file-list">
+                    {% for file in recording_files %}
+                        <div class="file-item" data-file-path="{{ file }}">
+                            <div class="file-info">
+                                <span class="file-icon">🎥</span>
+                                <span class="file-name">{{ file.name }}</span>
+                                <span class="file-path">{{ file.parent }}</span>
+                            </div>
+                            <button class="analyze-btn" onclick="analyzeRecording('{{ file }}')">
+                                Analyze
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <p>No SAI recording files (.rec) found.</p>
+                    <p>Place .rec files in the <code>data/</code> or <code>sai/</code> directory.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Analysis Results -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>📊 Analysis Results</h3>
+        </div>
+        <div class="card-content">
+            <div id="analysis-results" class="analysis-container">
+                <div class="empty-state">
+                    <p>Select a recording file to analyze</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Statistics -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>📈 API Statistics</h3>
+        </div>
+        <div class="card-content">
+            <div id="api-stats" class="stats-container">
+                <div class="empty-state">
+                    <p>Analysis statistics will appear here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usage Instructions -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>💡 Usage Instructions</h3>
+        </div>
+        <div class="card-content">
+            <div class="instructions">
+                <h4>How to Use:</h4>
+                <ol>
+                    <li>Select a SAI recording file (.rec) from the list above</li>
+                    <li>Click "Analyze" to process the recording</li>
+                    <li>View API usage patterns, statistics, and performance metrics</li>
+                    <li>Export results for further analysis</li>
+                </ol>
+                
+                <h4>Supported Formats:</h4>
+                <ul>
+                    <li>SAI Redis recording files (.rec)</li>
+                    <li>SAI API trace files</li>
+                    <li>Custom SAI log formats</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.file-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 0.5rem;
+    transition: var(--transition);
+}
+
+.file-item:hover {
+    background: var(--hover-bg);
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.file-icon {
+    font-size: 1.5rem;
+}
+
+.file-name {
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+.file-path {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-left: 0.5rem;
+}
+
+.analyze-btn {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.analyze-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+.analyze-btn:disabled {
+    background: var(--disabled-bg);
+    color: var(--disabled-text);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.analysis-container, .stats-container {
+    min-height: 300px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+.empty-state code {
+    background: var(--code-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-top: 2px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.analysis-result {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.analysis-result h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-color);
+}
+
+.api-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.api-stat:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-weight: 600;
+}
+
+.stat-value {
+    font-family: 'Courier New', monospace;
+    color: var(--accent-color);
+}
+
+.instructions {
+    line-height: 1.6;
+}
+
+.instructions h4 {
+    margin: 1rem 0 0.5rem 0;
+    color: var(--accent-color);
+}
+
+.instructions ol, .instructions ul {
+    margin: 0.5rem 0;
+    padding-left: 2rem;
+}
+
+.instructions li {
+    margin: 0.25rem 0;
+}
+</style>
+
+<script>
+async function analyzeRecording(filePath) {
+    const resultsContainer = document.getElementById('analysis-results');
+    const statsContainer = document.getElementById('api-stats');
+    
+    // Show loading state
+    resultsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <span>Analyzing recording...</span>
+        </div>
+    `;
+    
+    statsContainer.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <span>Processing statistics...</span>
+        </div>
+    `;
+    
+    // Disable analyze button
+    const analyzeBtn = event.target;
+    analyzeBtn.disabled = true;
+    analyzeBtn.textContent = 'Analyzing...';
+    
+    try {
+        const response = await fetch('/sai/analyze-recording', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                file_path: filePath
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.error) {
+            displayError(resultsContainer, result.error);
+            displayError(statsContainer, 'Analysis failed');
+        } else {
+            displayResults(resultsContainer, result);
+            displayStats(statsContainer, result.statistics || {});
+        }
+        
+    } catch (error) {
+        displayError(resultsContainer, `Network error: ${error.message}`);
+        displayError(statsContainer, 'Analysis failed');
+    } finally {
+        // Re-enable analyze button
+        analyzeBtn.disabled = false;
+        analyzeBtn.textContent = 'Analyze';
+    }
+}
+
+function displayResults(container, result) {
+    const html = `
+        <div class="analysis-result">
+            <h4>📁 File Analysis</h4>
+            <div class="api-stat">
+                <span class="stat-label">File Path:</span>
+                <span class="stat-value">${result.file_path || 'N/A'}</span>
+            </div>
+            <div class="api-stat">
+                <span class="stat-label">Total Lines:</span>
+                <span class="stat-value">${result.total_lines || 0}</span>
+            </div>
+            <div class="api-stat">
+                <span class="stat-label">API Calls Found:</span>
+                <span class="stat-value">${result.api_calls || 0}</span>
+            </div>
+        </div>
+        
+        ${result.parsed_calls && result.parsed_calls.length > 0 ? `
+        <div class="analysis-result">
+            <h4>🔍 Sample API Calls</h4>
+            ${result.parsed_calls.map(call => `
+                <div class="api-stat">
+                    <span class="stat-label">Line ${call.line}:</span>
+                    <span class="stat-value">${call.api_type}</span>
+                </div>
+            `).join('')}
+        </div>
+        ` : ''}
+    `;
+    
+    container.innerHTML = html;
+}
+
+function displayStats(container, stats) {
+    if (!stats || Object.keys(stats).length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>No statistics available</p></div>';
+        return;
+    }
+    
+    const html = `
+        <div class="analysis-result">
+            <h4>📊 Usage Statistics</h4>
+            <div class="api-stat">
+                <span class="stat-label">Total API Calls:</span>
+                <span class="stat-value">${stats.total_api_calls || 0}</span>
+            </div>
+            <div class="api-stat">
+                <span class="stat-label">Unique API Types:</span>
+                <span class="stat-value">${stats.unique_api_types || 0}</span>
+            </div>
+            <div class="api-stat">
+                <span class="stat-label">Most Used API:</span>
+                <span class="stat-value">${stats.most_used_api || 'N/A'}</span>
+            </div>
+        </div>
+        
+        ${stats.api_type_distribution ? `
+        <div class="analysis-result">
+            <h4>📈 API Distribution</h4>
+            ${Object.entries(stats.api_type_distribution).slice(0, 10).map(([api, count]) => `
+                <div class="api-stat">
+                    <span class="stat-label">${api}:</span>
+                    <span class="stat-value">${count} calls</span>
+                </div>
+            `).join('')}
+        </div>
+        ` : ''}
+    `;
+    
+    container.innerHTML = html;
+}
+
+function displayError(container, message) {
+    container.innerHTML = `
+        <div class="empty-state">
+            <p style="color: var(--error-color);">❌ ${message}</p>
+        </div>
+    `;
+}
+</script>
+{% endblock %}

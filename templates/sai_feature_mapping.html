@@ -1,0 +1,432 @@
+{% extends "base.html" %}
+
+{% block title %}SAI Feature Mapping{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>🔗 SAI Feature Mapping</h1>
+    <p>Map SONiC features to SAI API implementations and platform support</p>
+</div>
+
+<div class="dashboard-grid">
+    <!-- Feature Categories -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>🏷️ SONiC Feature Categories</h3>
+        </div>
+        <div class="card-content">
+            <div class="feature-categories">
+                <div class="category-tab active" data-category="networking">
+                    <span class="tab-icon">🌐</span>
+                    <span>Networking</span>
+                </div>
+                <div class="category-tab" data-category="switching">
+                    <span class="tab-icon">🔄</span>
+                    <span>Switching</span>
+                </div>
+                <div class="category-tab" data-category="routing">
+                    <span class="tab-icon">🛣️</span>
+                    <span>Routing</span>
+                </div>
+                <div class="category-tab" data-category="security">
+                    <span class="tab-icon">🔒</span>
+                    <span>Security</span>
+                </div>
+                <div class="category-tab" data-category="monitoring">
+                    <span class="tab-icon">📊</span>
+                    <span>Monitoring</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Mapping Table -->
+    <div class="dashboard-card full-width">
+        <div class="card-header">
+            <h3>🗺️ Feature to SAI API Mapping</h3>
+            <div class="mapping-controls">
+                <input type="text" id="mapping-search" placeholder="Search features..." class="search-input">
+                <select id="platform-filter" class="platform-select">
+                    <option value="">All Platforms</option>
+                    <option value="td3">TD3</option>
+                    <option value="th3">TH3</option>
+                    <option value="th4">TH4</option>
+                    <option value="th5">TH5</option>
+                </select>
+            </div>
+        </div>
+        <div class="card-content">
+            <div id="mapping-table" class="mapping-container">
+                <!-- Sample mapping data -->
+                <div class="mapping-row">
+                    <div class="feature-info">
+                        <div class="feature-name">BGP</div>
+                        <div class="feature-description">Border Gateway Protocol routing</div>
+                        <div class="feature-labels">
+                            <span class="label networking">Networking</span>
+                            <span class="label routing">Routing</span>
+                        </div>
+                    </div>
+                    <div class="sai-mapping">
+                        <div class="sai-apis">
+                            <span class="sai-api">sai_route_api</span>
+                            <span class="sai-api">sai_next_hop_api</span>
+                            <span class="sai-api">sai_neighbor_api</span>
+                        </div>
+                        <div class="platform-support">
+                            <span class="platform-chip supported">TD3</span>
+                            <span class="platform-chip supported">TH3</span>
+                            <span class="platform-chip supported">TH4</span>
+                            <span class="platform-chip partial">TH5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mapping-row">
+                    <div class="feature-info">
+                        <div class="feature-name">VXLAN</div>
+                        <div class="feature-description">Virtual Extensible LAN tunneling</div>
+                        <div class="feature-labels">
+                            <span class="label networking">Networking</span>
+                            <span class="label switching">Switching</span>
+                        </div>
+                    </div>
+                    <div class="sai-mapping">
+                        <div class="sai-apis">
+                            <span class="sai-api">sai_tunnel_api</span>
+                            <span class="sai-api">sai_bridge_api</span>
+                            <span class="sai-api">sai_vlan_api</span>
+                        </div>
+                        <div class="platform-support">
+                            <span class="platform-chip partial">TD3</span>
+                            <span class="platform-chip supported">TH3</span>
+                            <span class="platform-chip supported">TH4</span>
+                            <span class="platform-chip supported">TH5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mapping-row">
+                    <div class="feature-info">
+                        <div class="feature-name">ACL</div>
+                        <div class="feature-description">Access Control Lists for traffic filtering</div>
+                        <div class="feature-labels">
+                            <span class="label security">Security</span>
+                            <span class="label networking">Networking</span>
+                        </div>
+                    </div>
+                    <div class="sai-mapping">
+                        <div class="sai-apis">
+                            <span class="sai-api">sai_acl_api</span>
+                            <span class="sai-api">sai_policer_api</span>
+                        </div>
+                        <div class="platform-support">
+                            <span class="platform-chip supported">TD3</span>
+                            <span class="platform-chip supported">TH3</span>
+                            <span class="platform-chip supported">TH4</span>
+                            <span class="platform-chip supported">TH5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>📋 Legend</h3>
+        </div>
+        <div class="card-content">
+            <div class="legend">
+                <div class="legend-section">
+                    <h4>Platform Support</h4>
+                    <div class="legend-item">
+                        <span class="platform-chip supported">TD3</span>
+                        <span>Fully Supported</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="platform-chip partial">TH3</span>
+                        <span>Partial Support</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="platform-chip unsupported">TH4</span>
+                        <span>Not Supported</span>
+                    </div>
+                </div>
+                
+                <div class="legend-section">
+                    <h4>Feature Categories</h4>
+                    <div class="legend-item">
+                        <span class="label networking">Networking</span>
+                        <span>Network protocols and connectivity</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="label switching">Switching</span>
+                        <span>Layer 2 switching features</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="label routing">Routing</span>
+                        <span>Layer 3 routing protocols</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="label security">Security</span>
+                        <span>Security and access control</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Development Status -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>🚧 Development Status</h3>
+        </div>
+        <div class="card-content">
+            <div class="status-message">
+                <h4>🏗️ Under Development</h4>
+                <p>This feature mapping tool will integrate with the existing SONiC feature database to provide:</p>
+                <ul>
+                    <li>Real-time feature to SAI API mapping</li>
+                    <li>Platform-specific implementation details</li>
+                    <li>Feature dependency analysis</li>
+                    <li>API usage recommendations</li>
+                    <li>Performance impact assessment</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.feature-categories {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.category-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.category-tab:hover, .category-tab.active {
+    background: var(--accent-color);
+    color: var(--accent-text);
+}
+
+.tab-icon {
+    font-size: 1.2rem;
+}
+
+.mapping-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-input, .platform-select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.mapping-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.mapping-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.mapping-row:hover {
+    background: var(--hover-bg);
+    box-shadow: var(--shadow);
+}
+
+.feature-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.feature-description {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.feature-labels {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.label {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.label.networking { background: #e3f2fd; color: #1565c0; }
+.label.switching { background: #f3e5f5; color: #7b1fa2; }
+.label.routing { background: #e8f5e8; color: #388e3c; }
+.label.security { background: #fff3e0; color: #f57c00; }
+.label.monitoring { background: #fce4ec; color: #c2185b; }
+
+.sai-apis {
+    margin-bottom: 1rem;
+}
+
+.sai-api {
+    display: inline-block;
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    margin: 0.25rem 0.5rem 0.25rem 0;
+}
+
+.platform-support {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.platform-chip {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.platform-chip.supported {
+    background: #e8f5e8;
+    color: #388e3c;
+}
+
+.platform-chip.partial {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.platform-chip.unsupported {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.legend-section h4 {
+    margin: 0 0 1rem 0;
+    color: var(--accent-color);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.75rem 0;
+}
+
+.status-message {
+    text-align: center;
+    padding: 2rem;
+}
+
+.status-message h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.status-message ul {
+    text-align: left;
+    max-width: 500px;
+    margin: 1rem auto;
+}
+
+.status-message li {
+    margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .mapping-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .mapping-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .search-input, .platform-select {
+        width: 100%;
+    }
+}
+</style>
+
+<script>
+// Category tab switching
+document.querySelectorAll('.category-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        // Remove active class from all tabs
+        document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        this.classList.add('active');
+        
+        // Filter mappings by category (placeholder)
+        const category = this.dataset.category;
+        console.log('Filtering by category:', category);
+        // TODO: Implement filtering logic
+    });
+});
+
+// Search functionality placeholder
+document.getElementById('mapping-search').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    console.log('Searching for:', searchTerm);
+    // TODO: Implement search filtering
+});
+
+// Platform filter placeholder
+document.getElementById('platform-filter').addEventListener('change', function(e) {
+    const platform = e.target.value;
+    console.log('Filtering by platform:', platform);
+    // TODO: Implement platform filtering
+});
+</script>
+{% endblock %}

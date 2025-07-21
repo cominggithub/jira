@@ -34,6 +34,21 @@
                         </div>
                     </div>
                     
+                    <div class="nav-dropdown">
+                        <button class="nav-dropdown-btn" onclick="toggleNavDropdown('saiDropdown')">
+                            <span>SAI</span>
+                            <span class="nav-dropdown-arrow">▼</span>
+                        </button>
+                        <div class="nav-dropdown-content" id="saiDropdown">
+                            <a href="{{ url_for('sai_overview') }}">SAI Overview</a>
+                            <a href="{{ url_for('sai_analyzer') }}">Recording Analyzer</a>
+                            <a href="{{ url_for('sai_api_explorer') }}">API Explorer</a>
+                            <a href="{{ url_for('sai_feature_mapping') }}">Feature Mapping</a>
+                            <a href="{{ url_for('sai_sample_report') }}">Sample Report</a>
+                            <a href="{{ url_for('sai_enhanced_report') }}">Enhanced Analysis</a>
+                        </div>
+                    </div>
+                    
                     <a href="{{ url_for('mcp') }}">MCP</a>
                     <a href="{{ url_for('about') }}">About</a>
                     <a href="{{ url_for('db_info') }}">App Info</a>

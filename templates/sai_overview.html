@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block title %}SAI Overview{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>🔌 SAI (Switch Abstraction Interface) Overview</h1>
+    <p>Comprehensive SAI tools and utilities for SONiC feature management</p>
+</div>
+
+<div class="dashboard-grid">
+    <!-- SAI Documentation -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>📚 SAI Documentation</h3>
+        </div>
+        <div class="card-content markdown-content">
+            {% if sai_readme %}
+                <div id="sai-readme-content">{{ sai_readme }}</div>
+            {% else %}
+                <p>SAI README not found. Please check the sai/ directory.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- SAI Tools -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>🛠️ SAI Tools</h3>
+        </div>
+        <div class="card-content">
+            <div class="tool-grid">
+                <a href="{{ url_for('sai_analyzer') }}" class="tool-card">
+                    <div class="tool-icon">🔍</div>
+                    <div class="tool-info">
+                        <h4>Recording Analyzer</h4>
+                        <p>Analyze SAI recording files (.rec) for API usage patterns</p>
+                    </div>
+                </a>
+                
+                <a href="{{ url_for('sai_api_explorer') }}" class="tool-card">
+                    <div class="tool-icon">🗂️</div>
+                    <div class="tool-info">
+                        <h4>API Explorer</h4>
+                        <p>Browse SAI API definitions and specifications</p>
+                    </div>
+                </a>
+                
+                <a href="{{ url_for('sai_feature_mapping') }}" class="tool-card">
+                    <div class="tool-icon">🔗</div>
+                    <div class="tool-info">
+                        <h4>Feature Mapping</h4>
+                        <p>Map SONiC features to SAI API implementations</p>
+                    </div>
+                </a>
+                
+                <a href="{{ url_for('sai_sample_report') }}" class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-info">
+                        <h4>Sample Report</h4>
+                        <p>View a comprehensive SAI analysis report example</p>
+                    </div>
+                </a>
+                
+                <a href="{{ url_for('sai_enhanced_report') }}" class="tool-card">
+                    <div class="tool-icon">🔍</div>
+                    <div class="tool-info">
+                        <h4>Enhanced Analysis</h4>
+                        <p>Line-by-line SAI recording analysis with filtering</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAI File Structure -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>📁 SAI Components</h3>
+        </div>
+        <div class="card-content">
+            {% if sai_structure %}
+                <div class="file-explorer">
+                    {% for file_path, info in sai_structure.items() %}
+                        <div class="file-item">
+                            <span class="file-icon">
+                                {% if file_path.endswith('.py') %}🐍
+                                {% elif file_path.endswith('.md') %}📝
+                                {% elif file_path.endswith('.rec') %}🎥
+                                {% else %}📄{% endif %}
+                            </span>
+                            <span class="file-name">{{ file_path }}</span>
+                            <span class="file-size">{{ "%.1f KB"|format(info.size / 1024) }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No SAI files found. Please check the sai/ directory structure.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- SAI Integration Status -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3>📊 Integration Status</h3>
+        </div>
+        <div class="card-content">
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-label">Parsers</div>
+                    <div class="status-value">🟡 In Development</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Validators</div>
+                    <div class="status-value">🟡 In Development</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Analyzers</div>
+                    <div class="status-value">🟢 Available</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">API Explorer</div>
+                    <div class="status-value">🟡 In Development</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.tool-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.tool-card:hover {
+    background: var(--accent-color);
+    color: var(--accent-text);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.tool-icon {
+    font-size: 2rem;
+    min-width: 3rem;
+    text-align: center;
+}
+
+.tool-info h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.tool-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.file-explorer {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-icon {
+    font-size: 1.2rem;
+    min-width: 2rem;
+}
+
+.file-name {
+    flex: 1;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.file-size {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.status-label {
+    font-weight: 600;
+}
+
+.status-value {
+    font-size: 0.9rem;
+}
+
+.markdown-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+// Render markdown content
+document.addEventListener('DOMContentLoaded', function() {
+    const readmeContent = document.getElementById('sai-readme-content');
+    if (readmeContent) {
+        const markdownText = readmeContent.textContent;
+        readmeContent.innerHTML = marked.parse(markdownText);
+    }
+});
+</script>
+{% endblock %}

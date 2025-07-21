@@ -1,6 +1,7 @@
 import os
 import logging
 from datetime import datetime
+from pathlib import Path
 from flask import Flask, render_template, request
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -234,6 +235,148 @@ def create_app(config_name=None):
         
         # Show all schemas
         return render_template('schema.html', schemas=schemas, selected_db=None, config=app.config)
+    
+    # SAI Routes
+    @app.route('/sai')
+    @app.route('/sai/overview')
+    def sai_overview():
+        """SAI Overview page"""
+        import os
+        from pathlib import Path
+        
+        # Read SAI README
+        sai_readme_path = Path('sai/README.md')
+        sai_readme = ""
+        if sai_readme_path.exists():
+            with open(sai_readme_path, 'r', encoding='utf-8') as f:
+                sai_readme = f.read()
+        
+        # Get SAI file structure
+        sai_structure = {}
+        sai_dir = Path('sai')
+        if sai_dir.exists():
+            for item in sai_dir.rglob('*'):
+                if item.is_file() and not item.name.startswith('.'):
+                    rel_path = str(item.relative_to(sai_dir))
+                    sai_structure[rel_path] = {
+                        'size': item.stat().st_size,
+                        'modified': item.stat().st_mtime
+                    }
+        
+        return render_template('sai_overview.html', 
+                             sai_readme=sai_readme,
+                             sai_structure=sai_structure,
+                             config=app.config)
+    
+    @app.route('/sai/analyzer')
+    def sai_analyzer():
+        """SAI Recording Analyzer page"""
+        import os
+        from pathlib import Path
+        
+        # Check for existing recording files
+        recording_files = []
+        data_dir = Path('data')
+        if data_dir.exists():
+            recording_files = list(data_dir.glob('*.rec'))
+        
+        # Also check sai directory
+        sai_dir = Path('sai')
+        if sai_dir.exists():
+            recording_files.extend(list(sai_dir.glob('*.rec')))
+        
+        return render_template('sai_analyzer.html',
+                             recording_files=recording_files,
+                             config=app.config)
+    
+    @app.route('/sai/api-explorer')
+    def sai_api_explorer():
+        """SAI API Explorer page"""
+        return render_template('sai_api_explorer.html', config=app.config)
+    
+    @app.route('/sai/feature-mapping')
+    def sai_feature_mapping():
+        """SAI Feature Mapping page"""
+        return render_template('sai_feature_mapping.html', config=app.config)
+    
+    @app.route('/sai/sample-report')
+    def sai_sample_report():
+        """SAI Sample Analysis Report"""
+        return render_template('sai_sample_report.html', config=app.config)
+    
+    @app.route('/sai/enhanced-report')
+    def sai_enhanced_report():
+        """SAI Enhanced Line-by-Line Analysis Report"""
+        return render_template('sai_enhanced_report.html', config=app.config)
+    
+    @app.route('/sai/analyze-recording', methods=['POST'])
+    def sai_analyze_recording():
+        """API endpoint to analyze SAI recording files"""
+        import json
+        from flask import request, jsonify
+        
+        try:
+            data = request.get_json()
+            file_path = data.get('file_path')
+            
+            if not file_path:
+                return jsonify({'error': 'No file path provided'}), 400
+            
+            # Import and use the enhanced SAI parser
+            sys.path.append('sai/parsers')
+            from enhanced_sai_parser import EnhancedSAIParser
+            
+            parser = EnhancedSAIParser()
+            lines = parser.parse_file(file_path)
+            
+            # Convert to JSON-serializable format
+            result = {
+                'metadata': {
+                    'file': Path(file_path).name,
+                    'total_lines': len(lines),
+                    'parsed_at': datetime.now().isoformat(),
+                    'parser_version': 'enhanced_2.0.0'
+                },
+                'summary': {
+                    'total_operations': len(lines),
+                    'success_count': len([l for l in lines if l.status_category == 'success']),
+                    'error_count': len([l for l in lines if l.status_category == 'error']),
+                    'warning_count': len([l for l in lines if l.status_category == 'warning']),
+                    'info_count': len([l for l in lines if l.status_category == 'info']),
+                    'operation_types': {},
+                    'object_types': {},
+                },
+                'sample_lines': [
+                    {
+                        'line_number': line.line_number,
+                        'timestamp': line.timestamp.isoformat(),
+                        'operation_type': line.operation_type,
+                        'object_type': line.object_type,
+                        'object_id': line.object_id,
+                        'status': line.status,
+                        'status_category': line.status_category,
+                        'raw_line': line.raw_line,
+                        'human_explanation': line.human_explanation,
+                        'decoded_operation': line.decoded_operation,
+                        'duration_ms': line.duration_ms
+                    } for line in lines[:50]  # First 50 lines
+                ],
+                'errors': [
+                    {
+                        'line_number': line.line_number,
+                        'timestamp': line.timestamp.isoformat(),
+                        'operation_type': line.operation_type,
+                        'status': line.status,
+                        'human_explanation': line.human_explanation,
+                        'error_details': line.error_details
+                    } for line in lines if line.status_category == 'error'
+                ][:20]  # First 20 errors
+            }
+            
+            return jsonify(result)
+            
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
     
     return app
 

@@ -1,0 +1,579 @@
+{% extends "base.html" %}
+
+{% block title %}Enhanced SAI Recording Analysis{% endblock %}
+
+{% block head %}
+<style>
+/* Enhanced SAI Report Specific Styles */
+.report-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.report-header {
+    background: var(--card-bg);
+    color: var(--card-text);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    text-align: center;
+    border: 1px solid var(--card-border);
+}
+
+.summary-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.summary-stats .stat-item {
+    padding: 0.5rem 1rem;
+    background: var(--accent-color);
+    color: var(--accent-text);
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.filters {
+    background: var(--card-bg);
+    color: var(--card-text);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    border: 1px solid var(--card-border);
+}
+
+.filter-controls {
+    display: flex;
+    gap: 1.5rem;
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.filter-group select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: inherit;
+}
+
+.clear-btn {
+    padding: 0.5rem 1rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.clear-btn:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.line-analysis {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+}
+
+.line-analysis h2 {
+    padding: 1.5rem;
+    background: var(--header-bg);
+    color: var(--header-text);
+    border-bottom: 2px solid var(--accent-color);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.analysis-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 80px 2fr 3fr;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--accent-color);
+    color: var(--accent-text);
+    font-weight: bold;
+    border-bottom: 2px solid var(--card-border);
+    font-size: 0.95rem;
+}
+
+.table-body {
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 80px 2fr 3fr;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--card-border);
+    transition: background-color 0.2s;
+}
+
+.table-row:hover {
+    background: var(--list-bg);
+}
+
+.table-row.success {
+    border-left: 4px solid #28a745;
+}
+
+.table-row.error {
+    border-left: 4px solid #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.table-row.warning {
+    border-left: 4px solid #ffc107;
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.table-row.info {
+    border-left: 4px solid #17a2b8;
+}
+
+.col-line {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    justify-content: center;
+}
+
+.line-number {
+    font-weight: bold;
+    color: var(--accent-color);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.timestamp {
+    font-size: 0.7rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    font-family: var(--font-mono);
+}
+
+.col-source {
+    overflow: hidden;
+}
+
+.raw-log {
+    background: var(--card-bg);
+    color: var(--text-color);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    overflow-x: auto;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--card-border);
+    word-break: break-all;
+    max-height: 60px;
+    overflow-y: auto;
+}
+
+.operation-info {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.operation-badge {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.operation-badge.get-request { background: #007bff; color: white; }
+.operation-badge.set-request { background: #28a745; color: white; }
+.operation-badge.create-request { background: #17a2b8; color: white; }
+.operation-badge.remove-request { background: #dc3545; color: white; }
+.operation-badge.flush-request { background: #6f42c1; color: white; }
+
+.status-badge {
+    padding: 0.125rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.status-badge.success { background: #d4edda; color: #155724; }
+.status-badge.error { background: #f8d7da; color: #721c24; }
+.status-badge.warning { background: #fff3cd; color: #856404; }
+
+.col-explanation {
+    color: var(--text-color);
+    line-height: 1.4;
+    font-size: 0.9rem;
+}
+
+.explanation-section {
+    margin-bottom: 0.5rem;
+}
+
+.explanation-section strong {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.decoded-params {
+    font-family: var(--font-mono);
+    background: var(--list-bg);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    margin: 0.25rem 0;
+}
+
+.record-count {
+    text-align: center;
+    padding: 1rem;
+    background: var(--list-bg);
+    color: var(--text-color);
+    font-weight: bold;
+    border-top: 1px solid var(--card-border);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 70px 1.5fr 2fr;
+        gap: 0.75rem;
+        padding: 0.75rem;
+    }
+    
+    .raw-log {
+        font-size: 0.75rem;
+    }
+    
+    .col-explanation {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .table-header {
+        display: none;
+    }
+    
+    .table-row {
+        display: block;
+        padding: 1rem;
+    }
+    
+    .col-line,
+    .col-source,
+    .col-explanation {
+        margin-bottom: 1rem;
+    }
+    
+    .col-line::before {
+        content: "Line: ";
+        font-weight: bold;
+    }
+    
+    .col-source::before {
+        content: "Source Log: ";
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    .col-explanation::before {
+        content: "Explanation: ";
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="report-container">
+    <div class="report-header">
+        <h1>🔍 Enhanced SAI Recording Analysis</h1>
+        <p>Line-by-line analysis with human-readable explanations (Latest 100 Records)</p>
+        <div class="summary-stats">
+            <span class="stat-item" id="total-lines">Total: 0</span>
+            <span class="stat-item" id="success-count">Success: 0</span>
+            <span class="stat-item" id="error-count">Errors: 0</span>
+            <span class="stat-item" id="warning-count">Warnings: 0</span>
+        </div>
+    </div>
+
+    <div class="filters">
+        <h3>🎛️ Filters</h3>
+        <div class="filter-controls">
+            <div class="filter-group">
+                <label for="operation-filter">Operation Type:</label>
+                <select id="operation-filter">
+                    <option value="">All Operations</option>
+                    <option value="get">GET</option>
+                    <option value="set">SET</option>
+                    <option value="create">CREATE</option>
+                    <option value="remove">REMOVE</option>
+                    <option value="flush">FLUSH</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="status-filter">Status:</label>
+                <select id="status-filter">
+                    <option value="">All Status</option>
+                    <option value="success">Success</option>
+                    <option value="error">Error</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="object-filter">Object Type:</label>
+                <select id="object-filter">
+                    <option value="">All Objects</option>
+                </select>
+            </div>
+            
+            <button class="clear-btn" onclick="clearFilters()">Clear Filters</button>
+        </div>
+    </div>
+
+    <div class="line-analysis">
+        <h2>📊 Line-by-Line Analysis</h2>
+        <div class="analysis-table">
+            <div class="table-header">
+                <div>Line</div>
+                <div>Source SAI Log</div>
+                <div>Human Readable Explanation</div>
+            </div>
+            <div class="table-body" id="analysis-rows">
+                <!-- Analysis rows will be populated by JavaScript -->
+            </div>
+        </div>
+        <div class="record-count" id="record-count">
+            Showing latest 100 records
+        </div>
+    </div>
+</div>
+
+<script>
+// Sample SAI log data (latest 100 records)
+const sampleSAIData = [
+    {
+        line: 35614,
+        timestamp: "2024-01-15 14:30:25.123",
+        rawLog: "2024-01-15.14:30:25.123456|g|SAI_OBJECT_TYPE_SWITCH:oid:0x21000000000000|SAI_SWITCH_ATTR_DEFAULT_VIRTUAL_ROUTER_ID|oid:0x3000000000024",
+        operation: "get",
+        status: "success",
+        explanation: "Retrieved the default virtual router ID from switch object. The operation successfully returned router ID 0x3000000000024, which is the primary routing instance for this switch.",
+        decoded: "GET switch attribute DEFAULT_VIRTUAL_ROUTER_ID → oid:0x3000000000024",
+        objectType: "SWITCH"
+    },
+    {
+        line: 35613,
+        timestamp: "2024-01-15 14:30:25.120",
+        rawLog: "2024-01-15.14:30:25.120456|s|SAI_OBJECT_TYPE_PORT:oid:0x1000000000002|SAI_PORT_ATTR_ADMIN_STATE=true|SAI_STATUS_SUCCESS",
+        operation: "set",
+        status: "success",
+        explanation: "Successfully enabled administrative state for port oid:0x1000000000002. The port is now administratively UP and ready to forward traffic.",
+        decoded: "SET port attribute ADMIN_STATE=true → SUCCESS",
+        objectType: "PORT"
+    },
+    {
+        line: 35612,
+        timestamp: "2024-01-15 14:30:25.115",
+        rawLog: "2024-01-15.14:30:25.115456|c|SAI_OBJECT_TYPE_ROUTE_ENTRY:*|SAI_ROUTE_ENTRY_ATTR_NEXT_HOP_ID=oid:0x4000000000001|oid:0x600000000000a",
+        operation: "create",
+        status: "success",
+        explanation: "Created a new route entry with next-hop ID 0x4000000000001. The route was successfully installed in the routing table with entry ID 0x600000000000a.",
+        decoded: "CREATE route entry with NEXT_HOP_ID=0x4000000000001 → oid:0x600000000000a",
+        objectType: "ROUTE_ENTRY"
+    },
+    {
+        line: 35611,
+        timestamp: "2024-01-15 14:30:25.110",
+        rawLog: "2024-01-15.14:30:25.110456|r|SAI_OBJECT_TYPE_NEIGHBOR_ENTRY:*|SAI_STATUS_OBJECT_IN_USE",
+        operation: "remove",
+        status: "error",
+        explanation: "Failed to remove neighbor entry because it is still in use by other objects. This error indicates the neighbor is referenced by routes or other entries that must be removed first.",
+        decoded: "REMOVE neighbor entry → ERROR: OBJECT_IN_USE",
+        objectType: "NEIGHBOR_ENTRY"
+    },
+    {
+        line: 35610,
+        timestamp: "2024-01-15 14:30:25.105",
+        rawLog: "2024-01-15.14:30:25.105456|g|SAI_OBJECT_TYPE_VIRTUAL_ROUTER:oid:0x3000000000024|SAI_VIRTUAL_ROUTER_ATTR_ADMIN_V4_STATE|true",
+        operation: "get",
+        status: "success",
+        explanation: "Retrieved IPv4 administrative state from virtual router 0x3000000000024. The router has IPv4 forwarding enabled (admin state = true).",
+        decoded: "GET virtual router ADMIN_V4_STATE → true",
+        objectType: "VIRTUAL_ROUTER"
+    }
+];
+
+// Add more sample data to reach 100 records
+for (let i = 6; i <= 100; i++) {
+    const operations = ['get', 'set', 'create', 'remove'];
+    const statuses = ['success', 'success', 'success', 'error', 'warning']; // More success than errors
+    const objects = ['PORT', 'SWITCH', 'ROUTE_ENTRY', 'NEIGHBOR_ENTRY', 'VIRTUAL_ROUTER', 'VLAN', 'LAG'];
+    
+    const op = operations[Math.floor(Math.random() * operations.length)];
+    const status = statuses[Math.floor(Math.random() * statuses.length)];
+    const obj = objects[Math.floor(Math.random() * objects.length)];
+    const lineNum = 35615 - i;
+    
+    sampleSAIData.push({
+        line: lineNum,
+        timestamp: `2024-01-15 14:30:${String(25 - Math.floor(i/4)).padStart(2, '0')}.${String(125 - i).padStart(3, '0')}`,
+        rawLog: `2024-01-15.14:30:${String(25 - Math.floor(i/4)).padStart(2, '0')}.${String(125000 - i*1000).padStart(6, '0')}|${op.charAt(0)}|SAI_OBJECT_TYPE_${obj}:oid:0x${Math.floor(Math.random() * 999999).toString(16)}|ATTR_EXAMPLE|value`,
+        operation: op,
+        status: status,
+        explanation: `${op.toUpperCase()} operation on ${obj} object. ${status === 'success' ? 'Operation completed successfully.' : status === 'error' ? 'Operation failed due to system constraints.' : 'Operation completed with warnings.'}`,
+        decoded: `${op.toUpperCase()} ${obj.toLowerCase()} operation → ${status.toUpperCase()}`,
+        objectType: obj
+    });
+}
+
+let currentData = [...sampleSAIData];
+let allObjectTypes = [...new Set(sampleSAIData.map(item => item.objectType))];
+
+function initializePage() {
+    updateSummaryStats();
+    populateObjectFilter();
+    renderAnalysisRows();
+}
+
+function updateSummaryStats() {
+    const total = currentData.length;
+    const success = currentData.filter(item => item.status === 'success').length;
+    const errors = currentData.filter(item => item.status === 'error').length;
+    const warnings = currentData.filter(item => item.status === 'warning').length;
+    
+    document.getElementById('total-lines').textContent = `Total: ${total}`;
+    document.getElementById('success-count').textContent = `Success: ${success}`;
+    document.getElementById('error-count').textContent = `Errors: ${errors}`;
+    document.getElementById('warning-count').textContent = `Warnings: ${warnings}`;
+}
+
+function populateObjectFilter() {
+    const objectFilter = document.getElementById('object-filter');
+    allObjectTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        objectFilter.appendChild(option);
+    });
+}
+
+function renderAnalysisRows() {
+    const container = document.getElementById('analysis-rows');
+    container.innerHTML = '';
+    
+    currentData.forEach(item => {
+        const row = document.createElement('div');
+        row.className = `table-row ${item.status}`;
+        
+        row.innerHTML = `
+            <div class="col-line">
+                <div class="line-number">#${item.line}</div>
+                <div class="timestamp">${item.timestamp}</div>
+            </div>
+            <div class="col-source">
+                <div class="raw-log">${item.rawLog}</div>
+                <div class="operation-info">
+                    <span class="operation-badge ${item.operation}-request">${item.operation.toUpperCase()}</span>
+                    <span class="status-badge ${item.status}">${item.status.toUpperCase()}</span>
+                </div>
+            </div>
+            <div class="col-explanation">
+                <div class="explanation-section">
+                    <strong>Summary:</strong> ${item.explanation}
+                </div>
+                <div class="decoded-params">${item.decoded}</div>
+            </div>
+        `;
+        
+        container.appendChild(row);
+    });
+    
+    document.getElementById('record-count').textContent = 
+        `Showing ${currentData.length} of ${sampleSAIData.length} records (Latest 100)`;
+}
+
+function applyFilters() {
+    const operationFilter = document.getElementById('operation-filter').value;
+    const statusFilter = document.getElementById('status-filter').value;
+    const objectFilter = document.getElementById('object-filter').value;
+    
+    currentData = sampleSAIData.filter(item => {
+        const matchesOperation = !operationFilter || item.operation === operationFilter;
+        const matchesStatus = !statusFilter || item.status === statusFilter;
+        const matchesObject = !objectFilter || item.objectType === objectFilter;
+        
+        return matchesOperation && matchesStatus && matchesObject;
+    });
+    
+    updateSummaryStats();
+    renderAnalysisRows();
+}
+
+function clearFilters() {
+    document.getElementById('operation-filter').value = '';
+    document.getElementById('status-filter').value = '';
+    document.getElementById('object-filter').value = '';
+    
+    currentData = [...sampleSAIData];
+    updateSummaryStats();
+    renderAnalysisRows();
+}
+
+// Event listeners
+document.getElementById('operation-filter').addEventListener('change', applyFilters);
+document.getElementById('status-filter').addEventListener('change', applyFilters);
+document.getElementById('object-filter').addEventListener('change', applyFilters);
+
+// Initialize page when loaded
+document.addEventListener('DOMContentLoaded', initializePage);
+</script>
+{% endblock %}
