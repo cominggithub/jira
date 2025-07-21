@@ -68,10 +68,13 @@ def find_latest_feature_file():
 if __name__ == "__main__":
     print("🔍 Excel File Inspector for EC SONiC Feature Files")
     print("="*60)
-    
-    # Find and inspect the latest file
-    latest_file = find_latest_feature_file()
-    if latest_file:
-        inspect_excel_file(latest_file)
+
+    if len(sys.argv) > 1:
+        filepath = sys.argv[1]
+    else:
+        filepath = find_latest_feature_file()
+
+    if filepath:
+        inspect_excel_file(filepath)
     else:
         print("❌ No files to inspect")

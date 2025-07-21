@@ -49,6 +49,15 @@ def create_app(config_name=None):
     db.init_app(app)
     migrate = Migrate(app, db)
     
+    # Add custom template filters
+    @app.template_filter('timestamp_to_date')
+    def timestamp_to_date(timestamp):
+        from datetime import datetime
+        try:
+            return datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+        except:
+            return str(timestamp)
+    
     # Database connection probe
     print("=" * 60)
     print("DATABASE CONNECTION PROBE")
@@ -110,6 +119,63 @@ def create_app(config_name=None):
     @app.route('/ests')
     def ests():
         return render_template('ests.html', config=app.config)
+    
+    @app.route('/mcp')
+    def mcp():
+        import json
+        import subprocess
+        import os
+        from pathlib import Path
+        
+        # Read MCP configuration
+        mcp_config = {}
+        try:
+            with open('mcp_config.json', 'r', encoding='utf-8') as f:
+                mcp_config = json.load(f)
+        except FileNotFoundError:
+            mcp_config = {"mcpServers": {}}
+        except Exception as e:
+            mcp_config = {"error": f"Error reading config: {str(e)}"}
+        
+        # Check MCP server status
+        server_status = {}
+        for server_name, server_config in mcp_config.get('mcpServers', {}).items():
+            try:
+                # Check if server file exists
+                script_path = Path(server_config.get('args', [''])[0])
+                if script_path.exists():
+                    server_status[server_name] = {
+                        'file_exists': True,
+                        'file_path': str(script_path.absolute()),
+                        'file_size': script_path.stat().st_size,
+                        'last_modified': script_path.stat().st_mtime
+                    }
+                else:
+                    server_status[server_name] = {
+                        'file_exists': False,
+                        'file_path': str(script_path.absolute()),
+                        'error': 'Server file not found'
+                    }
+            except Exception as e:
+                server_status[server_name] = {
+                    'error': f'Error checking server: {str(e)}'
+                }
+        
+        # Read MCP demo readme
+        mcp_readme = ""
+        try:
+            with open('MCP_DEMO_README.md', 'r', encoding='utf-8') as f:
+                mcp_readme = f.read()
+        except FileNotFoundError:
+            mcp_readme = "# MCP Demo README not found"
+        except Exception as e:
+            mcp_readme = f"# Error reading MCP readme: {str(e)}"
+        
+        return render_template('mcp.html', 
+                             mcp_config=mcp_config, 
+                             server_status=server_status,
+                             mcp_readme=mcp_readme,
+                             config=app.config)
     
     @app.route('/readme')
     def readme():
@@ -173,4 +239,5 @@ def create_app(config_name=None):
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True, host='0.0.0.0', port=5002, use_reloader=False)
+    port = int(os.environ.get('FLASK_RUN_PORT', 5003))
+    app.run(debug=True, host='0.0.0.0', port=port, use_reloader=False)
