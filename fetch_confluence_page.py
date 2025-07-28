@@ -8,7 +8,8 @@ from urllib.parse import urlparse, parse_qs
 def load_atlassian_config():
     """Load Atlassian configuration from YAML file"""
     with open('config/atlassian_config.yaml', 'r') as file:
-        return yaml.safe_load(file)
+        config = yaml.safe_load(file)
+        return config['jira']
 
 def extract_page_id(url):
     """Extract page ID from Confluence URL"""

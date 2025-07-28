@@ -30,7 +30,17 @@
                             <a href="{{ url_for('sonic_feature') }}">Feature</a>
                             <a href="{{ url_for('feature_list') }}">Feature Support Matrix</a>
                             <a href="{{ url_for('sonic_mgmt') }}">sonic-mgmt</a>
-                            <a href="{{ url_for('ests') }}">ESTS</a>
+                            
+                            <div class="nav-submenu">
+                                <button class="nav-submenu-btn" onclick="toggleSubMenu('estsSubmenu')">
+                                    <span>ESTS</span>
+                                    <span class="submenu-arrow">▶</span>
+                                </button>
+                                <div class="nav-submenu-content" id="estsSubmenu">
+                                    <a href="{{ url_for('ests') }}">📊 Overview</a>
+                                    <a href="{{ url_for('ests_test_cases') }}">🧪 Test Cases</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     

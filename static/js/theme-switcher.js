@@ -174,7 +174,38 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// Submenu functionality
+function toggleSubMenu(submenuId) {
+    const submenu = document.getElementById(submenuId);
+    const allSubmenus = document.querySelectorAll('.nav-submenu-content');
+    
+    // Close all other submenus
+    allSubmenus.forEach(s => {
+        if (s.id !== submenuId) {
+            s.classList.remove('show');
+        }
+    });
+    
+    // Toggle the clicked submenu
+    submenu.classList.toggle('show');
+    
+    // Prevent event bubbling to avoid closing the main dropdown
+    event.stopPropagation();
+}
+
+// Close submenus when clicking outside
+document.addEventListener('click', function(event) {
+    const isSubmenu = event.target.closest('.nav-submenu');
+    if (!isSubmenu) {
+        const submenus = document.querySelectorAll('.nav-submenu-content');
+        submenus.forEach(submenu => {
+            submenu.classList.remove('show');
+        });
+    }
+});
+
 // Make functions globally available
 window.switchTheme = switchTheme;
 window.toggleThemeDropdown = toggleThemeDropdown;
 window.toggleNavDropdown = toggleNavDropdown;
+window.toggleSubMenu = toggleSubMenu;

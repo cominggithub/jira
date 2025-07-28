@@ -48,7 +48,8 @@ class SONiCReleaseNotesExtractor:
         """Load Atlassian configuration from YAML file"""
         try:
             with open(config_path, 'r') as file:
-                return yaml.safe_load(file)
+                config = yaml.safe_load(file)
+                return config['jira']
         except FileNotFoundError:
             print(f"Configuration file not found: {config_path}")
             sys.exit(1)

@@ -221,6 +221,91 @@ body[data-theme="pink-neon"] .bg-image.bg1.active {
     color: var(--accent-text);
 }
 
+/* Navigation Submenu Styles */
+.nav-submenu {
+    position: relative;
+    display: block;
+}
+
+.nav-submenu-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    font-family: inherit;
+    text-align: left;
+}
+
+.nav-submenu-btn:hover {
+    background: var(--accent-color);
+    color: var(--accent-text);
+}
+
+.submenu-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-submenu.show .submenu-arrow {
+    transform: rotate(90deg);
+}
+
+.nav-submenu-content {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-hover);
+    min-width: 160px;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    margin-left: 0.5rem;
+}
+
+.nav-submenu-content.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.nav-submenu-content a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition);
+    border-radius: 0;
+    border: none;
+    font-size: 0.85rem;
+}
+
+.nav-submenu-content a:first-child {
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.nav-submenu-content a:last-child {
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+.nav-submenu-content a:hover {
+    background: var(--accent-color);
+    color: var(--accent-text);
+}
+
 .theme-switcher {
     position: relative;
     display: flex;

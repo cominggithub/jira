@@ -49,4 +49,6 @@ instance/
 *.sqlite3
 
 # Log files
+*.logmcp/sonic_mcp/
 *.log
+mcp/sonic_mcp/

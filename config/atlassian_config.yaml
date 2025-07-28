@@ -1,3 +1,10 @@
-domain: "https://accton-group.atlassian.net/"
-email: "peter_lin@edge-core.com"
-api_token: "YOUR_API_TOKEN_HERE"
+jira:
+  domain: "https://accton-group.atlassian.net/"
+  email: "peter_lin@edge-core.com"
+  api_token: "ATATT3xFfGF0RpR2yZYJDzshN2hMAFTQDauCbD8zHJb7ch5gHusE-VMqPHYjBMu5xlA8_xlB8bgTjVIENhIlNvtrNPugzR6Nh3cBBY6c6hFTlaMJkckDut2hLxq03MNL4ubVT9xhwoovkmthsMvojKb9BFkSF_j98MCSM1skg9zzlrZETecwuNg=2BF6A670"
+
+zephy_scale:
+  domain: "https://accton-group.atlassian.net/"
+  email: "peter_lin@edge-core.com"
+  projectKey: ESTS
+  access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijp7ImJhc2VVcmwiOiJodHRwczovL2FjY3Rvbi1ncm91cC5hdGxhc3NpYW4ubmV0IiwidXNlciI6eyJhY2NvdW50SWQiOiI3MTIwMjA6ZWM1NDVjMDMtN2JhNi00YThhLTk5MTYtYWIyZDc0NWFkZTM5IiwidG9rZW5JZCI6Ijk1NDJiNWRjLTRlYzYtNGYyOC05MDgwLWYzYWQzZmMwOTUwMiJ9fSwiaXNzIjoiY29tLmthbm9haC50ZXN0LW1hbmFnZXIiLCJzdWIiOiJhYTU3YzAwYS02ODMwLTM2NzQtYTYwNy01ZWJkZTgzNWNkNzAiLCJleHAiOjE3ODUyMDk5ODYsImlhdCI6MTc1MzY3Mzk4Nn0.z15MfnEAwUqyo9jRBAZHMGTYyO_RqoDjoFV8NEDZu_Q"

@@ -94,3 +94,16 @@ chmod +x deploy_standalone.sh
 chmod +x deploy_simple.sh
 ./deploy_simple.sh
 ```
+
+# Spec
+ - feature has its own spec in the spec folder
+ - spec are in md file format
+ - spec elaborate the details specificiation of an feature
+ - this project consist web spec, cli spec, mcp server spec
+ - the spec contains the requirement, feature description, config and test criteria information, source code, tmp folder, test files structure
+ - when updating spec in the spec folder, the related files must also updated in the spec.md in the spec folder
+ - the spec.md list all the spec file and their purpose
+ 
+## API Documentation References
+
+- Search Zephyr Scale RESTful API documentation at https://support.smartbear.com/zephyr-scale-cloud/api-docs/

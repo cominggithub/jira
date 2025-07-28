@@ -1,0 +1,1051 @@
+{
+  "expand": "description,lead,issueTypes,url,projectKeys,permissions,insight",
+  "self": "https://accton-group.atlassian.net/rest/api/3/project/14601",
+  "id": "14601",
+  "key": "ESTS",
+  "description": "",
+  "lead": {
+    "self": "https://accton-group.atlassian.net/rest/api/3/user?accountId=712020:ec545c03-7ba6-4a8a-9916-ab2d745ade39",
+    "accountId": "712020:ec545c03-7ba6-4a8a-9916-ab2d745ade39",
+    "avatarUrls": {
+      "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:ec545c03-7ba6-4a8a-9916-ab2d745ade39/6095d758-6b0a-41ec-9152-cd70bef27df5/48",
+      "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:ec545c03-7ba6-4a8a-9916-ab2d745ade39/6095d758-6b0a-41ec-9152-cd70bef27df5/24",
+      "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:ec545c03-7ba6-4a8a-9916-ab2d745ade39/6095d758-6b0a-41ec-9152-cd70bef27df5/16",
+      "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:ec545c03-7ba6-4a8a-9916-ab2d745ade39/6095d758-6b0a-41ec-9152-cd70bef27df5/32"
+    },
+    "displayName": "peter_lin \u6797\u9298\u8ce2",
+    "active": true
+  },
+  "components": [
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17417",
+      "id": "17417",
+      "name": "aaa",
+      "description": "aaa",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17488",
+      "id": "17488",
+      "name": "accounting",
+      "description": "AAA (Accounting)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17465",
+      "id": "17465",
+      "name": "acl",
+      "description": "ACL",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17480",
+      "id": "17480",
+      "name": "acl-deny",
+      "description": "ACL Deny",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17479",
+      "id": "17479",
+      "name": "acl-permit",
+      "description": "ACL Permit",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17521",
+      "id": "17521",
+      "name": "an_lanes",
+      "description": "Enable / Disable Auto Negotiation with Number of Lanes",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17471",
+      "id": "17471",
+      "name": "asym-pfc",
+      "description": "Asym PFC",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17483",
+      "id": "17483",
+      "name": "authentication",
+      "description": "AAA (Authentication)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17486",
+      "id": "17486",
+      "name": "authorization",
+      "description": "AAA (Authorization)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17456",
+      "id": "17456",
+      "name": "bfd",
+      "description": "BFD",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17436",
+      "id": "17436",
+      "name": "bgp",
+      "description": "BGP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17438",
+      "id": "17438",
+      "name": "bgp-greaful-restart-helper",
+      "description": "BGP Graceful Restart Helper",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17437",
+      "id": "17437",
+      "name": "bgp-mp",
+      "description": "BGP MP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17439",
+      "id": "17439",
+      "name": "bgp-routing-stack-graceful-restart",
+      "description": "Routing Stack Graceful Restart (BGP)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17445",
+      "id": "17445",
+      "name": "bgp-unnumbered",
+      "description": "BGP Unnumbered",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17482",
+      "id": "17482",
+      "name": "cacl",
+      "description": "CACL",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17541",
+      "id": "17541",
+      "name": "cmis-diag",
+      "description": "CMIS Diagnostics",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17539",
+      "id": "17539",
+      "name": "config-rollback",
+      "description": "config rollback",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17538",
+      "id": "17538",
+      "name": "config-update",
+      "description": "config udpate",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17528",
+      "id": "17528",
+      "name": "configurable-drop-counter",
+      "description": "Configurable Drop Counter",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17534",
+      "id": "17534",
+      "name": "container-warm-restart",
+      "description": "Container Warm Restart (BGP / TeamD / SWSS / SyncD)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17478",
+      "id": "17478",
+      "name": "copp",
+      "description": "COPP (Config / Management)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17513",
+      "id": "17513",
+      "name": "crm",
+      "description": "Critical Resource Monitoring (CRM)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17494",
+      "id": "17494",
+      "name": "dhcp-relay",
+      "description": "DHCP Relay",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17495",
+      "id": "17495",
+      "name": "dhcpv6-relay",
+      "description": "DHCPv6 Relay",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17469",
+      "id": "17469",
+      "name": "diffserv",
+      "description": "DiffServ",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17442",
+      "id": "17442",
+      "name": "dlb",
+      "description": "DLB (Dynamic Load Balance)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17508",
+      "id": "17508",
+      "name": "dns-utilities",
+      "description": "DNS Utilities",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17531",
+      "id": "17531",
+      "name": "dom-optics-data",
+      "description": "DOM Optics Data",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17524",
+      "id": "17524",
+      "name": "dpb",
+      "description": "DPB (Dynamic Port Breakout)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17440",
+      "id": "17440",
+      "name": "ecmp",
+      "description": "ECMP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17441",
+      "id": "17441",
+      "name": "ecmp-dynamic-ordered-next-hop",
+      "description": "Dynamic Ordered Next-hop ECMP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17460",
+      "id": "17460",
+      "name": "ecn",
+      "description": "ECN",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17475",
+      "id": "17475",
+      "name": "egress-shaping",
+      "description": "Egress Shaping (Port, Queue)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17519",
+      "id": "17519",
+      "name": "erspan",
+      "description": "erspan",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17517",
+      "id": "17517",
+      "name": "everflow",
+      "description": "everflow",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17446",
+      "id": "17446",
+      "name": "evpn",
+      "description": "evpn",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17448",
+      "id": "17448",
+      "name": "evpn/vxlan",
+      "description": "evpn/vxlan",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17450",
+      "id": "17450",
+      "name": "evpn/vxlan-ingress-replication",
+      "description": "Ingress Replication for L2 BUM Traffic over VXLAN Tunnels",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17451",
+      "id": "17451",
+      "name": "evpn/vxlan-remote-mac-programming",
+      "description": "Remote MAC Programming over VxLAN Tunnels",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17498",
+      "id": "17498",
+      "name": "fast-reload",
+      "description": "Fast Reload",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17425",
+      "id": "17425",
+      "name": "fdb",
+      "description": "FDB",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17426",
+      "id": "17426",
+      "name": "fdb-mac-aging",
+      "description": "FDB Mac Aging",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17427",
+      "id": "17427",
+      "name": "fdb-mac-learning",
+      "description": "FDB Mac Learning",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17497",
+      "id": "17497",
+      "name": "image-upgrade",
+      "description": "SONiC Image Upgrade",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17515",
+      "id": "17515",
+      "name": "in-band-mgmt-vrf",
+      "description": "In-band Management VRF",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17476",
+      "id": "17476",
+      "name": "ingress-port-rate-limit",
+      "description": "Ingress Port Rate Limit",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17444",
+      "id": "17444",
+      "name": "ipv6",
+      "description": "IPv6",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17481",
+      "id": "17481",
+      "name": "ipv6-acl",
+      "description": "IPv6 ACL",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17454",
+      "id": "17454",
+      "name": "is-is",
+      "description": "IS-IS",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17536",
+      "id": "17536",
+      "name": "kubernetes",
+      "description": "Kubernetes",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17419",
+      "id": "17419",
+      "name": "lacp-fallback",
+      "description": "LACP Fallback",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17421",
+      "id": "17421",
+      "name": "lacp-rate",
+      "description": "LACP Rate",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17422",
+      "id": "17422",
+      "name": "lldp",
+      "description": "LLDP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17507",
+      "id": "17507",
+      "name": "log-files",
+      "description": "Log Files",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17523",
+      "id": "17523",
+      "name": "lt",
+      "description": "Link Training",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17429",
+      "id": "17429",
+      "name": "mclag",
+      "description": "MCLAG",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17430",
+      "id": "17430",
+      "name": "mclag-dynamic-configuration",
+      "description": "MCLAG Dynamic Configuration",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17431",
+      "id": "17431",
+      "name": "mclag-unique-ip",
+      "description": "MCLAG Unique IP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17526",
+      "id": "17526",
+      "name": "mgmt-framework",
+      "description": "Management Framework",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17514",
+      "id": "17514",
+      "name": "mgmt-vrf",
+      "description": "Management VRF",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17516",
+      "id": "17516",
+      "name": "mirroring",
+      "description": "Mirroring (Everflow / SPAN / ERSPAN)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17530",
+      "id": "17530",
+      "name": "mtu",
+      "description": "MTU Setting",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17532",
+      "id": "17532",
+      "name": "nat",
+      "description": "NAT",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17449",
+      "id": "17449",
+      "name": "nd/arp-supression",
+      "description": "ND/ARP Suppression",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17493",
+      "id": "17493",
+      "name": "ntp",
+      "description": "NTP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17503",
+      "id": "17503",
+      "name": "object-track",
+      "description": "Object Track",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17505",
+      "id": "17505",
+      "name": "object-track-bgp-neighbor-track",
+      "description": "Object-track BGP Neighbor Track",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17504",
+      "id": "17504",
+      "name": "object-track-port-track",
+      "description": "Object Track - Port Track",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17453",
+      "id": "17453",
+      "name": "ospfv2",
+      "description": "OSPF v2",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17459",
+      "id": "17459",
+      "name": "pbr",
+      "description": "PBR",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17537",
+      "id": "17537",
+      "name": "pcie-monitoring",
+      "description": "PCIe Monitoring",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17542",
+      "id": "17542",
+      "name": "persistent-log-level",
+      "description": "Persistent Log Level",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17470",
+      "id": "17470",
+      "name": "pfc",
+      "description": "PFC (Priority Flow Control)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17472",
+      "id": "17472",
+      "name": "pfc-wd",
+      "description": "PFC Watchdog (WD)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17473",
+      "id": "17473",
+      "name": "pfc-wm",
+      "description": "PFC Watermark (WM)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17500",
+      "id": "17500",
+      "name": "platform-monitor",
+      "description": "Platform Monitor ",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17520",
+      "id": "17520",
+      "name": "port-speed-setting",
+      "description": "Port Speed Setting",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17506",
+      "id": "17506",
+      "name": "protocol-down",
+      "description": "Protocol Down",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17455",
+      "id": "17455",
+      "name": "proxy-arp",
+      "description": "Proxy ARP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17434",
+      "id": "17434",
+      "name": "pvst",
+      "description": "PVST",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17462",
+      "id": "17462",
+      "name": "qos-classification",
+      "description": "QoS Classification",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17463",
+      "id": "17463",
+      "name": "qos-classification-cos",
+      "description": "COS",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17464",
+      "id": "17464",
+      "name": "qos-classification-dscp",
+      "description": "DSCP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17466",
+      "id": "17466",
+      "name": "qos-marking",
+      "description": "QoS Marking",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17467",
+      "id": "17467",
+      "name": "qos-marking-cos",
+      "description": "QoS Marking COS",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17468",
+      "id": "17468",
+      "name": "qos-marking-dscp",
+      "description": "QoS Marking DSCP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17485",
+      "id": "17485",
+      "name": "radius",
+      "description": "RADIUS",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17509",
+      "id": "17509",
+      "name": "reachability-tools",
+      "description": "Reachability Tools",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17477",
+      "id": "17477",
+      "name": "rocev2-over-evpn/vxlan",
+      "description": "RoCEv2 over EVPN/VxLAN",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17452",
+      "id": "17452",
+      "name": "sag",
+      "description": "SAG (Static Anycast Gateway)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17474",
+      "id": "17474",
+      "name": "scheduling",
+      "description": "Scheduling",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17511",
+      "id": "17511",
+      "name": "scp",
+      "description": "SCP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17502",
+      "id": "17502",
+      "name": "sensor-xcvr-monitor",
+      "description": "Sensor Transceiver Monitoring",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17527",
+      "id": "17527",
+      "name": "sflow",
+      "description": "sFlow",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17512",
+      "id": "17512",
+      "name": "sftp",
+      "description": "SFTP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17490",
+      "id": "17490",
+      "name": "snmp",
+      "description": "SNMP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17491",
+      "id": "17491",
+      "name": "snmp-sonic-entity-mib-extensions",
+      "description": "SONiC Entity MIB Extensions",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17518",
+      "id": "17518",
+      "name": "span",
+      "description": "span",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17522",
+      "id": "17522",
+      "name": "ss_lanes",
+      "description": "Enable / Disable Speed Setting with Number of Lanes",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17529",
+      "id": "17529",
+      "name": "ssd-diag",
+      "description": "SSD Diagnostic Tooling",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17510",
+      "id": "17510",
+      "name": "ssh",
+      "description": "SSH",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17428",
+      "id": "17428",
+      "name": "static-fdb",
+      "description": "Static FDB",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17420",
+      "id": "17420",
+      "name": "static-lag",
+      "description": "Static LAG",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17432",
+      "id": "17432",
+      "name": "storm-control",
+      "description": "Storm Control",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17433",
+      "id": "17433",
+      "name": "stp",
+      "description": "STP",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17458",
+      "id": "17458",
+      "name": "subport",
+      "description": "Subport",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17535",
+      "id": "17535",
+      "name": "sys-health",
+      "description": "System Health",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17496",
+      "id": "17496",
+      "name": "sysdump",
+      "description": "Sysdump",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17492",
+      "id": "17492",
+      "name": "syslog",
+      "description": "Syslog",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17540",
+      "id": "17540",
+      "name": "systemd-bootchart-integration",
+      "description": "Systemd Bootchart Integration",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17484",
+      "id": "17484",
+      "name": "tacacs",
+      "description": "TACACS+",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17489",
+      "id": "17489",
+      "name": "tacacs-accounting",
+      "description": "TACACS+ Accounting (and CLI Level Accounting)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17487",
+      "id": "17487",
+      "name": "tacacs-authorization",
+      "description": "TACACS+ Authorization (and CLI Level Authorization)",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17525",
+      "id": "17525",
+      "name": "telemetry",
+      "description": "Telemetry",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17501",
+      "id": "17501",
+      "name": "thermal-monitor",
+      "description": "Thermal Monitor",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17423",
+      "id": "17423",
+      "name": "vlan",
+      "description": "VLAN",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17424",
+      "id": "17424",
+      "name": "vlan-trunk",
+      "description": "VLAN Trunk",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17443",
+      "id": "17443",
+      "name": "vrf",
+      "description": "Virtual routing and forwarding",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17457",
+      "id": "17457",
+      "name": "vrf-route-leaking",
+      "description": "VRF Route Leaking",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17447",
+      "id": "17447",
+      "name": "vxlan",
+      "description": "vxlan",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17499",
+      "id": "17499",
+      "name": "warm-reboot",
+      "description": "Warm Reboot",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17461",
+      "id": "17461",
+      "name": "wred",
+      "description": "WRED",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17435",
+      "id": "17435",
+      "name": "xstp",
+      "description": "xstp",
+      "isAssigneeTypeValid": false
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/component/17533",
+      "id": "17533",
+      "name": "ztp",
+      "description": "ZTP",
+      "isAssigneeTypeValid": false
+    }
+  ],
+  "issueTypes": [
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/issuetype/10002",
+      "id": "10002",
+      "description": "A task that needs to be done.",
+      "iconUrl": "https://accton-group.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+      "name": "Task",
+      "subtask": false,
+      "avatarId": 10318,
+      "hierarchyLevel": 0
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/issuetype/10003",
+      "id": "10003",
+      "description": "The sub-task of the issue",
+      "iconUrl": "https://accton-group.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+      "name": "Sub-task",
+      "subtask": true,
+      "avatarId": 10316,
+      "hierarchyLevel": -1
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/issuetype/10001",
+      "id": "10001",
+      "description": "Created by Jira Software - do not edit or delete. Issue type for a user story.",
+      "iconUrl": "https://accton-group.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium",
+      "name": "Story",
+      "subtask": false,
+      "avatarId": 10315,
+      "hierarchyLevel": 0
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/issuetype/10004",
+      "id": "10004",
+      "description": "A problem which impairs or prevents the functions of the product.",
+      "iconUrl": "https://accton-group.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium",
+      "name": "Bug",
+      "subtask": false,
+      "avatarId": 10303,
+      "hierarchyLevel": 0
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/issuetype/10000",
+      "id": "10000",
+      "description": "Created by Jira Software - do not edit or delete. Issue type for a big user story that needs to be broken down.",
+      "iconUrl": "https://accton-group.atlassian.net/images/icons/issuetypes/epic.svg",
+      "name": "Epic",
+      "subtask": false,
+      "hierarchyLevel": 1
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/issuetype/12125",
+      "id": "12125",
+      "description": "For system outages or incidents. Created by Jira Service Management.",
+      "iconUrl": "https://accton-group.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/15278?size=medium",
+      "name": "[System] Incident",
+      "subtask": false,
+      "avatarId": 15278,
+      "hierarchyLevel": 0
+    }
+  ],
+  "assigneeType": "PROJECT_LEAD",
+  "versions": [
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/version/15407",
+      "id": "15407",
+      "description": "2024/08/05 to 2024/08/16",
+      "name": "2024 ECSIT Sprint 20",
+      "archived": false,
+      "released": false,
+      "startDate": "2024-08-05",
+      "releaseDate": "2024-08-16",
+      "overdue": true,
+      "userStartDate": "05/Aug/24",
+      "userReleaseDate": "16/Aug/24",
+      "projectId": 14601
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/version/15411",
+      "id": "15411",
+      "description": "ESTS 2024 Q4 Release",
+      "name": "ESTS.24Q4",
+      "archived": false,
+      "released": false,
+      "startDate": "2024-10-01",
+      "releaseDate": "2024-12-31",
+      "overdue": true,
+      "userStartDate": "01/Oct/24",
+      "userReleaseDate": "31/Dec/24",
+      "projectId": 14601
+    },
+    {
+      "self": "https://accton-group.atlassian.net/rest/api/3/version/15412",
+      "id": "15412",
+      "description": "ESTS 2024 Q3 Release",
+      "name": "ESTS.24Q3",
+      "archived": false,
+      "released": false,
+      "startDate": "2024-07-01",
+      "releaseDate": "2024-09-30",
+      "overdue": true,
+      "userStartDate": "01/Jul/24",
+      "userReleaseDate": "30/Sep/24",
+      "projectId": 14601
+    }
+  ],
+  "name": "ESTS",
+  "roles": {
+    "Hardware PL": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11400",
+    "Accton SWPL": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10900",
+    "Scrum Masters": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10300",
+    "Service Desk Customers": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11621",
+    "MFG": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10901",
+    "Timing Module": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11401",
+    "atlassian-addons-project-access": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11600",
+    "Software Developers": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10100",
+    "ONIE Development": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11102",
+    "Design Quality Assurance Staff": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11200",
+    "Technical Support": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10600",
+    "BMC Development": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11100",
+    "Product Owners": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10127",
+    "Third Party Customers": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10400",
+    "Testers": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10501",
+    "Quality Assurance Staffs": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10101",
+    "TBRH.architect (role)": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10403",
+    "TBRH.reviewer (role)": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10401",
+    "Service Desk Team": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11622",
+    "Final  Reviewer": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11003",
+    "Code Reviewer 3": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11002",
+    "Code Reviewer 2": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11001",
+    "TA": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10903",
+    "Code Reviewer 1": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11000",
+    "EC SWPL": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11500",
+    "TBRH.business.value (role)": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10402",
+    "Developers": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10502",
+    "Read Only Users": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10404",
+    "SW DEV CICT": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11300",
+    "BIOS Development": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/11101",
+    "Mechanical": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10904",
+    "Administrators": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10002",
+    "Group Leader": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10800",
+    "TBRH.users (role)": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10500",
+    "Hardware Developers": "https://accton-group.atlassian.net/rest/api/3/project/14601/role/10301"
+  },
+  "avatarUrls": {
+    "48x48": "https://accton-group.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10324",
+    "24x24": "https://accton-group.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10324?size=small",
+    "16x16": "https://accton-group.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10324?size=xsmall",
+    "32x32": "https://accton-group.atlassian.net/rest/api/3/universal_avatar/view/type/project/avatar/10324?size=medium"
+  },
+  "projectTypeKey": "software",
+  "simplified": false,
+  "style": "classic",
+  "isPrivate": false,
+  "properties": {}
+}
