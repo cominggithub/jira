@@ -7,8 +7,19 @@
     <h1>🔗 Model Context Protocol (MCP)</h1>
     <p>Manage and monitor MCP servers that extend Claude's capabilities with custom tools and data sources.</p>
     
-    <div class="mcp-section">
-        <h2>📊 Server Status</h2>
+    <!-- Navigation -->
+    <div class="mcp-nav">
+        <a href="#overview" class="nav-link active" onclick="showSection('overview')">Overview</a>
+        <a href="#demo-server" class="nav-link" onclick="showSection('demo-server')">Demo Server</a>
+        <a href="#sonic-mcp" class="nav-link" onclick="showSection('sonic-mcp')">SONiC MCP</a>
+        <a href="#jira-mcp" class="nav-link" onclick="showSection('jira-mcp')">Jira MCP</a>
+        <a href="#configuration" class="nav-link" onclick="showSection('configuration')">Configuration</a>
+    </div>
+
+    <!-- Overview Section -->
+    <div id="overview-section" class="content-section active">
+        <div class="mcp-section">
+            <h2>📊 Server Status</h2>
         {% if mcp_config.get('mcpServers') %}
             {% for server_name, server_config in mcp_config.mcpServers.items() %}
                 <div class="server-card">
@@ -51,65 +62,148 @@
         {% else %}
             <p class="no-servers">No MCP servers configured.</p>
         {% endif %}
+        </div>
     </div>
-    
-    <div class="mcp-section">
-        <h2>⚙️ Configuration</h2>
-        <div class="config-card">
-            <h3>mcp_config.json</h3>
-            {% if mcp_config.get('error') %}
-                <div class="error-message">
-                    <p><strong>Configuration Error:</strong> {{ mcp_config.error }}</p>
+
+    <!-- SONiC MCP Section -->
+    <div id="sonic-mcp-section" class="content-section">
+        <div class="mcp-section">
+            <h2>🌐 SONiC MCP Server Documentation</h2>
+            
+            <div class="tools-section">
+                <h3>🛠️ Available Tools</h3>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <h4>list_switches</h4>
+                        <p><strong>Purpose:</strong> Display all configured SONiC switches</p>
+                        <p><strong>Parameters:</strong> None</p>
+                        <p><strong>Returns:</strong> Table format list of switches with connection details</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h4>add_switch</h4>
+                        <p><strong>Purpose:</strong> Add new SONiC switch to configuration</p>
+                        <p><strong>Parameters:</strong> name, ip, username (optional), password (optional), port (optional), timeout (optional)</p>
+                        <p><strong>Returns:</strong> Success confirmation or validation error</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h4>probe_switch</h4>
+                        <p><strong>Purpose:</strong> Test SSH connectivity to a switch</p>
+                        <p><strong>Parameters:</strong> identifier (name or IP)</p>
+                        <p><strong>Returns:</strong> Connection status, timing, and SONiC detection results</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h4>show_version</h4>
+                        <p><strong>Purpose:</strong> Get SONiC version and platform information</p>
+                        <p><strong>Parameters:</strong> identifier (name or IP)</p>
+                        <p><strong>Returns:</strong> Parsed version info including SONiC version, platform, ASIC, build date</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h4>show_err</h4>
+                        <p><strong>Purpose:</strong> Extract and analyze system error logs</p>
+                        <p><strong>Parameters:</strong> identifier, lines (default: 100), severity_filter (all/critical/error/warning)</p>
+                        <p><strong>Returns:</strong> Classified error logs with severity analysis and recommendations</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h4>show_config</h4>
+                        <p><strong>Purpose:</strong> Retrieve switch configuration data</p>
+                        <p><strong>Parameters:</strong> identifier, config_type (all/config_db/frr)</p>
+                        <p><strong>Returns:</strong> JSON-formatted configuration data (config_db.json, FRR config)</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h4>show_status</h4>
+                        <p><strong>Purpose:</strong> Comprehensive system health monitoring</p>
+                        <p><strong>Parameters:</strong> identifier</p>
+                        <p><strong>Returns:</strong> JSON status including CPU/memory/disk usage, hardware status, health analysis</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h4>get_sai_record</h4>
+                        <p><strong>Purpose:</strong> Get SAI (Switch Abstraction Interface) records and logs</p>
+                        <p><strong>Parameters:</strong> identifier, component (all/sai_logs/orchagent_logs/syncd_logs/sai_dump), lines (default: 100)</p>
+                        <p><strong>Returns:</strong> SAI logs analysis with JIRA query suggestions, component breakdown, and recommendations</p>
+                    </div>
                 </div>
-            {% else %}
-                <pre class="config-json"><code>{{ mcp_config | tojson(indent=2) }}</code></pre>
-            {% endif %}
-        </div>
-    </div>
-    
-    <div class="mcp-section">
-        <h2>🛠️ Available Tools</h2>
-        <div class="tools-grid">
-            <div class="tool-card">
-                <h4>get_system_info</h4>
-                <p>Returns basic system information including platform, Python version, and environment details.</p>
-            </div>
-            <div class="tool-card">
-                <h4>list_files</h4>
-                <p>Lists files and directories in a specified path with size and type information.</p>
-            </div>
-            <div class="tool-card">
-                <h4>read_file</h4>
-                <p>Reads and returns the contents of a specified file.</p>
-            </div>
-            <div class="tool-card">
-                <h4>write_demo_file</h4>
-                <p>Creates a demo file with custom content and timestamp.</p>
             </div>
         </div>
     </div>
-    
-    <div class="mcp-section">
-        <h2>🚀 Quick Actions</h2>
-        <div class="actions-grid">
-            <button class="action-btn" onclick="testMCPServer()">Test Server</button>
-            <button class="action-btn" onclick="viewServerLogs()">View Logs</button>
-            <button class="action-btn" onclick="restartServer()">Restart Server</button>
-            <button class="action-btn" onclick="showServerConfig()">Edit Config</button>
-        </div>
-    </div>
-    
-    <div class="mcp-section">
-        <h2>📖 Documentation</h2>
-        <div class="readme-content">
-            <div class="markdown-content">
-                {{ mcp_readme | safe }}
+
+    <!-- Configuration Section -->
+    <div id="configuration-section" class="content-section">
+        <div class="mcp-section">
+            <h2>⚙️ Configuration</h2>
+            <div class="config-card">
+                <h3>mcp_config.json</h3>
+                {% if mcp_config.get('error') %}
+                    <div class="error-message">
+                        <p><strong>Configuration Error:</strong> {{ mcp_config.error }}</p>
+                    </div>
+                {% else %}
+                    <pre class="config-json"><code>{{ mcp_config | tojson(indent=2) }}</code></pre>
+                {% endif %}
+            </div>
+            
+            <div class="actions-section">
+                <h3>🚀 Quick Actions</h3>
+                <div class="actions-grid">
+                    <button class="action-btn" onclick="testMCPServer()">🧪 Test Servers</button>
+                    <button class="action-btn" onclick="viewServerLogs()">📄 View Logs</button>
+                    <button class="action-btn" onclick="restartServer()">🔄 Restart Servers</button>
+                    <button class="action-btn" onclick="showServerConfig()">⚙️ Edit Config</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <style>
+/* Navigation Styles */
+.mcp-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    background: var(--bg-color);
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    background: var(--secondary-bg);
+    color: var(--text-primary);
+}
+
+.nav-link.active {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+/* Content Section Styles */
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
 .mcp-section {
     margin: 2rem 0;
     padding: 1.5rem;
@@ -251,6 +345,29 @@
 </style>
 
 <script>
+// Navigation Functions
+function showSection(sectionName) {
+    // Hide all sections
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => section.classList.remove('active'));
+    
+    // Remove active class from all nav links
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => link.classList.remove('active'));
+    
+    // Show selected section
+    const targetSection = document.getElementById(sectionName + '-section');
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+    
+    // Add active class to clicked nav link
+    const activeLink = document.querySelector(`[onclick="showSection('${sectionName}')"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
+    }
+}
+
 function testMCPServer() {
     alert('Testing MCP server functionality...\n\nThis would normally run test_mcp_server.py');
 }
@@ -268,5 +385,11 @@ function restartServer() {
 function showServerConfig() {
     alert('Opening server configuration...\n\nThis would allow editing the mcp_config.json file.');
 }
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    // Show overview section by default
+    showSection('overview');
+});
 </script>
 {% endblock %}

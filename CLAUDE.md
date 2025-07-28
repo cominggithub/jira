@@ -22,6 +22,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - If it is community, that means native support from community source
   - Update the feature importer and the feature matrix page properly
 
+## Web Development Best Practices
+
+- When update or add any web page, also check the theme compatibility, update the theme and menu properly.
+
 ## EC Device Information
 
 ### Edgecore Switch Portfolio by Chip Architecture
