@@ -121,68 +121,6 @@ def create_app(config_name=None):
     def ests():
         return render_template('ests.html', config=app.config)
     
-    @app.route('/ests/test-cases')
-    def ests_test_cases():
-        """ESTS Test Cases page - retrieve and display test cases from Zephyr Scale"""
-        from utils.zephyr_api import get_zephyr_api
-        
-        try:
-            # Initialize Zephyr Scale API
-            zephyr_api = get_zephyr_api()
-            
-            # Get API status
-            api_status = zephyr_api.get_api_status()
-            
-            # Get test cases if API is connected
-            test_cases = []
-            error_message = None
-            
-            if api_status['status'] == 'connected':
-                test_cases = zephyr_api.get_ests_test_cases()
-                
-                # Add statistics
-                total_cases = len(test_cases)
-                categories = {}
-                features = set()
-                
-                for case in test_cases:
-                    category = case.get('category', 'Unknown')
-                    categories[category] = categories.get(category, 0) + 1
-                    
-                    feature_key = case.get('feature_key', '')
-                    if feature_key:
-                        features.add(feature_key)
-                
-                stats = {
-                    'total_cases': total_cases,
-                    'categories': categories,
-                    'unique_features': len(features),
-                    'categories_count': len(categories)
-                }
-            else:
-                error_message = api_status.get('error', 'Unknown API error')
-                stats = {
-                    'total_cases': 0,
-                    'categories': {},
-                    'unique_features': 0,
-                    'categories_count': 0
-                }
-            
-            return render_template('ests_test_cases.html', 
-                                 test_cases=test_cases,
-                                 api_status=api_status,
-                                 stats=stats,
-                                 error_message=error_message,
-                                 config=app.config)
-                                 
-        except Exception as e:
-            error_message = f"Error loading test cases: {str(e)}"
-            return render_template('ests_test_cases.html',
-                                 test_cases=[],
-                                 api_status={'status': 'error', 'error': str(e)},
-                                 stats={'total_cases': 0, 'categories': {}, 'unique_features': 0, 'categories_count': 0},
-                                 error_message=error_message,
-                                 config=app.config)
     
     @app.route('/mcp')
     def mcp():
